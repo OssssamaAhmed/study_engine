@@ -1,0 +1,53 @@
+# Study Engine — Architecture & Conventions
+
+Local, single-user Laravel app for Spaced Interleaved Retrieval Practice toward an AI Security Engineer role. Full requirements: `PROJECT_SPEC.md` (the source of truth — read it before building anything).
+
+## Status
+
+All 6 milestones complete. Pages: dashboard `/` (stats + Mission), `/ingest`, `/chat` (tutor chat), `/exercise/{id}` (submit + evaluation), `/concepts` (`?filter=due|struggling`, retire toggle, struggle-note resolve), `/history`, `/settings` (provider display + resync roadmap), `/debug/topics`. `php artisan llm:test` smoke-tests the active provider. README.md has full Windows run instructions. Test suite: `php artisan test` (in-memory sqlite).
+
+## Environment
+
+- Windows 11 native — no Docker, no WSL. The user is a Laravel beginner: explain every manual command in plain language.
+- PHP 8.4 (portable install at `C:\Users\HP\tools\php`, on user PATH) + Composer 2 (`composer.bat` shim in same dir). Node 22 preinstalled.
+- Laravel 13, SQLite at `database/database.sqlite`. Run the app with `php artisan serve`.
+
+## Key decisions
+
+- **Embeddings**: JSON column on `chunks` + cosine similarity in PHP (not sqlite-vec — impractical to load on Windows PHP; hundreds of chunks makes PHP-side cosine fine).
+- **Curriculum truth**: the JSON in `storage/app/roadmap/` (copied from `AI_Engineering_Roadmap_v3.1.json` at root). `App\Services\RoadmapService` re-reads it from disk on every call — no caching — so a "Resync roadmap" just calls `syncTopics()` again (upsert keyed on `phase_number`, idempotent).
+- **Runtime LLM prompt**: `resources/prompts/exercise-engine.md`, a byte-identical copy of `RUNTIME_SYSTEM_PROMPT.md`. Never rewrite it.
+- **LLM provider**: `App\Services\LlmService` picks drivers (`app/Services/Llm/`) from `.env` — config in `config/ai.php`. **Chat and embeddings route separately**: `AI_PROVIDER` picks the chat driver (openrouter | ollama | anthropic | gemini); `AI_EMBED_PROVIDER` picks embeddings, defaulting to the chat provider except gemini/anthropic which fall back to openrouter. Embeddings must NEVER change model mid-corpus — stored 1536-dim `text-embedding-3-small` vectors are only comparable to query vectors from that same model. Current setup: chat = openrouter `nvidia/nemotron-3-ultra-550b-a55b:free` (Gemini wired and ready — user adds `GEMINI_API_KEY` and flips `AI_PROVIDER=gemini`), embeddings = openrouter `openai/text-embedding-3-small`. Nemotron/Gemini are reasoning models; drivers strip think blocks/thought parts. Keys only in `.env`, never in code. Smoke test: `php artisan llm:test`.
+- **Mission shape**: exactly FOUR drills (Setup/Task/Output/Concepts, concrete values) + exactly one closing **Boss Fight** that integrates every concept of the mission into a single realistic build — defined in `RUNTIME_SYSTEM_PROMPT.md` MODE 1. Extra concepts get combined inside drills, never dropped. Generation takes a learner-picked difficulty (Easy/Medium/Hard selects on dashboard + ingest confirm → `Requested difficulty:` line in the MODE 1 request) and a learner-picked drill count (number input, min 5 max 10, default 5 → `Requested drills:` line; prompt says exactly that many drills + one Boss Fight, revisiting concepts from new angles when concepts < drills). Every mission ends with a `## Solutions` section (simple-first worked solution + `Concepts used:` per drill and Boss Fight, per user request — solutions ship WITH the mission, not after evaluation); MODE 2 compares the learner's work against those published solutions instead of restating them. phpunit.xml pins AI_PROVIDER/AI_EMBED_PROVIDER=openrouter so tests never follow a .env provider flip onto a real API.
+- **Personal instructions (learner memory)**: free text saved from `/settings` (`POST /settings/instructions`, max 4000 chars) via `App\Support\LearnerInstructions` (flat file `learner-instructions.md` on the local Storage disk — no DB table). Injected into every MODE 1 request (`Learner's personal instructions:` section, honored per a MODE 1 rule that never overrides only-provided-concepts) and into the tutor system prompt via `ChatController::learnerState()`.
+- **Tutor chat**: `/chat` (`ChatController`) — session-held history (capped at 30 entries, `POST /chat/clear` resets), folded into one user string per request because drivers take a single user message; system prompt at `resources/prompts/tutor-chat.md` (beginner-focused, simple solutions first; knows the app's purpose/flow, can generate ad-hoc drills in chat with solutions last, teaches the write-first/AI-reviews-after workflow) + live learner state appended per request (`ChatController::learnerState()`: phase, ≤10 due concepts, ≤10 unresolved struggle notes).
+- **Portable PHP quirk**: TLS needs the CA bundle at `C:\Users\HP\tools\php\cacert.pem`, wired via `curl.cainfo`/`openssl.cafile` in that dir's `php.ini`. If HTTPS calls ever throw cURL error 60, re-check those two ini lines.
+
+## Data model
+
+Eight tables in one migration (`2026_07_09_000001_create_study_engine_tables.php`): `topics`, `transcripts`, `concepts`, `chunks`, `exercises`, `exercise_concept` (pivot), `attempts`, `struggle_notes`. Columns follow PROJECT_SPEC.md §4 exactly. `topics` has no timestamps (`Topic::$timestamps = false`).
+
+Spacing algorithm (spec §5): ladder 1/3/7/14/30 days; score ≥ 70 promotes, < 70 is a lapse (halve interval, min 1 day, boost struggle note).
+
+## Ingestion (Milestone 3)
+
+`App\Services\IngestService`: `chunk()` splits ~2000 chars (~500 tokens) with 200-char overlap; `extractConcepts()` asks the chat model for strict JSON (`{topic_phase_number, concepts:[{name, summary}]}`, fences/prose stripped tolerantly); `store()` writes transcript + embedded chunks (one `embedMany` batch call) + concepts inside a transaction. New concepts get `next_review_at = tomorrow`; existing names (case-insensitive, global) are linked, never duplicated. `chunks.concept_id` stays null — retrieval (Milestone 4) will match concepts to chunks by cosine similarity, not stored links. Flow: `GET /ingest` → `POST /ingest/preview` (LLM, shows editable checklist) → `POST /ingest/confirm` (saves only checked concepts).
+
+## Exercise engine (Milestone 4)
+
+`App\Services\ExerciseService`: `selectConcepts()` returns `[new, review]` — new = non-retired with `interval_days = 0` (all of them; missions scale up); review slots (count ≈ ⅔ of new, floor 2 → ~60/40) fill with overdue concepts first (lapses desc, then most overdue) and then **backfill with not-yet-due reviewed concepts** (soonest `next_review_at` first) so past topics repeat in every mission (true interleaving — user requirement). Nothing new → up to 8 strictly-due only. Shared `reviewSelection()` also drives `generateFromConcepts()` (excludes the just-ingested ids). `latestPending()` = newest `status=pending` mission; the dashboard falls back to it when today has no mission ("Unfinished mission" banner) so work survives restarts/day changes. `retrieveChunks()` embeds each concept's name+summary and takes top-2 chunks by cosine in PHP. `generate()` is one-per-day (returns existing), sends the MODE 1 request (concepts with ids/roles/lapses, unresolved struggle notes, current phase+week, chunks) with the runtime prompt as system, stores the exercise + `exercise_concept` pivots (NOTE: pivot table name is non-alphabetical, must be explicit in `belongsToMany`). `RoadmapService::currentWeek()/currentPhaseTopic()` derive phase from `meta.start_date`. Dashboard `/` shows stats (due count, phase/week, streak = consecutive days with a generated mission) and renders `mission_md` via `Str::markdown` (html stripped) styled by the `.mission` CSS block in `resources/css/app.css` (no typography plugin).
+
+## Transcript-driven drills (primary workflow) + UI
+
+Ingest confirm has two buttons: "Save only" and "Save & generate drills" (`action=save_generate`). The latter calls `ExerciseService::generateFromConcepts(ids)` — the just-saved concepts (ids returned by `IngestService::store`) become [NEW], due reviews *excluding* those ids become [REVIEW] (cap ⅔·new). This path allows multiple missions per day; the dashboard button keeps one-per-day via `generate()`. Both share private `storeMission()`. `todays()` = latest of today; dashboard has a mission-browser dropdown (all missions → `/exercise/{id}`); `Exercise::title()` parses the first mission_md line. UI: design tokens + component classes (`btn`, `btn-accent`, `btn-outline`, `input`, `card`, `eyebrow`, `badge-*`, `stat-num`, `label`) live in `resources/css/app.css` (`@theme` + `@layer components`) — use them, don't hand-roll padding; `form[data-llm]` gets an automatic disabled/working state from layout JS. **The dev database holds real user study data — never `migrate:fresh` without explicit user consent.**
+
+## Evaluation loop (Milestone 5)
+
+`ExerciseService::evaluate()` sends MODE 2 (mission + pasted result + concept list with ids/roles) via `LlmService::chatJson()` (the shared tolerant JSON parser lives on LlmService), stores an `Attempt` (score = rounded avg of per-concept scores), then `applyLadder()` per concept: ≥70 promotes to the next rung of `[1,3,7,14,30]` (capped at 30), <70 increments lapses, halves interval (min 1) and creates/boosts an unresolved struggle note — skipped when the evaluation already suggested a note for that concept. Hallucinated concept_ids are ignored; unscored concepts are skipped, not punished. `addOwnNote()` = learner's free-text note, weight 2, all exercise concepts. OpenRouterDriver retries once on empty completions / 200-with-error bodies (free-tier flakiness — real, observed). Resubmission is allowed and re-runs the ladder.
+
+## Conventions
+
+- Blade + Tailwind via Vite; no SPA framework. Keep dependencies minimal, first-party Laravel features preferred.
+- Seeding = `php artisan db:seed` (DatabaseSeeder delegates to RoadmapService::syncTopics).
+- Debug/verification route: `GET /debug/topics`.
+- Build milestone-by-milestone per spec §7; stop after each for user confirmation.

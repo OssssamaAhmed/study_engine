@@ -1,0 +1,171 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Segoe UI', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --font-mono: 'Cascadia Code', ui-monospace, 'Segoe UI Mono', Consolas, monospace;
+
+    /* Ops-console palette: warm paper for long reading, blue-black command
+       chrome, one cyan accent. The dark hero is the only loud surface. */
+    --color-paper: #f5f4ef;
+    --color-surface: #ffffff;
+    --color-ink: #0c1424;
+    --color-ink-soft: #2a3850;
+    --color-line: #e5e3da;
+    --color-muted: #64748b;
+    --color-accent: #0e7490;
+    --color-accent-deep: #155e75;
+    --color-accent-wash: #ecfeff;
+    --color-warn: #b45309;
+    --color-warn-wash: #fffbeb;
+    --color-danger: #b91c1c;
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-md bg-ink px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-accent {
+        @apply inline-flex items-center justify-center gap-2 rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-accent-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-muted hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-sm {
+        @apply px-3 py-1.5 text-xs;
+    }
+
+    .input {
+        @apply w-full rounded-md border border-line bg-surface px-3 py-2.5 text-sm text-ink shadow-none transition-colors placeholder:text-muted focus:border-accent focus:outline-2 focus:outline-offset-0 focus:outline-accent/25;
+    }
+
+    .card {
+        @apply rounded-xl border border-line bg-surface shadow-xs;
+    }
+
+    /* Dashboard mission-control hero — the one loud surface in the app. */
+    .hero {
+        @apply relative overflow-hidden rounded-2xl bg-ink px-6 py-7 sm:px-8;
+        background-image:
+            radial-gradient(ellipse 80% 90% at 85% -10%, rgb(14 116 144 / 0.35), transparent),
+            repeating-linear-gradient(0deg, rgb(255 255 255 / 0.025) 0 1px, transparent 1px 28px);
+    }
+
+    .hero-eyebrow {
+        @apply font-mono text-[11px] font-medium uppercase tracking-[0.24em] text-cyan-300/80;
+    }
+
+    /* Roadmap track: one segment per phase, width ∝ weeks in the phase. */
+    .progress-track {
+        @apply flex h-2.5 w-full gap-[3px];
+    }
+
+    .progress-seg {
+        @apply h-full min-w-1 rounded-[3px] bg-white/12;
+    }
+
+    .progress-seg.is-done {
+        @apply bg-cyan-400;
+    }
+
+    .progress-seg.is-current {
+        @apply bg-cyan-200;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .progress-seg.is-current {
+            animation: seg-pulse 2.4s ease-in-out infinite;
+        }
+    }
+
+    .eyebrow {
+        @apply font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-muted;
+    }
+
+    .badge {
+        @apply inline-flex items-center rounded-full px-2.5 py-0.5 font-mono text-[11px] font-medium uppercase tracking-wider;
+    }
+
+    .badge-pending {
+        @apply bg-warn-wash text-warn;
+    }
+
+    .badge-evaluated {
+        @apply bg-accent-wash text-accent-deep;
+    }
+
+    .badge-submitted {
+        @apply bg-paper text-ink-soft;
+    }
+
+    .badge-quiet {
+        @apply bg-paper text-muted;
+    }
+
+    .stat-num {
+        @apply font-mono text-3xl font-semibold tabular-nums text-ink;
+    }
+
+    .label {
+        @apply mb-1.5 block text-sm font-medium text-ink;
+    }
+}
+
+@keyframes seg-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+}
+
+/* Rendered-markdown (Missions, evaluations) — Tailwind preflight flattens raw HTML. */
+.mission {
+    line-height: 1.65;
+}
+.mission h1 { font-size: 1.4rem; font-weight: 650; margin: 0 0 1rem; letter-spacing: -0.015em; }
+.mission h2 {
+    font-size: 1.02rem; font-weight: 650; margin: 1.75rem 0 0.6rem;
+    padding-top: 1.25rem; border-top: 1px solid var(--color-line);
+}
+.mission h1 + h2, .mission h2:first-child { border-top: 0; padding-top: 0; margin-top: 0.75rem; }
+.mission h3 { font-size: 0.95rem; font-weight: 600; margin: 1rem 0 0.5rem; }
+.mission p { margin: 0.55rem 0; }
+.mission ul, .mission ol { margin: 0.55rem 0 0.55rem 1.5rem; list-style: disc; }
+.mission ol { list-style: decimal; }
+.mission li { margin: 0.25rem 0; }
+.mission strong { font-weight: 650; color: var(--color-ink); }
+.mission code {
+    font-family: var(--font-mono); background: var(--color-paper);
+    border: 1px solid var(--color-line); padding: 0.1rem 0.35rem;
+    border-radius: 0.3rem; font-size: 0.82em;
+}
+.mission pre {
+    background: var(--color-ink); color: #e6edf5; padding: 0.9rem 1.1rem;
+    border-radius: 0.5rem; overflow-x: auto; margin: 0.8rem 0; font-size: 0.85rem;
+}
+.mission pre code { background: transparent; border: 0; padding: 0; color: inherit; font-size: inherit; }
+.mission blockquote {
+    border-left: 3px solid var(--color-accent); padding-left: 0.9rem;
+    color: var(--color-ink-soft); margin: 0.8rem 0;
+}
+
+/* Mission outline (exercise page): click a section in the side list to jump to it. */
+html { scroll-behavior: smooth; }
+.mission h2, .mission h3 { scroll-margin-top: 5rem; }
+.toc-link {
+    display: block; padding: 0.3rem 0.65rem; margin: 1px 0;
+    font-size: 0.8rem; color: var(--color-muted);
+    border-left: 2px solid var(--color-line);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    transition: color 120ms, border-color 120ms;
+}
+.toc-link:hover { color: var(--color-ink); }
+.toc-sub { padding-left: 1.6rem; font-size: 0.75rem; }
+.toc-link.active {
+    color: var(--color-accent-deep);
+    border-left-color: var(--color-accent);
+    background: var(--color-accent-wash);
+}

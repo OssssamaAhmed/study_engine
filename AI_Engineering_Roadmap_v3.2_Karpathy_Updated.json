@@ -1,0 +1,3358 @@
+{
+  "meta": {
+    "title": "AI Engineering Self-Study Roadmap",
+    "version": "3.2",
+    "learner": "Osama",
+    "start_date": "2026-06-15",
+    "estimated_completion": "2027-02-13",
+    "duration_weeks": 35,
+    "study_days": 210,
+    "pace": "2-3 hours per day, 6 days per week (Sundays off)",
+    "last_updated": "2026-11-09",
+    "how_to_use": "Do not passively watch videos. Every phase: build something small, commit it to GitHub, and use Claude Code or another coding agent alongside you from week 1. Official docs and interactive courses are listed as primaries where they beat YouTube.",
+    "why_v3_rebased": "v3.0 rebased to 15 June 2026 because learner is still completing Phase 1 (Python). Phase 1 shortened to 2 weeks (finish in-progress work, do not restart). Total duration cut from 40 to 35 weeks by compressing DSA/ML/DL/RAG and adding three new phases: Harness Engineering, Evals, and Agentic AI Security.",
+    "links_verified_on": "2026-11-09",
+    "resource_guide_legend": "Every resource now has a working link. Priority tells you how to treat it: MUST (full) = watch/do all of it; MUST (selected parts) = only the timestamps in 'Watch in detail'; PRACTICE = hands-on, do the exercises; REFERENCE = open while building, do not read cover to cover; OPTIONAL = only if you have spare time or the primary did not click. 'Watch in detail' timestamps come from the video's own chapter list. 'Skip / skim' tells you what is safe to fast-forward. 'Replaces' shows the original v3.1 pick when a better 2026 video was swapped in - the old link is kept so nothing is lost."
+  },
+  "changelog": {
+    "v3_0": [
+      "NEW Phase 9: Prompt, Context & Harness Engineering (replaces 1-week prompt engineering; harness engineering is the 2026 core skill - Agent = Model + Harness)",
+      "NEW Phase 13: Evals & LLM Testing (most universal 2026 hiring differentiator; placed before agents)",
+      "NEW Phase 16: Agentic AI Security (OWASP Agentic Top 10, lethal trifecta, memory poisoning)",
+      "Phase 12 expanded: open-model serving added (Ollama, vLLM)",
+      "CCA-F certification entry corrected: launched publicly 12 March 2026, $99, registration link added",
+      "Anthropic Academy (free official courses + certificates) added as primary Phase 15 resource",
+      "Hugging Face Agents + MCP courses (free certificates) added",
+      "Checkpoint 4 exam text corrected: model references replaced with current model generations",
+      "Certifications cut from 13 to 8 with explicit priorities and real links; 5 NVIDIA associate certs removed for low ROI",
+      "Mislabelled 2021 FastAPI video removed; official FastAPI tutorial promoted to primary",
+      "CrewAI demoted to awareness-level; LangGraph + provider SDKs prioritised",
+      "All dead links from v2.0 replaced with their corrected URLs",
+      "Schedule rebased; MLOps weeks now contiguous (v2.0 had weeks 33/34/37 split)"
+    ],
+    "v3_1": [
+      "Model references refreshed: Claude Sonnet 4.6 replaced with Claude Sonnet 5 (released 30 June 2026); current Claude lineup is Fable 5 / Opus 4.8 / Sonnet 5 / Haiku 4.5",
+      "Model retirement warning added to Phase 15: Claude Sonnet 4 and Opus 4 were retired 15 June 2026 - API calls pinned to retired model IDs now fail outright, so update model strings when copying from older tutorials",
+      "NEW in Phase 14: A2A (Agent2Agent) protocol added at awareness level - the Linux Foundation standard for agent-to-agent interoperability that complements MCP",
+      "NEW in Phase 13: promptfoo added as an open-source eval tool alongside LangSmith",
+      "No structural changes: v3.0 phase plan, schedule, and checkpoints all still current as of July 2026"
+    ],
+    "v3_2": [
+      "Phases 6 and 10 (Karpathy Neural Networks: Zero to Hero path) were updated earlier with official URLs - left exactly as they were in this pass",
+      "LINKS: every resource in Phases 1-5, 7-9 and 11-21 now has a verified URL (YouTube, official docs, GitHub or course page), checked on 9 November 2026",
+      "WATCH GUIDES: every video now has duration, upload date, priority, the exact timestamps to watch in detail, and what to skip - taken from each video's own chapter list",
+      "SWAPPED for better 2026 options (originals kept as 'Replaces' with their link): Git (freeCodeCamp 2026 crash course), DSA (the 'Python Field Guide' video could not be found - replaced with freeCodeCamp visual DSA course), SQL (Data with Baraa - the Simplilearn course has no window-function or CTE chapters), AWS (freeCodeCamp CLF-C02 2026 - the Intellipaat course has no S3 or Lambda chapters), ChromaDB (freeCodeCamp Nov 2026 vector-DB course), CrewAI (NeuralNine Jan 2026 - the 2024 tutorial uses an outdated API), Claude Code (Tech With Tim Oct 2026 full guide), CI/CD (Traversy Media Oct 2026), Docker (freeCodeCamp Jun 2026)",
+      "PHASE 3: Keith Galli promoted to primary (clear chapters, 820k views); Data Den kept as optional (no chapter markers)",
+      "PHASE 16 expanded for the AI security engineer goal: OWASP LLM Top 10 2026 edition (released Aug 2026) and Agentic Top 10 2026 linked directly; added IBM OWASP attacks explainer, OWASP London agentic deep dive, Microsoft AI Red Teaming 101 + PyRIT, Johann Rehberger's 2026 agent-exploitation talk, LangChain guardrails, PortSwigger Web LLM labs, Lakera Gandalf, Microsoft red-team playground labs and the lethal-trifecta article",
+      "ADDED small, high-value items: DSA patterns video (Phase 2), Anthropic context-engineering article + Thariq Shihipar harness talk (Phase 9), prompt-caching video + Anthropic notebook (Phase 20)",
+      "Each phase now has a 'study_order' list: the order to use the resources in, so a learner always knows what to open next",
+      "Updated moved URLs: Mode SQL tutorial now lives at ThoughtSpot, n8n courses at learn.n8n.io, Anthropic docs at platform.claude.com, Anthropic cookbook repo renamed to claude-cookbooks",
+      "Schedule, checkpoints and certifications are unchanged",
+      "ADDED Terminal & Linux basics side track in Phase 2 (1-2 hours per week alongside Phases 2-5): WSL setup, Boot.dev 'Learn Linux' course, MIT Missing Semester 2026 shell lectures, OverTheWire Bandit"
+    ]
+  },
+  "phases": [
+    {
+      "phase": 1,
+      "title": "Git, GitHub & Python Programming (finish in progress)",
+      "weeks": "1-2",
+      "notes": "You are already mid-way through Python. Finish it in 2 focused weeks instead of restarting. Priority: functions, OOP basics, error handling, virtual environments, pip, and daily Git commits. From day 1, install Claude Code (or any AI coding assistant) and use it WHILE learning - working alongside a coding agent is itself a core 2026 skill.",
+      "resources": [
+        {
+          "title": "Git & GitHub Crash Course for Beginners [2026]",
+          "provider": "freeCodeCamp.org",
+          "type": "video",
+          "role": "Primary Git resource",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=mAFoROnOfHs",
+          "duration": "1h 21m",
+          "published": "2025-12-04",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch all of it at 1.25x with a terminal open and type every command yourself. It covers what you will actually use daily: staging, commits, branches, merge conflicts, push/pull, stash, revert, rebase and pull requests.",
+          "watch_in_detail": [
+            "0:14:41 - 0:52:13  init, clone, status, add, reset, commit, rm, log, branching, checkout, merge, merge conflicts",
+            "0:55:50 - 1:03:16  push, fetch vs pull, restore",
+            "1:03:16 - 1:19:57  stash, revert, rebase, pull requests"
+          ],
+          "skip_or_skim": [
+            "0:00:00 - 0:14:41  intro and install - skim if Git is already installed"
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=dTvrC1SSnWU",
+            "reason": "The Simplilearn video (1h 23m, Feb 2026) only has 7 chapters and stops at merge conflicts - no push/pull, stash, revert, rebase or pull requests. The freeCodeCamp 2026 course covers all of these and has ~920k views.",
+            "title": "Git And GitHub Full Tutorial For Beginners 2026",
+            "provider": "Simplilearn"
+          }
+        },
+        {
+          "title": "Learn Python in 2026: Full Course For Beginners",
+          "provider": "Zero To Mastery",
+          "type": "video",
+          "role": "Primary Python resource (continue where you are)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=RL-2Oas3gps",
+          "duration": "9h 37m",
+          "published": "2026-02-11",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "You are mid-way, so do not restart. Jump to the first chapter you have not done. Code along in VS Code, and after each chapter ask Claude Code to give you 2 small exercises on it.",
+          "watch_in_detail": [
+            "2:27:19 - 2:52:08  dictionaries, tuples, sets (if not done)",
+            "3:01:14 - 3:15:56  list / set / dict comprehensions",
+            "3:15:56 - 3:50:56  functions, parameters, docstrings, clean code, scope",
+            "3:50:56 - 4:31:44  OOP: classes, methods, attributes, inheritance, polymorphism, dunder methods",
+            "4:31:44 - 5:02:08  error handling, modules, file I/O, debugging, testing, regular expressions"
+          ],
+          "skip_or_skim": [
+            "0:01:26 - 0:38:23  how Python works, install, Python 2 vs 3 - skip if done",
+            "1:07:57 - 1:11:23  binary numbers - optional",
+            "5:11:46 onwards  GUI, data science, web dev previews - skip (later phases cover these properly)"
+          ],
+          "extra_links": [
+            {
+              "label": "Virtual environments and pip (the course does not cover venv well) - Tech With Tim, 9 min",
+              "url": "https://www.youtube.com/watch?v=Y21OR1OPC9A"
+            }
+          ]
+        },
+        {
+          "title": "Harvard CS50P - Introduction to Programming with Python",
+          "provider": "Harvard / edX",
+          "type": "course",
+          "role": "Best free structured alternative with problem sets and free certificate of completion",
+          "cost": "Free",
+          "url": "https://cs50.harvard.edu/python/",
+          "priority": "PRACTICE",
+          "how_to_use": "Use CS50P as your problem bank, not as a second full course. Do the problem sets for Functions, Conditionals, Loops, Exceptions, Libraries and Object-Oriented Programming. Each problem set is auto-graded by check50. The free certificate needs all problem sets plus the final project - optional.",
+          "extra_links": [
+            {
+              "label": "Same course on edX (free audit)",
+              "url": "https://www.edx.org/learn/python/harvard-university-cs50-s-introduction-to-programming-with-python"
+            }
+          ]
+        },
+        {
+          "title": "Learn Git Branching (interactive)",
+          "provider": "learngitbranching.js.org",
+          "type": "interactive",
+          "role": "Hands-on Git practice in browser",
+          "cost": "Free",
+          "url": "https://learngitbranching.js.org/",
+          "priority": "PRACTICE",
+          "how_to_use": "After the Git video, do 'Main' > Introduction Sequence and Ramping Up, then 'Remote' > Push & Pull - Git Remotes. About 2-3 hours total. This is where branching and rebase actually click."
+        },
+        {
+          "title": "Kaggle Learn: Python",
+          "provider": "Kaggle",
+          "type": "interactive",
+          "role": "Short hands-on exercises with free certificate",
+          "cost": "Free",
+          "url": "https://www.kaggle.com/learn/python",
+          "priority": "PRACTICE",
+          "how_to_use": "7 short lessons with exercises. Do them as a quick self-test at the end of week 2 and collect the free certificate."
+        }
+      ],
+      "study_order": [
+        "Day 1: Git video (full) + Learn Git Branching intro levels",
+        "Days 2-9: continue the ZTM Python course from where you stopped - functions, OOP, errors, modules, file I/O, testing",
+        "Every 2 days: one CS50P problem set on the topic you just watched",
+        "Set up a virtual environment for every project from now on (Tech With Tim venv video)",
+        "Day 10-12: Kaggle Learn Python as a self-test; commit every exercise to GitHub daily"
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "Practical DSA (compressed)",
+      "weeks": "3",
+      "notes": "Cut from 2 weeks to 1. In 2026, coding agents handle most implementation; you need Big-O intuition, hash maps, and basic trees/graphs for interviews and pipeline design - not competitive programming depth.",
+      "resources": [
+        {
+          "title": "Learn Data Structures and Algorithms Visually - Crash Course",
+          "provider": "freeCodeCamp.org",
+          "type": "video",
+          "role": "Primary resource - visual intuition for every core data structure in about an hour",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=RpLnQnurpLY",
+          "duration": "1h 14m",
+          "published": "2026-08-20",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully at 1.25x. Pause after each data structure and write a 10-line Python version of it. Big-O intuition and hash maps are the priority.",
+          "watch_in_detail": [
+            "0:24:06 - 0:41:03  priority queue/heap, hash table and set, tree, trie",
+            "0:41:03 - 1:02:25  graph, searching, sorting, recursion, BFS/DFS, Dijkstra"
+          ],
+          "skip_or_skim": [
+            "0:59:36 - 1:02:25  Dijkstra - understand the idea, no need to implement"
+          ],
+          "replaces": {
+            "url": null,
+            "reason": "No video with this title from 'The Python Field Guide' could be found on YouTube in November 2026. The closest match is an 8-minute video with 17 views. Replaced with freeCodeCamp's Aug 2026 visual DSA course (335k views).",
+            "title": "Python Data Structures & Algorithms 2026 | Complete Guide",
+            "provider": "The Python Field Guide"
+          }
+        },
+        {
+          "title": "NeetCode Roadmap (free problem sets)",
+          "provider": "NeetCode",
+          "type": "interactive",
+          "role": "Practice: do Arrays & Hashing + Two Pointers sections only",
+          "cost": "Free",
+          "url": "https://neetcode.io/roadmap",
+          "priority": "PRACTICE",
+          "how_to_use": "Solve the Arrays & Hashing and Two Pointers problems in Python (Easy + a few Medium). Watch NeetCode's video explanation only after you try for 20 minutes."
+        },
+        {
+          "title": "Data Structure and Algorithm Patterns for LeetCode Interviews - Tutorial",
+          "provider": "freeCodeCamp.org (with AlgoMonster)",
+          "type": "video",
+          "role": "Pattern companion for NeetCode - shows hashmap and two-pointer patterns with practice problems",
+          "url": "https://www.youtube.com/watch?v=Z_c4byLrNBU",
+          "duration": "1h 15m",
+          "published": "2025-07-22",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Watch the parts that match the NeetCode sections you are solving.",
+          "watch_in_detail": [
+            "0:07:32 - 0:26:48  Big O, hashmap + practice, two pointers + practice",
+            "0:48:28 - 1:05:01  BFS and DFS on trees and graphs"
+          ],
+          "skip_or_skim": [
+            "0:26:48 - 0:48:28  sliding window and binary search - optional this week",
+            "1:05:01 onwards  backtracking and heap - optional"
+          ],
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Install WSL (Windows Subsystem for Linux)",
+          "provider": "Microsoft Learn",
+          "type": "docs",
+          "cost": "Free",
+          "role": "Setup - a real Ubuntu terminal inside Windows (skip if you already use Linux or macOS)",
+          "url": "https://learn.microsoft.com/en-us/windows/wsl/install",
+          "priority": "PRACTICE",
+          "side_track": "Terminal & Linux basics (side track)",
+          "added_in": "v3.2",
+          "how_to_use": "Do this once before the videos. Open PowerShell as administrator, run 'wsl --install', restart, then create your Ubuntu username and password. Use this Ubuntu terminal for all the Linux practice below."
+        },
+        {
+          "title": "Learn Linux - The Full Course",
+          "provider": "Boot dev",
+          "type": "video",
+          "cost": "Free",
+          "role": "Primary Linux course - terminal, files, permissions, programs, input/output, packages",
+          "url": "https://www.youtube.com/watch?v=v392lEyM29A",
+          "duration": "2h 34m",
+          "published": "2025-02-18",
+          "priority": "MUST (full)",
+          "side_track": "Terminal & Linux basics (side track)",
+          "added_in": "v3.2",
+          "how_to_use": "Watch one chapter per session (about 30 minutes) and type every command in your own terminal. Over 2-3 weeks this finishes the whole course.",
+          "watch_in_detail": [
+            "0:04:03 - 0:20:43  terminals and shells",
+            "0:20:43 - 0:51:18  filesystems: navigating, creating, moving, deleting",
+            "0:51:18 - 1:13:31  permissions (chmod, users, sudo) - very important for security later",
+            "1:13:31 - 1:38:33  programs: running scripts, PATH, environment variables",
+            "1:38:33 - 2:18:43  input/output: pipes, redirection, grep",
+            "2:18:43 - end  package managers (apt)"
+          ],
+          "extra_links": [
+            {
+              "label": "More detailed 2026 alternative: EdxPath 'Linux Command Line for Beginners (Full Course 2026)' (4h, users/groups and vi included)",
+              "url": "https://www.youtube.com/watch?v=AJ1XS_3Waas"
+            },
+            {
+              "label": "Text version to revise from: Ubuntu 'The Linux command line for beginners'",
+              "url": "https://ubuntu.com/tutorials/command-line-for-beginners"
+            }
+          ]
+        },
+        {
+          "title": "The Missing Semester of Your CS Education (2026 edition) - Shell lectures",
+          "provider": "MIT (Missing Semester)",
+          "type": "course",
+          "cost": "Free",
+          "role": "How professional engineers actually use the terminal - shell, scripting, environment, SSH",
+          "url": "https://www.youtube.com/watch?v=MSgoeuMqUmU",
+          "duration": "1h 15m + 1h 06m",
+          "published": "2026-01-18",
+          "priority": "MUST (full)",
+          "side_track": "Terminal & Linux basics (side track)",
+          "added_in": "v3.2",
+          "how_to_use": "Do this after the Boot.dev course. Watch Lecture 1 (shell) and Lecture 2 (command-line environment), then do the exercises at the end of each lecture's notes page. The other 2026 lectures (version control, debugging, agentic coding) are useful later - optional for now.",
+          "extra_links": [
+            {
+              "label": "Lecture 1 notes + exercises",
+              "url": "https://missing.csail.mit.edu/2026/course-shell/"
+            },
+            {
+              "label": "Lecture 2 video: Command-line Environment",
+              "url": "https://www.youtube.com/watch?v=ccBGsPedE9Q"
+            },
+            {
+              "label": "Lecture 2 notes + exercises",
+              "url": "https://missing.csail.mit.edu/2026/command-line-environment/"
+            },
+            {
+              "label": "All 2026 lectures",
+              "url": "https://missing.csail.mit.edu/2026/"
+            }
+          ]
+        },
+        {
+          "title": "OverTheWire: Bandit (Linux wargame)",
+          "provider": "OverTheWire",
+          "type": "interactive",
+          "cost": "Free",
+          "role": "Practice Linux by playing - each level is a small puzzle solved with terminal commands; the classic first step into security",
+          "url": "https://overthewire.org/wargames/bandit/",
+          "priority": "PRACTICE",
+          "side_track": "Terminal & Linux basics (side track)",
+          "added_in": "v3.2",
+          "how_to_use": "Start after Boot.dev chapter 3 (permissions). You connect with SSH from your terminal. Aim for levels 0-15 over the next weeks - about 1 level per session. Keep a notes file of the commands you used for each level; do not look up full solutions, only hints."
+        }
+      ],
+      "study_order": [
+        "Day 1: freeCodeCamp visual DSA crash course (full)",
+        "Day 2: DSA patterns video - Big O, hashmap, two pointers",
+        "Days 3-5: NeetCode Arrays & Hashing + Two Pointers in Python",
+        "Day 6: BFS/DFS section of the patterns video; write BFS and DFS once from memory",
+        "Side track (1-2 hours per week, Phases 2-5): install WSL -> Boot.dev Linux course, one chapter per session -> MIT Missing Semester 2026 lectures 1-2 + exercises -> OverTheWire Bandit levels 0-15"
+      ],
+      "side_track_note": "Side track: Terminal & Linux basics. Runs alongside Phases 2-5 at 1-2 hours per week - it does not replace any Phase 2 work. Every later phase uses the terminal (pip, Git, Docker, servers, cloud), and for the AI security goal Linux is a must. On Windows, set up WSL (Ubuntu) first so you have a real Linux terminal."
+    },
+    {
+      "phase": 3,
+      "title": "Exploratory Data Analysis (EDA)",
+      "weeks": "4-5",
+      "notes": "Pandas, NumPy, visualization. Unchanged from v2 - this is timeless.",
+      "resources": [
+        {
+          "title": "Python Pandas Full Course | Data Analysis, Cleaning, Filtering, Groupby (2026)",
+          "provider": "Data Den with Prashant",
+          "type": "video",
+          "role": "Optional long-form reference (demoted from primary - see note)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=kjfL-D9Dm1I",
+          "duration": "4h 42m",
+          "published": "2026-03-26",
+          "priority": "OPTIONAL",
+          "how_to_use": "The video has no chapter markers and is still small (under 1k views), so it is hard to navigate. Use it only if you want more examples on a topic after the Keith Galli tutorial; the description lists the topics in order (DataFrames, selection with loc/iloc, cleaning and missing values, sorting/duplicates, groupby, dates)."
+        },
+        {
+          "title": "Complete Python Pandas Data Science Tutorial! (2025 Updated Edition)",
+          "provider": "Keith Galli",
+          "type": "video",
+          "role": "PRIMARY - clear chapters, covers everything EDA needs (promoted from secondary)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=2uvysYbKdjM",
+          "duration": "1h 34m",
+          "published": "2024-06-29",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Code along in Google Colab or a local notebook with your own dataset from Kaggle. Labelled '2025 Updated Edition' - it covers pandas 2.x and is current.",
+          "watch_in_detail": [
+            "0:03:58 - 0:58:33  DataFrames, loading CSV/Excel/Parquet, loc/iloc, filtering, regex filters, adding columns, apply, merge/concat",
+            "0:58:33 - 1:22:10  null values, value_counts, groupby, pivot tables, datetime groupby, shift/rank/cumsum/rolling"
+          ],
+          "skip_or_skim": [
+            "1:22:10 - 1:32:05  pandas 2.0/pyarrow and Copilot sections - skim"
+          ],
+          "extra_links": [
+            {
+              "label": "Visualization + data cleaning + EDA sections: Alex The Analyst 'Learn Pandas in Under 3 Hours' (from 1:13:29)",
+              "url": "https://www.youtube.com/watch?v=Mdq1WWSdUtw"
+            }
+          ]
+        },
+        {
+          "title": "Kaggle Learn: Pandas + Data Visualization",
+          "provider": "Kaggle",
+          "type": "interactive",
+          "role": "Hands-on micro-courses with free certificates",
+          "cost": "Free",
+          "url": "https://www.kaggle.com/learn/pandas",
+          "priority": "PRACTICE",
+          "how_to_use": "Do both micro-courses fully (each 3-4 hours) and collect both certificates. Data Visualization uses seaborn.",
+          "extra_links": [
+            {
+              "label": "Kaggle Learn: Data Visualization",
+              "url": "https://www.kaggle.com/learn/data-visualization"
+            }
+          ]
+        }
+      ],
+      "study_order": [
+        "Week 4: Keith Galli tutorial (0:03:58 - 0:58:33) + Kaggle Pandas course",
+        "Week 5: Keith Galli (0:58:33 - 1:22:10) + Kaggle Data Visualization + Alex The Analyst visualization/EDA sections",
+        "Week 5 project: full EDA notebook on one Kaggle dataset, committed to GitHub"
+      ]
+    },
+    {
+      "phase": 4,
+      "title": "Advanced SQL for AI Engineers",
+      "weeks": "6",
+      "notes": "Joins, subqueries, window functions, CTEs. Unchanged.",
+      "resources": [
+        {
+          "title": "SQL Full Course for Beginners (30 Hours) - From Zero to Hero",
+          "provider": "Data with Baraa",
+          "type": "video",
+          "role": "Primary resource - watch only the advanced chapters below (about 9-10 hours this week)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=SSKVgrwhzus",
+          "duration": "29h 48m",
+          "published": "2025-03-27",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Do NOT watch all 30 hours. The joins, window functions, subqueries and CTE chapters are the best on YouTube (6.6M views, visual explanations). Install the free SQL Server/Postgres setup he shows, or follow along in the browser on the ThoughtSpot (Mode) tutorial.",
+          "watch_in_detail": [
+            "2:47:57 - 4:02:09  SQL joins basics + advanced",
+            "8:43:36 - 12:40:34  aggregate functions + window functions (basics, aggregate, ranking, value)",
+            "12:58:04 - 15:35:02  subqueries + Common Table Expressions (CTE)",
+            "22:24:25 - 23:21:04  AI and SQL"
+          ],
+          "skip_or_skim": [
+            "0:34:01 - 2:47:57  SELECT and filtering - 1.5x refresher only if rusty",
+            "4:02:09 - 8:07:50  set operators and SQL functions - look up when needed",
+            "15:35:02 onwards  views, stored procedures, indexes, data warehouse project - optional"
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=crZIWsWy4fs",
+            "reason": "Simplilearn uploads many near-identical 'SQL Full Course 2026' videos; the best-structured one (5h 33m, Jan 2026) has no window-function or CTE chapter - and those are the core of this phase.",
+            "title": "SQL Full Course 2026",
+            "provider": "Simplilearn"
+          }
+        },
+        {
+          "title": "Mode SQL Tutorial (free, browser-based)",
+          "provider": "Mode Analytics",
+          "type": "interactive",
+          "role": "Practice on real data in browser - do Intermediate + Advanced sections",
+          "cost": "Free",
+          "url": "https://www.thoughtspot.com/sql-tutorial",
+          "priority": "PRACTICE",
+          "how_to_use": "Mode was acquired by ThoughtSpot; the old mode.com link redirects here. Run queries in the browser. Do the Intermediate section (aggregates, CASE, joins) and the Advanced section (subqueries, window functions, performance tuning)."
+        },
+        {
+          "title": "SQLBolt",
+          "provider": "sqlbolt.com",
+          "type": "interactive",
+          "role": "Quick interactive drills",
+          "cost": "Free",
+          "url": "https://sqlbolt.com/",
+          "priority": "PRACTICE",
+          "how_to_use": "Quick warm-up drills - lessons 1-12 take about an hour. Do them on day 1 before the window-function chapters."
+        }
+      ],
+      "study_order": [
+        "Day 1: SQLBolt lessons 1-12 (warm-up)",
+        "Days 2-3: Baraa - joins chapters + ThoughtSpot Intermediate section",
+        "Days 4-5: Baraa - window functions + subqueries + CTEs; ThoughtSpot Advanced section",
+        "Day 6: Baraa 'AI and SQL' chapter; write 10 window-function queries on your Phase 3 dataset",
+        "Security note for later: text-to-SQL agents are a classic injection target (Phase 16) - knowing SQL well is what lets you test them"
+      ]
+    },
+    {
+      "phase": 5,
+      "title": "Machine Learning Fundamentals",
+      "weeks": "7-8",
+      "notes": "Compressed from 3 weeks to 2. Classic algorithms, feature engineering, evaluation. You need conceptual fluency, not research depth - your target role is AI engineering (building with LLMs), not ML research.",
+      "resources": [
+        {
+          "title": "100 Days of Machine Learning",
+          "provider": "CampusX",
+          "type": "playlist",
+          "role": "Primary resource (playlist) - targeted videos only, see guide",
+          "cost": "Free",
+          "url": "https://www.youtube.com/playlist?list=PLKnIA16_Rmvbr7zKYQuBfsVkjoLcJgxHH",
+          "duration": "134 videos (playlist)",
+          "priority": "MUST (selected parts)",
+          "language": "Hindi (easy to follow for Urdu speakers)",
+          "how_to_use": "Video numbers below are positions in the playlist (the 'Day' numbers in titles stop matching after Day 30). Watch at 1.25-1.5x and code each algorithm in a notebook. Precision/recall/ROC (videos 76-78) matter a lot later: they are how you measure prompt-injection detectors and evals.",
+          "watch_in_detail": [
+            "Videos 1-9  what ML is, types, ML development life cycle (1.5x)",
+            "Videos 23-29  feature engineering, scaling, encoding, ColumnTransformer, pipelines",
+            "Videos 35-36, 41-43  missing data and outliers (quick)",
+            "Videos 50-62  linear regression, regression metrics, gradient descent (batch/SGD/mini-batch), bias-variance",
+            "Videos 70-78  logistic regression, accuracy, confusion matrix, precision/recall/F1, ROC-AUC",
+            "Videos 97-98  decision trees + overfitting"
+          ],
+          "skip_or_skim": [
+            "Videos 11-22  data loading and EDA - already covered in Phase 3",
+            "Videos 30-34, 37-40, 44-49  advanced transforms, imputation variants, PCA - optional",
+            "Videos 82-96  Naive Bayes maths and SVM maths - optional"
+          ]
+        },
+        {
+          "title": "Google Machine Learning Crash Course",
+          "provider": "Google",
+          "type": "course",
+          "role": "Free, fast, well-structured alternative with exercises",
+          "cost": "Free",
+          "url": "https://developers.google.com/machine-learning/crash-course",
+          "priority": "PRACTICE",
+          "how_to_use": "Use the interactive exercises to check the ideas from CampusX in English. Do the modules on linear regression, logistic regression, classification metrics, working with numerical and categorical data, and generalization/overfitting. Neural-network and embedding modules are covered in Phase 6."
+        },
+        {
+          "title": "Kaggle Learn: Intro to Machine Learning",
+          "provider": "Kaggle",
+          "type": "interactive",
+          "role": "Hands-on with free certificate",
+          "cost": "Free",
+          "url": "https://www.kaggle.com/learn/intro-to-machine-learning",
+          "priority": "PRACTICE",
+          "how_to_use": "7 lessons with scikit-learn (decision trees, validation, under/overfitting, random forests). Do all of it at the end of week 8 and collect the certificate - it is the direct warm-up for Checkpoint 1."
+        }
+      ],
+      "study_order": [
+        "Week 7: CampusX videos 1-9, 23-29, 50-62 + Google MLCC regression modules",
+        "Week 8: CampusX videos 70-78, 97-98 + Google MLCC classification module + Kaggle Intro to ML",
+        "End of week 8: Checkpoint 1 project"
+      ]
+    },
+    {
+      "phase": 6,
+      "title": "Deep Learning & Neural Networks",
+      "weeks": "9-11",
+      "_update_comment": "UPDATED ONLY IN THIS PHASE: Promoted Andrej Karpathy's official Neural Networks: Zero to Hero sequence to the primary path; added micrograd, makemore Parts 1-5, precise official video URLs, and a realistic 3-week order. Existing broader resources were retained only as targeted supplements. No metadata, changelog, schedule dates, checkpoints, security phases, or other phases were changed.",
+      "_change_summary": [
+        "Added the official Neural Networks: Zero to Hero playlist and companion repository.",
+        "Added the exact official micrograd and makemore Parts 1-5 titles and URLs.",
+        "Replaced the generic primary path with a week-by-week Karpathy implementation sequence.",
+        "Kept CampusX, MIT 6.S191, fast.ai, and 3Blue1Brown as optional or targeted supplements so CNN and broader deep-learning coverage is not lost."
+      ],
+      "notes": "Compressed from 4 to 3 weeks. Follow Karpathy's code-first progression and implement alongside every lecture: Week 9 = micrograd plus makemore Part 1; Week 10 = makemore Parts 2-3; Week 11 = makemore Parts 4-5. This builds first-principles understanding of backpropagation, tensors, language modelling, MLPs, activation/gradient diagnostics, BatchNorm, manual tensor backpropagation, torch.nn, and a WaveNet-style convolutional architecture. The complete Transformer/GPT build is deliberately placed in Phase 10 to avoid duplication. For an AI security engineer, the objective is model-internals literacy for debugging, evaluation, and threat reasoning, not research-level mathematical depth.",
+      "resources": [
+        {
+          "title": "Neural Networks: Zero to Hero",
+          "provider": "Andrej Karpathy",
+          "type": "playlist",
+          "role": "PRIMARY sequence for Phase 6 and the Transformer foundation in Phase 10",
+          "cost": "Free",
+          "url": "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ",
+          "companion_url": "https://github.com/karpathy/nn-zero-to-hero"
+        },
+        {
+          "title": "The spelled-out intro to neural networks and backpropagation: building micrograd",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "Week 9 required - build a scalar-valued autograd engine and neural network library from scratch",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=VMj-3S1tku0&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
+        },
+        {
+          "title": "The spelled-out intro to language modeling: building makemore",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "Week 9 required - bigram language modelling, torch.Tensor, training, sampling, and negative log-likelihood",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=PaCmpygFfXo&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
+        },
+        {
+          "title": "Building makemore Part 2: MLP",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "Week 10 required - embeddings, multilayer perceptrons, hyperparameters, train/dev/test splits, and overfitting",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=TCH_1BHY58I&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
+        },
+        {
+          "title": "Building makemore Part 3: Activations & Gradients, BatchNorm",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "Week 10 required - initialization, activation and gradient diagnostics, and BatchNorm",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=P6sfmUTpUmc&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
+        },
+        {
+          "title": "Building makemore Part 4: Becoming a Backprop Ninja",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "Week 11 required - manually backpropagate through tensors instead of relying blindly on autograd",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=q8SA3rM6ckI&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
+        },
+        {
+          "title": "Building makemore Part 5: Building a WaveNet",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "Week 11 required - deepen the model, use torch.nn, track tensor shapes, and build a WaveNet-style CNN",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=t3YJ5hKiMQ0&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ"
+        },
+        {
+          "title": "100 Days of Deep Learning (Corrected URL)",
+          "provider": "CampusX",
+          "type": "playlist",
+          "role": "Targeted supplement only - use selected conventional CNN/image-model sections not covered by Karpathy; skip overlapping ANN and Transformer material",
+          "cost": "Free"
+        },
+        {
+          "title": "MIT 6.S191: Introduction to Deep Learning (2026 Edition)",
+          "provider": "Alexander Amini",
+          "type": "playlist",
+          "role": "Optional academic survey after the required Karpathy implementations",
+          "cost": "Free"
+        },
+        {
+          "title": "fast.ai Practical Deep Learning for Coders",
+          "provider": "fast.ai",
+          "type": "course",
+          "role": "Optional top-down reinforcement if practical model training is not sticking",
+          "cost": "Free"
+        },
+        {
+          "title": "3Blue1Brown Neural Networks series",
+          "provider": "3Blue1Brown",
+          "type": "video",
+          "role": "Optional visual intuition for gradients, backpropagation, and neural network representations",
+          "cost": "Free"
+        }
+      ]
+    },
+    {
+      "phase": 7,
+      "title": "Cloud Fundamentals",
+      "weeks": "12",
+      "notes": "EC2, S3, Lambda, IAM. Unchanged.",
+      "resources": [
+        {
+          "title": "AWS Certified Cloud Practitioner Certification Course 2026 (CLF-C02)",
+          "provider": "freeCodeCamp.org (Andrew Brown, ExamPro)",
+          "type": "video",
+          "role": "Primary resource - selected chapters only (about 6-7 hours)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=7HKot-brXFE",
+          "duration": "13h 46m",
+          "published": "2026-05-14",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Do not watch all 13 hours. Watch the chapters below and do every hands-on demo in your own AWS free-tier account. First thing in 'Getting Started': set up MFA on the root user and a billing alarm.",
+          "watch_in_detail": [
+            "0:08:50 - 1:14:08  cloud concepts + getting started (account, MFA, billing alarm)",
+            "1:26:54 - 2:12:10  AWS global infrastructure",
+            "4:01:32 - 5:52:47  shared responsibility model, compute, storage (S3)",
+            "6:50:19 - 8:46:02  EC2 + EC2 pricing + identity (IAM)",
+            "10:04:05 - 10:08:35  serverless (Lambda)",
+            "12:43:05 - 13:31:27  security"
+          ],
+          "skip_or_skim": [
+            "1:14:08 - 1:26:54  digital transformation",
+            "2:35:32 - 4:01:32  management tools - skim",
+            "9:03:03 - 10:04:05  containers, governance, provisioning - skim",
+            "11:34:22 - 12:43:05  TCO, migration, billing - skim"
+          ],
+          "extra_links": [
+            {
+              "label": "Hands-on Lambda in Python (25 min) - NeuralNine",
+              "url": "https://www.youtube.com/watch?v=4AgWKVBOjVc"
+            }
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=a8FFknuJwB0",
+            "reason": "The Intellipaat course (11h, Jan 2026) has no S3 or Lambda chapters, which this phase lists as core. It is still good for IAM (4:05:05 - 4:48:59) and VPC networking if you want extra depth.",
+            "title": "AWS Full Course FREE 2026 | AWS Tutorial for Beginners",
+            "provider": "Intellipaat"
+          }
+        },
+        {
+          "title": "AWS Skill Builder (free tier)",
+          "provider": "AWS",
+          "type": "course",
+          "role": "Official free AWS courses - do Cloud Practitioner Essentials",
+          "cost": "Free",
+          "url": "https://skillbuilder.aws/learn/94T2BEN85A/aws-cloud-practitioner-essentials/8D79F3AVR7",
+          "priority": "PRACTICE",
+          "how_to_use": "Free with an AWS Builder ID. Do 'AWS Cloud Practitioner Essentials' - the official course. For an AI security engineer the modules on the shared responsibility model, IAM and security are the most important."
+        }
+      ],
+      "study_order": [
+        "Day 1: freeCodeCamp cloud concepts + getting started; create the AWS account with MFA and a billing alarm",
+        "Days 2-3: global infrastructure, shared responsibility, compute, S3 - create a private bucket and upload with the CLI",
+        "Days 4-5: EC2 + IAM - launch an instance with a least-privilege role; NeuralNine Lambda video and deploy one Lambda",
+        "Day 6: Skill Builder Cloud Practitioner Essentials modules on security and IAM; terminate everything you launched"
+      ]
+    },
+    {
+      "phase": 8,
+      "title": "API Development with FastAPI",
+      "weeks": "13",
+      "notes": "Compressed to 1 week. The v2 primary resource was a mislabelled 2021 video - dropped. The official tutorial is genuinely the best resource.",
+      "resources": [
+        {
+          "title": "FastAPI Official Tutorial",
+          "provider": "FastAPI docs",
+          "type": "course",
+          "role": "PRIMARY - work through it, do not just read",
+          "cost": "Free",
+          "url": "https://fastapi.tiangolo.com/tutorial/",
+          "priority": "PRACTICE",
+          "how_to_use": "Type every example. Order: First Steps > Path and Query Parameters > Request Body > Response Model > Handling Errors > Dependencies > Security (OAuth2 + JWT) > Bigger Applications (APIRouter) > Background Tasks > Testing. The Security section is a must for your AI security track."
+        },
+        {
+          "title": "FastAPI Crash Course - Modern Python API Development",
+          "provider": "Traversy Media",
+          "type": "video",
+          "role": "Crash course video companion",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=8TMQcRcBnW8",
+          "duration": "1h 00m",
+          "published": "2026-01-13",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch first, on day 1, to see a whole project end to end; then spend the rest of the week in the official tutorial.",
+          "watch_in_detail": [
+            "0:10:11 - 0:28:39  venv, install, first route, Swagger docs, POST, APIRouter, JSON storage",
+            "0:28:39 - 0:47:00  Pydantic schemas and full CRUD routes",
+            "0:47:00 - 0:54:37  middleware and CORS"
+          ],
+          "skip_or_skim": [
+            "0:01:06 - 0:02:45  sponsor",
+            "0:54:37 onwards  deploying to Render - optional"
+          ]
+        }
+      ],
+      "study_order": [
+        "Day 1: Traversy crash course (full)",
+        "Days 2-5: official tutorial in the order listed, including Security (OAuth2/JWT) and Testing",
+        "Day 6: wrap your Phase 5 model behind a FastAPI endpoint with Pydantic validation and a test file"
+      ]
+    },
+    {
+      "phase": 9,
+      "title": "Prompt, Context & Harness Engineering",
+      "weeks": "14-15",
+      "notes": "UPDATED FOR 2026. Prompt engineering is now one layer inside a bigger discipline. The progression: prompt engineering (2024) -> context engineering (2025) -> harness engineering (2026). The harness is everything around the model: tool orchestration, verification loops, context/memory management, permissions, sandboxing, observability. Agent = Model + Harness. This phase replaces the old 1-week prompt engineering phase.",
+      "resources": [
+        {
+          "title": "Anthropic Prompt Engineering Interactive Tutorial",
+          "provider": "Anthropic (GitHub)",
+          "type": "course",
+          "role": "PRIMARY for prompting layer - official, hands-on, free",
+          "cost": "Free",
+          "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
+          "priority": "PRACTICE",
+          "how_to_use": "Clone the repo and work through the 'Anthropic 1P' notebooks: chapters 1-9 plus appendix 10.1 (chaining), 10.2 (tool use), 10.3 (search and retrieval). Chapter 4 (separating data and instructions) is your first prompt-injection defence lesson. Replace old model names in the notebooks with a current model ID from the Anthropic docs."
+        },
+        {
+          "title": "Prompt Engineering Guide",
+          "provider": "promptingguide.ai",
+          "type": "course",
+          "role": "Reference for techniques (CoT, few-shot, structured output)",
+          "cost": "Free",
+          "url": "https://www.promptingguide.ai/",
+          "priority": "REFERENCE",
+          "how_to_use": "Reference, not a course. Read the Techniques pages (few-shot, chain-of-thought, ReAct, prompt chaining) and, for your security track, 'Risks & Misuses > Adversarial Prompting'.",
+          "extra_links": [
+            {
+              "label": "Adversarial Prompting (prompt injection, leaking, jailbreaking)",
+              "url": "https://www.promptingguide.ai/risks/adversarial"
+            }
+          ]
+        },
+        {
+          "title": "Harness Engineering: The Complete Guide",
+          "provider": "amux.io",
+          "type": "course",
+          "role": "PRIMARY for harness layer - Agent = Model + Harness, guides/sensors, permissions, sandboxes",
+          "cost": "Free",
+          "url": "https://amux.io/guides/harness-engineering/",
+          "priority": "MUST (full)",
+          "how_to_use": "Read fully (1-2 hours) and take notes on the permissions and sandbox sections - those are the security controls of an agent."
+        },
+        {
+          "title": "Awesome Harness Engineering (curated list)",
+          "provider": "GitHub - ai-boost",
+          "type": "course",
+          "role": "Curated tools, patterns, evals, memory, MCP, permissions, observability",
+          "cost": "Free",
+          "url": "https://github.com/ai-boost/awesome-harness-engineering",
+          "priority": "REFERENCE",
+          "how_to_use": "Skim the categories once. Pick 3 items to actually read: one on permissions/sandboxing, one on evals, one on memory. Come back to it in Phases 13-16."
+        },
+        {
+          "title": "Harness Engineering: Making AI Coding Agents Work in 2026",
+          "provider": "Faros AI",
+          "type": "article",
+          "role": "The five layers of a production harness",
+          "cost": "Free",
+          "url": "https://www.faros.ai/blog/harness-engineering",
+          "priority": "MUST (full)",
+          "how_to_use": "20-minute read on the five layers of a production harness and the metrics behind them. Read after the amux guide."
+        },
+        {
+          "title": "Effective context engineering for AI agents",
+          "provider": "Anthropic",
+          "type": "article",
+          "role": "Official Anthropic guide to the context-engineering layer between prompting and harness",
+          "url": "https://www.anthropic.com/research/effective-context-engineering-for-ai-agents",
+          "priority": "MUST (full)",
+          "how_to_use": "Read in week 14 right after the prompt tutorial: it explains why context is a limited budget and how compaction, note-taking and sub-agents manage it.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Claude Code's Bitter Lesson: Prompts, Harnesses, Mods, and Agents - Thariq Shihipar, Anthropic",
+          "provider": "Latent Space",
+          "type": "video",
+          "role": "Harness engineering explained by the Anthropic engineer who builds Claude Code",
+          "url": "https://www.youtube.com/watch?v=IZAlq-V19U8",
+          "duration": "1h 34m",
+          "published": "2026-09-28",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Podcast-style interview; watch the sections below.",
+          "watch_in_detail": [
+            "0:17:39 - 0:34:51  prompting as the core skill, context and effort, is CLAUDE.md going away",
+            "0:46:42 - 0:52:51  the bitter lesson of harness engineering",
+            "0:58:01 - 1:07:36  autonomous agent security and agents gaming a scorer - important for you"
+          ],
+          "skip_or_skim": [
+            "1:12:34 onwards  industry discussion - optional"
+          ],
+          "cost": "Free",
+          "added_in": "v3.2"
+        }
+      ],
+      "study_order": [
+        "Week 14: Anthropic prompt tutorial (chapters 1-9 + appendix) -> Anthropic context-engineering article -> promptingguide.ai Adversarial Prompting",
+        "Week 15: amux harness guide -> Faros article -> Thariq Shihipar talk (selected parts) -> 3 items from the awesome list"
+      ]
+    },
+    {
+      "phase": 10,
+      "title": "Generative AI & LangChain",
+      "weeks": "16-17",
+      "_update_comment": "UPDATED ONLY IN THIS PHASE: Added Karpathy's official Transformer/GPT-from-scratch, GPT tokenizer, and GPT-2 reproduction lectures with exact URLs; made first-principles Transformer work precede framework usage; and retained the existing LangChain, Microsoft, and Hugging Face resources. The GPT-2 reproduction is explicitly a stretch item so this phase does not derail the AI security engineering roadmap. No schedule dates, checkpoints, later security content, or unrelated phases were changed.",
+      "_change_summary": [
+        "Promoted 'Let's build GPT: from scratch, in code, spelled out.' to the required primary Transformer resource.",
+        "Added 'Let's build the GPT Tokenizer' as required model-pipeline knowledge.",
+        "Added 'Let's reproduce GPT-2 (124M)' as an advanced stretch capstone, not a mandatory full training run.",
+        "Retained LangChain, Microsoft Generative AI for Beginners, and the Hugging Face LLM Course for application-layer skills after the architecture foundation."
+      ],
+      "notes": "First principles before frameworks. Week 16: implement the decoder-only GPT in Karpathy's lecture and be able to explain token embeddings, positional information, causal self-attention, multi-head attention, residual connections, LayerNorm, feed-forward blocks, training loss, sampling, and the difference between pretraining and later alignment. Then build the tokenizer and understand Unicode, bytes, Byte Pair Encoding, encode/decode, special tokens, and how tokenization affects model behaviour. Week 17: return to application engineering with LangChain, Microsoft, and Hugging Face. 'Let's reproduce GPT-2 (124M)' is a stretch capstone: study the implementation and training-engineering decisions, but do not spend money on a full cloud training run unless deliberately choosing that project. This phase strengthens model-internals knowledge without replacing the roadmap's later RAG, evals, agentic AI, or AI security phases.",
+      "resources": [
+        {
+          "title": "Let's build GPT: from scratch, in code, spelled out.",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "REQUIRED PRIMARY - implement a decoder-only Transformer/GPT from scratch before using orchestration frameworks",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ",
+          "companion_url": "https://github.com/karpathy/ng-video-lecture"
+        },
+        {
+          "title": "Let's build the GPT Tokenizer",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "REQUIRED - build byte-level BPE from scratch and understand the tokenizer as a separate LLM pipeline component",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=zduSFxRajkE&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ",
+          "companion_url": "https://github.com/karpathy/minbpe"
+        },
+        {
+          "title": "Let's reproduce GPT-2 (124M)",
+          "provider": "Andrej Karpathy",
+          "type": "video",
+          "role": "STRETCH CAPSTONE - walk through the complete GPT-2 reproduction and production-oriented training loop; full cloud training is optional",
+          "cost": "Free to study; GPU compute optional",
+          "url": "https://www.youtube.com/watch?v=l8pRSuU81PU&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ",
+          "companion_url": "https://github.com/karpathy/build-nanogpt"
+        },
+        {
+          "title": "Generative AI using LangChain",
+          "provider": "CampusX",
+          "type": "playlist",
+          "role": "Application-layer resource after completing the required Karpathy architecture work",
+          "cost": "Free"
+        },
+        {
+          "title": "Microsoft Generative AI for Beginners (21 lessons)",
+          "provider": "Microsoft (GitHub)",
+          "type": "course",
+          "role": "Structured application curriculum with code; use selectively during Week 17",
+          "cost": "Free"
+        },
+        {
+          "title": "Hugging Face LLM Course",
+          "provider": "Hugging Face",
+          "type": "course",
+          "role": "Hands-on Transformers library bridge after understanding the architecture from scratch",
+          "cost": "Free"
+        }
+      ]
+    },
+    {
+      "phase": 11,
+      "title": "Vector Databases & RAG",
+      "weeks": "18-19",
+      "notes": "Compressed from 3 to 2 weeks. Embeddings, chunking, hybrid search, reranking.",
+      "resources": [
+        {
+          "title": "The End of Search Engines? RAG Explained (Full 8-Hour Course)",
+          "provider": "Boot dev",
+          "type": "video",
+          "role": "Primary RAG resource (8-hour course)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=9c48sMot1gA",
+          "duration": "7h 47m",
+          "published": "2026-02-04",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Builds search from scratch in Python: keyword search -> BM25 -> embeddings -> chunking -> hybrid search -> reranking -> evaluation -> generation. Code along; it uses the Gemini API free tier.",
+          "watch_in_detail": [
+            "0:37:26 - 1:47:03  inverted index, TF-IDF, BM25 (week 18)",
+            "1:47:03 - 2:44:14  embeddings, cosine similarity, semantic search, vector databases (week 18)",
+            "2:44:14 - 4:25:50  chunking, semantic chunking, ColBERT, hybrid search, reciprocal rank fusion (week 19)",
+            "4:47:22 - 5:25:38  reranking with LLMs and cross-encoders (week 19)",
+            "5:25:38 - 6:30:14  RAG evaluation: golden dataset, precision, recall, F1, error analysis, LLM evaluation (week 19)",
+            "6:30:14 - end  augmented generation, summarization, citations"
+          ],
+          "skip_or_skim": [
+            "0:15:52 - 0:37:26  punctuation, tokenization, stop words, stemming - 1.5x"
+          ]
+        },
+        {
+          "title": "Vector Databases Full Course for Beginners - Embeddings, Similarity Search & ChromaDB",
+          "provider": "freeCodeCamp.org",
+          "type": "video",
+          "role": "Vector DB focus - how vector databases work inside, then a ChromaDB project",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=lR931Iz8Z6U",
+          "duration": "1h 40m",
+          "published": "2026-11-03",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully. The architecture and indexing chapters (IVF, HNSW) are what interviewers ask about.",
+          "watch_in_detail": [
+            "0:03:42 - 1:11:48  vectors, cosine vs Euclidean, tokenization, embeddings",
+            "1:22:07 - 1:29:26  vector DB architecture, IVF and HNSW indexing",
+            "1:29:26 - end  project: storing and querying embeddings in ChromaDB"
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=sCs_Ha5mFF0",
+            "reason": "The quantlabs video is a 15-minute Docker setup (Aug 2025, labelled 2025). Keep it for running ChromaDB in Docker in Phase 18; the freeCodeCamp course (Nov 2026) teaches how vector DBs actually work.",
+            "title": "ChromaDB Docker Tutorial: Build AI Vector Database",
+            "provider": "quantlabs"
+          }
+        },
+        {
+          "title": "DeepLearning.AI short courses on RAG (free)",
+          "provider": "DeepLearning.AI",
+          "type": "course",
+          "role": "Pick 2-3 short RAG courses - each is 1-2 hours, free",
+          "cost": "Free",
+          "url": "https://www.deeplearning.ai/courses/building-evaluating-advanced-rag",
+          "priority": "PRACTICE",
+          "how_to_use": "Do 'Building and Evaluating Advanced RAG' (about 1-2 hours) and 'Building Agentic RAG with LlamaIndex' (about 45 min). DeepLearning.AI short courses were free in a limited beta in 2026; if one becomes paid, the Boot.dev evaluation chapters cover the same ground.",
+          "extra_links": [
+            {
+              "label": "Building Agentic RAG with LlamaIndex",
+              "url": "https://www.deeplearning.ai/courses/building-agentic-rag-with-llamaindex"
+            },
+            {
+              "label": "All DeepLearning.AI courses",
+              "url": "https://www.deeplearning.ai/courses"
+            }
+          ]
+        }
+      ],
+      "study_order": [
+        "Week 18: Boot.dev chapters 1-4 (keyword search to semantic search) + freeCodeCamp vector-DB course",
+        "Week 19: Boot.dev chapters 5-10 (chunking, hybrid search, reranking, evaluation, generation) + 2 DeepLearning.AI short courses",
+        "Security note: every document your RAG system ingests is untrusted input - indirect prompt injection lives here (Phase 16)",
+        "End of week 19: Checkpoint 2"
+      ]
+    },
+    {
+      "phase": 12,
+      "title": "Fine-Tuning & Open-Model Serving",
+      "weeks": "20-21",
+      "notes": "UPDATED. v2 covered fine-tuning but not serving. Added: running open models locally (Ollama) and serving them in production (vLLM) - this is what makes the cost-optimization phase real.",
+      "resources": [
+        {
+          "title": "LLM Fine-Tuning Course - From Supervised FT to RLHF, LoRA (Corrected URL)",
+          "provider": "freeCodeCamp",
+          "type": "video",
+          "role": "Fine-tuning resource (12-hour course, corrected URL)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=CcrC5zSv1iA",
+          "duration": "11h 56m",
+          "published": "2026-03-10",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Only about 5 of the 12 hours are needed. Run the notebooks on free Colab GPUs.",
+          "watch_in_detail": [
+            "0:00:00 - 0:24:25  full vs partial fine-tuning, PEFT (LoRA/QLoRA), instruction vs non-instruction data, RLHF and DPO",
+            "0:55:23 - 1:45:15  practical setup, datasets, tokenization, training arguments, fine-tuning with LoRA, inference",
+            "2:40:02 - 3:37:30  preference alignment and DPO - this is how safety behaviour is trained into models",
+            "4:37:55 - 5:32:08  Unsloth - 2x faster, cheap fine-tuning on free GPUs"
+          ],
+          "skip_or_skim": [
+            "3:37:30 - 4:37:55  LLaMA-Factory UI - optional",
+            "5:32:08 - 6:52:20  OpenAI fine-tuning API - skim",
+            "6:52:20 - 8:31:01  Vertex AI / Gemini - skip",
+            "8:38:40 onwards  multimodal and ViT - skip"
+          ]
+        },
+        {
+          "title": "Ollama (run open models locally)",
+          "provider": "Ollama docs",
+          "type": "docs",
+          "role": "Install and run Llama/Qwen class models on your machine",
+          "cost": "Free",
+          "url": "https://docs.ollama.com/quickstart",
+          "priority": "PRACTICE",
+          "how_to_use": "Install, run a small model (3B-8B), call it through the OpenAI-compatible API from Python, and write one Modelfile. Security: Ollama's API has no authentication - keep it bound to localhost and never expose port 11434 to the internet (see the FAQ on exposing Ollama on your network).",
+          "extra_links": [
+            {
+              "label": "Ollama FAQ (network exposure, environment variables)",
+              "url": "https://docs.ollama.com/faq"
+            }
+          ]
+        },
+        {
+          "title": "vLLM documentation + quickstart",
+          "provider": "vLLM",
+          "type": "docs",
+          "role": "Production-grade open-model serving",
+          "cost": "Free",
+          "url": "https://docs.vllm.ai/en/latest/getting_started/quickstart/",
+          "priority": "PRACTICE",
+          "how_to_use": "Do the quickstart: offline batched inference and the OpenAI-compatible server. vLLM needs an NVIDIA GPU - if you do not have one, run it on a free Colab/Kaggle GPU."
+        },
+        {
+          "title": "Hugging Face: fine-tuning chapter of LLM Course",
+          "provider": "Hugging Face",
+          "type": "course",
+          "role": "Hands-on fine-tuning with Trainer/PEFT",
+          "cost": "Free",
+          "url": "https://huggingface.co/learn/llm-course/chapter11/1",
+          "priority": "PRACTICE",
+          "how_to_use": "Chapter 11 'Supervised Fine-Tuning' is the modern one: chat templates, SFT with TRL, LoRA (section 11.4) and evaluation. If the Trainer API is new to you, do chapter 3 first.",
+          "extra_links": [
+            {
+              "label": "LoRA section",
+              "url": "https://huggingface.co/learn/llm-course/chapter11/4"
+            },
+            {
+              "label": "Chapter 3 - fine-tuning a pretrained model (Trainer basics)",
+              "url": "https://huggingface.co/learn/llm-course/chapter3/1"
+            }
+          ]
+        }
+      ],
+      "study_order": [
+        "Week 20: freeCodeCamp concepts (0:00-0:24) + practical LoRA (0:55-1:45) + Hugging Face chapter 11 with TRL",
+        "Week 21: DPO section + Unsloth section; Ollama quickstart; vLLM quickstart on a Colab GPU",
+        "Mini project: fine-tune a 1-3B model with LoRA on a small dataset and serve it with Ollama or vLLM"
+      ]
+    },
+    {
+      "phase": 13,
+      "title": "Evals & LLM Testing",
+      "weeks": "22",
+      "notes": "NEW PHASE - the single most universal differentiator in 2026 AI hiring. Golden datasets, code-based evaluators, LLM-as-judge, trace-based agent evals, regression testing. Deliberately placed BEFORE the agentic phase so you evaluate agents from day one instead of bolting it on. v3.1 addition: alongside LangSmith, learn one open-source eval tool - promptfoo (MIT-licensed, runs locally, YAML test cases, CI/CD integration).",
+      "resources": [
+        {
+          "title": "Evaluating AI Agents (free course)",
+          "provider": "DeepLearning.AI + Arize",
+          "type": "course",
+          "role": "PRIMARY - routers/skills/memory, traces, code-based + LLM-as-judge evaluators, experiments",
+          "cost": "Free",
+          "url": "https://www.deeplearning.ai/courses/evaluating-ai-agents",
+          "priority": "MUST (full)",
+          "how_to_use": "Do the whole course (about 2 hours): tracing, router/skill evaluation, code-based and LLM-as-judge evaluators, experiments. Build the notebook yourself."
+        },
+        {
+          "title": "How to Build AI Evals in 2026 (Step-by-Step, No Hype)",
+          "provider": "Aakash Gupta",
+          "type": "video",
+          "role": "How to Build AI Evals (step-by-step, no hype)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=J7N9FMouSKg",
+          "duration": "1h 07m",
+          "published": "2026-01-14",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Product-manager framing but a real workflow: traces -> error analysis -> axial coding -> LLM judge -> measuring the judge.",
+          "watch_in_detail": [
+            "0:05:26 - 0:11:24  starting with observability",
+            "0:13:05 - 0:30:53  analysing traces, error analysis, axial coding",
+            "0:32:40 - 0:56:38  counting issues, building the LLM judge, measuring the judge"
+          ],
+          "skip_or_skim": [
+            "0:11:24 - 0:13:05 and 0:30:53 - 0:32:40  ads",
+            "0:56:38 onwards  PM vs engineer roles - optional"
+          ]
+        },
+        {
+          "title": "Anthropic Cookbook - evaluation recipes",
+          "provider": "Anthropic (GitHub)",
+          "type": "course",
+          "role": "Working eval code you can copy",
+          "cost": "Free",
+          "url": "https://github.com/anthropics/claude-cookbooks/blob/main/misc/building_evals.ipynb",
+          "priority": "PRACTICE",
+          "how_to_use": "The repo was renamed from anthropic-cookbook to claude-cookbooks. Run 'building_evals.ipynb' (code-graded, human-graded and model-graded evals), then 'generate_test_cases.ipynb'. The classification example uses promptfoo - a good bridge to the next resource.",
+          "extra_links": [
+            {
+              "label": "Generate test cases notebook",
+              "url": "https://github.com/anthropics/claude-cookbooks/blob/main/misc/generate_test_cases.ipynb"
+            },
+            {
+              "label": "Classification eval with promptfoo",
+              "url": "https://github.com/anthropics/claude-cookbooks/tree/main/capabilities/classification/evaluation"
+            }
+          ]
+        },
+        {
+          "title": "promptfoo - Getting Started (official docs)",
+          "provider": "promptfoo.dev",
+          "type": "docs",
+          "role": "Open-source eval CLI - declarative YAML test cases, model comparison, RAG and agent eval guides, CI/CD integration",
+          "cost": "Free (open source, MIT)",
+          "url": "https://www.promptfoo.dev/docs/getting-started/",
+          "priority": "PRACTICE",
+          "how_to_use": "Install with npm, run 'promptfoo init', write a promptfooconfig.yaml with assertions, run 'promptfoo eval' and 'promptfoo view'. promptfoo also has a red-teaming mode - bookmark it for Phase 16.",
+          "extra_links": [
+            {
+              "label": "promptfoo red-team quickstart (use in Phase 16)",
+              "url": "https://www.promptfoo.dev/docs/red-team/quickstart/"
+            }
+          ]
+        },
+        {
+          "title": "Promptfoo Tutorial: A Hands-On Guide to LLM Evaluation",
+          "provider": "DataCamp",
+          "type": "tutorial",
+          "role": "Step-by-step walkthrough - build an eval suite from scratch and wire it into GitHub Actions",
+          "cost": "Free",
+          "url": "https://www.datacamp.com/tutorial/promptfoo-tutorial",
+          "published": "2026-03-25",
+          "priority": "PRACTICE",
+          "how_to_use": "12-minute read, then build it: an eval suite across two models and a GitHub Actions workflow that runs it on every pull request. Swap in current model IDs if the ones in the article have been retired."
+        }
+      ],
+      "study_order": [
+        "Day 1: Aakash Gupta video (selected parts) - the mental model",
+        "Days 2-3: DeepLearning.AI 'Evaluating AI Agents' course",
+        "Day 4: Anthropic cookbook building_evals notebook",
+        "Days 5-6: promptfoo docs + DataCamp tutorial; add a promptfoo eval to your Phase 11 RAG project and run it in GitHub Actions"
+      ]
+    },
+    {
+      "phase": 14,
+      "title": "Agentic AI & Multi-Agent Frameworks",
+      "weeks": "23-25",
+      "notes": "UPDATED. LangGraph remains the main graph-orchestration framework. CrewAI demoted to awareness-level (one tutorial). Added Hugging Face Agents Course (free certificate) and smolagents. v3.1 addition: know the A2A (Agent2Agent) protocol at awareness level - the open Linux Foundation standard for agent-to-agent interoperability. Mental model: build with any framework, equip tools with MCP, and connect agents to other agents with A2A.",
+      "resources": [
+        {
+          "title": "Complete LangGraph Tutorial Beginner To Advance 2026",
+          "provider": "Wizard Engineer",
+          "type": "video",
+          "role": "LangGraph resource",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=Hz21KVo0t4E",
+          "duration": "2h 05m",
+          "published": "2026-03-17",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "RAG-focused LangGraph: naive -> corrective -> adaptive RAG, reflection and a multi-agent handoff. Do LangChain Academy module 1 first so the basics are solid.",
+          "watch_in_detail": [
+            "0:01:16 - 0:15:56  what LangGraph is, first graph",
+            "0:53:14 - 1:32:20  corrective RAG and adaptive RAG pipelines",
+            "1:32:20 - end  reflection/reflexion and a multi-agent system with the handoff pattern"
+          ],
+          "skip_or_skim": [
+            "0:15:56 - 0:53:14  naive RAG - skim, you built this in Phase 11"
+          ],
+          "extra_links": [
+            {
+              "label": "Fundamentals-first alternative with exercises: freeCodeCamp LangGraph Complete Course (3h 10m, May 2025)",
+              "url": "https://www.youtube.com/watch?v=jGg_1h0qzaM"
+            }
+          ]
+        },
+        {
+          "title": "LangChain Academy: Introduction to LangGraph (free)",
+          "provider": "LangChain",
+          "type": "course",
+          "role": "Official free LangGraph course",
+          "cost": "Free",
+          "url": "https://academy.langchain.com/courses/intro-to-langgraph",
+          "priority": "PRACTICE",
+          "how_to_use": "Official course. Modules 1-3 are a must (graphs, state and memory, human-in-the-loop); module 4+ if time. Human-in-the-loop approval is one of the main security controls for agents."
+        },
+        {
+          "title": "Hugging Face AI Agents Course (free certificate)",
+          "provider": "Hugging Face",
+          "type": "course",
+          "role": "PRIMARY - theory to practice, smolagents/LangGraph/LlamaIndex, certificate on completion",
+          "cost": "Free",
+          "url": "https://huggingface.co/learn/agents-course",
+          "priority": "PRACTICE",
+          "how_to_use": "Unit 1 (agent fundamentals) earns the fundamentals certificate - must. In Unit 2 pick the LangGraph track. Unit 4 final project is for the full certificate - do it in week 25 if time allows."
+        },
+        {
+          "title": "Microsoft AI Agents for Beginners",
+          "provider": "Microsoft (GitHub)",
+          "type": "course",
+          "role": "Free lesson series with code",
+          "cost": "Free",
+          "url": "https://github.com/microsoft/ai-agents-for-beginners",
+          "priority": "REFERENCE",
+          "how_to_use": "Pick lessons, do not do all 18. For you the must-reads are 06 'Building Trustworthy Agents' and 18 'Securing AI Agents'; also useful: 03 design patterns, 04 tool use, 11 agentic protocols, 12 context engineering, 13 agent memory."
+        },
+        {
+          "title": "CrewAI Tutorial: Multiple Agents Working Together in Python",
+          "provider": "NeuralNine",
+          "type": "video",
+          "role": "CrewAI - awareness level only, do not over-invest",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=I90xJlzAUW0",
+          "duration": "29m",
+          "published": "2026-01-30",
+          "priority": "OPTIONAL",
+          "how_to_use": "Awareness level - watch once at 1.25x, including the local-model section with Ollama (25:05). Do not build a project in CrewAI.",
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=sPzc6hMg7So",
+            "reason": "The aiwithbrandon tutorial is from Feb 2024 and CrewAI's API has changed a lot since then.",
+            "title": "CrewAI Tutorial: Complete Crash Course for Beginners",
+            "provider": "aiwithbrandon"
+          }
+        },
+        {
+          "title": "A2A: The Agent2Agent Protocol (short course)",
+          "provider": "DeepLearning.AI / Google Cloud / IBM Research",
+          "type": "course",
+          "role": "Awareness-level primary for A2A - build a multi-agent system where agents on different frameworks collaborate via A2A; shows how A2A complements MCP",
+          "cost": "Free",
+          "url": "https://www.deeplearning.ai/courses/a2a-the-agent2agent-protocol",
+          "priority": "OPTIONAL",
+          "how_to_use": "Awareness level - do it in week 25 after LangGraph is comfortable."
+        },
+        {
+          "title": "A2A Protocol official documentation",
+          "provider": "a2a-protocol.org (Linux Foundation)",
+          "type": "docs",
+          "role": "Reference - protocol spec, AgentCards, task lifecycle, and how A2A sits alongside MCP",
+          "cost": "Free",
+          "url": "https://a2a-protocol.org/",
+          "priority": "REFERENCE",
+          "how_to_use": "Read the overview, key concepts (Agent Card, Task, Message) and the A2A-vs-MCP page. Security angle: a spoofed Agent Card is an 'insecure inter-agent communication' risk (OWASP Agentic ASI07)."
+        }
+      ],
+      "study_order": [
+        "Week 23: LangChain Academy modules 1-3; Hugging Face Agents Unit 1 (certificate)",
+        "Week 24: Wizard Engineer LangGraph (corrective/adaptive RAG, multi-agent); Microsoft lessons 06 and 18",
+        "Week 25: Hugging Face Unit 2 LangGraph track; CrewAI video (awareness); A2A course + docs"
+      ]
+    },
+    {
+      "phase": 15,
+      "title": "Anthropic Ecosystem: Claude API, Claude Code, Agent SDK & MCP",
+      "weeks": "26-28",
+      "notes": "UPDATED. This is now the certification-anchor phase: Anthropic Academy launched March 2026 with free courses + official certificates, and the Claude Certified Architect (CCA-F) exam is live. Covers Claude API, tool use, structured outputs, Claude Code (CLAUDE.md, hooks, skills, subagents), Agent SDK, and MCP. NOTE (v3.1, July 2026): Claude Sonnet 4 and Opus 4 were retired on 15 June 2026 - API requests pinned to retired model IDs fail outright rather than warning. Older tutorials and sample code will contain dead model strings; always swap in current model IDs (Sonnet 5, Opus 4.8, Haiku 4.5) from the official docs before running examples.",
+      "resources": [
+        {
+          "title": "Anthropic Academy (all courses free, official certificates)",
+          "provider": "Anthropic (Skilljar)",
+          "type": "course",
+          "role": "PRIMARY - do the API, Claude Code, and MCP tracks; ~15-20 hours total",
+          "cost": "Free",
+          "url": "https://anthropic.skilljar.com/",
+          "priority": "PRACTICE",
+          "how_to_use": "Do these, in order: 'Building with the Claude API', 'Claude Code in Action', 'Introduction to Model Context Protocol', 'Model Context Protocol: Advanced Topics', 'Introduction to agent skills', 'Introduction to subagents'. Each gives a certificate and together they are the CCA-F exam preparation."
+        },
+        {
+          "title": "Anthropic API documentation",
+          "provider": "Anthropic",
+          "type": "docs",
+          "role": "Reference while building",
+          "cost": "Free",
+          "url": "https://platform.claude.com/docs",
+          "priority": "REFERENCE",
+          "how_to_use": "docs.claude.com now redirects here. Read the models overview (current model IDs), tool use, structured outputs and prompt caching pages while you build."
+        },
+        {
+          "title": "Model Context Protocol docs",
+          "provider": "MCP",
+          "type": "docs",
+          "role": "Build one MCP server from scratch",
+          "cost": "Free",
+          "url": "https://modelcontextprotocol.io/",
+          "priority": "PRACTICE",
+          "how_to_use": "Follow the 'build a server' quickstart in Python, then read the Security Best Practices page (confused deputy, token passthrough, session hijacking) - this is core AI security material.",
+          "extra_links": [
+            {
+              "label": "MCP Security Best Practices",
+              "url": "https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices"
+            }
+          ]
+        },
+        {
+          "title": "Hugging Face MCP Course (free certificate)",
+          "provider": "Hugging Face",
+          "type": "course",
+          "role": "Structured MCP course with certificate",
+          "cost": "Free",
+          "url": "https://huggingface.co/learn/mcp-course",
+          "priority": "PRACTICE",
+          "how_to_use": "Do the fundamentals unit and one end-to-end application unit for the certificate. Skip units that repeat the Anthropic Academy MCP courses."
+        },
+        {
+          "title": "Claude Agent SDK [Full Workshop] - Thariq Shihipar, Anthropic",
+          "provider": "AI Engineer",
+          "type": "video",
+          "role": "Claude Agent SDK full workshop (Anthropic engineer)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=TqC1qOfiVcQ",
+          "duration": "1h 52m",
+          "published": "2026-01-05",
+          "priority": "MUST (full)",
+          "how_to_use": "Code along. The permissions and bash-tool sections show exactly how an agent harness limits damage - core to your security track.",
+          "watch_in_detail": [
+            "0:05:15 - 0:10:10  the harness: tools, prompts and skills",
+            "0:25:20 - 0:58:15  agent loop, tool execution, the bash tool, safety and permissions (read-only vs read-write)",
+            "0:58:15 - 1:12:45  context engineering and monitoring the agent",
+            "1:35:10 - 1:48:39  hooks and deterministic overrides"
+          ]
+        },
+        {
+          "title": "Learn 99% Of Claude Code in One Video",
+          "provider": "Tech With Tim",
+          "type": "video",
+          "role": "Claude Code walkthrough - every feature in one video (Oct 2026)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=3TwbE7gv6qo",
+          "duration": "48m",
+          "published": "2026-10-24",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully and set each feature up in your own project as he shows it.",
+          "watch_in_detail": [
+            "0:11:04 - 0:20:04  permission modes, plan mode, CLAUDE.md",
+            "0:23:31 - 0:34:55  settings.json, context, skills, subagents",
+            "0:34:55 - 0:46:01  MCP servers and hooks"
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=qYqIhX9hTQk",
+            "reason": "The original 15-minute video (Mar 2026) mainly covers CLAUDE.md, plugins and the GitHub MCP server. The same creator's Oct 2026 video covers permissions, hooks, skills and subagents too - keep the short one as a quick start.",
+            "title": "FULL Claude Code Tutorial for Beginners in 2026! (Step-By-Step)",
+            "provider": "Tech With Tim"
+          }
+        }
+      ],
+      "study_order": [
+        "Week 26: Anthropic Academy 'Building with the Claude API' + API docs (tool use, structured outputs, caching)",
+        "Week 27: Tech With Tim Claude Code video + 'Claude Code in Action' + agent skills + subagents courses; Thariq Agent SDK workshop",
+        "Week 28: MCP courses (Anthropic + Hugging Face), build one MCP server, read MCP Security Best Practices; Checkpoint 3"
+      ]
+    },
+    {
+      "phase": 16,
+      "title": "Agentic AI Security",
+      "weeks": "29",
+      "notes": "NEW PHASE. The 2024 threat model was prompt injection on a chatbot; the 2026 threat model is agent-level: goal hijacking, memory poisoning, unbounded tool execution, credential leakage in agent skills, the lethal trifecta (private data + untrusted content + network egress). Security job demand in agentic AI is climbing fast and almost nobody on a junior roadmap has this.",
+      "resources": [
+        {
+          "title": "OWASP GenAI Security Project (LLM Top 10 + Agentic Security)",
+          "provider": "OWASP",
+          "type": "course",
+          "role": "PRIMARY - read LLM Top 10 and agentic security guidance",
+          "cost": "Free",
+          "url": "https://genai.owasp.org/",
+          "priority": "MUST (full)",
+          "how_to_use": "Read two documents cover to cover: the LLM Top 10 2026 edition (released 3 Aug 2026 - the 2025 list is now historical; excessive agency and unbounded consumption moved up) and the Top 10 for Agentic Applications 2026 (ASI01-ASI10). Then use the GenAI Red Teaming Guide as your testing method.",
+          "extra_links": [
+            {
+              "label": "OWASP Top 10 for LLM Applications 2026",
+              "url": "https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/"
+            },
+            {
+              "label": "OWASP Top 10 for Agentic Applications 2026",
+              "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            {
+              "label": "OWASP GenAI Red Teaming Guide",
+              "url": "https://genai.owasp.org/resource/genai-red-teaming-guide/"
+            }
+          ]
+        },
+        {
+          "title": "OWASP Agentic Skills Top 10",
+          "provider": "OWASP",
+          "type": "course",
+          "role": "Skill/supply-chain attacks, lethal trifecta, real 2026 incident timeline",
+          "cost": "Free",
+          "url": "https://owasp.org/www-project-agentic-skills-top-10/",
+          "priority": "MUST (full)",
+          "how_to_use": "OWASP incubator project (v0.5, June 2026, public review). Read the ten risks (AST01 malicious skills to AST10 cross-platform reuse) and the security checklist. Directly relevant to the Claude Code skills you used in Phase 15."
+        },
+        {
+          "title": "Complete Tutorial for AI Developers With Guardrails AI",
+          "provider": "Sunny Savita",
+          "type": "video",
+          "role": "Guardrails AI tutorial (defensive tooling)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=7V1w5gnZ-kw",
+          "duration": "1h 26m",
+          "published": "2025-10-14",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Defensive tooling. Code along with the practical part.",
+          "watch_in_detail": [
+            "0:22:31 - 0:29:36  framework for implementing guardrails",
+            "0:29:36 - end  hands-on with Guardrails AI"
+          ],
+          "skip_or_skim": [
+            "0:00:00 - 0:22:31  what guardrails are - 1.5x"
+          ]
+        },
+        {
+          "title": "Learn to Build Production-Ready LLM Guardrails From Scratch!",
+          "provider": "Pavan Belagatti",
+          "type": "video",
+          "role": "Production-ready guardrails from scratch",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=zBV-xAWNEKk",
+          "duration": "12m",
+          "published": "2025-11-03",
+          "priority": "MUST (full)",
+          "how_to_use": "Short; watch fully and rebuild the chatbot guard yourself."
+        },
+        {
+          "title": "OWASP's Top 10 Ways to Attack LLMs: AI Vulnerabilities Exposed",
+          "provider": "IBM Technology",
+          "type": "video",
+          "role": "Best short visual walkthrough of every OWASP LLM risk - watch first",
+          "url": "https://www.youtube.com/watch?v=gUNXZMcd2jU",
+          "duration": "25m",
+          "published": "2026-03-07",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch on day 1 before reading the OWASP documents. It follows the 2025 list order; the 2026 edition re-ranks the same ideas.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Deep Dive into the OWASP Top 10 for Agentic AI Applications - John Sotiropoulos",
+          "provider": "OWASP London",
+          "type": "video",
+          "role": "Authoritative walk-through of all ten agentic risks from the OWASP community",
+          "url": "https://www.youtube.com/watch?v=-vXoC0UvpjY",
+          "duration": "52m",
+          "published": "2025-11-23",
+          "priority": "MUST (selected parts)",
+          "watch_in_detail": [
+            "0:14:08 - 0:47:02  overview and all ten risks: goal hijack, tool misuse, identity abuse, supply chain, code execution, memory poisoning, inter-agent comms, cascading failures, trust exploitation, rogue agents"
+          ],
+          "how_to_use": "Watch with the Agentic Top 10 PDF open.",
+          "extra_links": [
+            {
+              "label": "Shorter, incident-driven alternative: ByteMonk 'OWASP Agentic Top 10 Explained' (21m, Sep 2026)",
+              "url": "https://www.youtube.com/watch?v=UftYcziWO3g"
+            }
+          ],
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "AI Red Teaming 101 - Full Course (Episodes 1-10)",
+          "provider": "Microsoft Developer",
+          "type": "video",
+          "role": "Attacker skills: direct and indirect prompt injection, multi-turn attacks, mitigations, automation with PyRIT",
+          "url": "https://www.youtube.com/watch?v=DwFVhFdD2fs",
+          "duration": "1h 17m",
+          "published": "2025-07-09",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch all 10 episodes. Episodes 8-10 use PyRIT, Microsoft's open-source red-teaming tool - install it and repeat one single-turn and one multi-turn attack against your own Phase 14 agent.",
+          "watch_in_detail": [
+            "0:13:29 - 0:42:59  direct and indirect prompt injection, single-turn and multi-turn attacks",
+            "0:42:59 - 0:49:53  mitigations and guardrails",
+            "0:49:53 - end  automating attacks with PyRIT"
+          ],
+          "extra_links": [
+            {
+              "label": "PyRIT (GitHub)",
+              "url": "https://github.com/Azure/PyRIT"
+            },
+            {
+              "label": "garak - NVIDIA's LLM vulnerability scanner (GitHub)",
+              "url": "https://github.com/NVIDIA/garak"
+            },
+            {
+              "label": "promptfoo red-team quickstart",
+              "url": "https://www.promptfoo.dev/docs/red-team/quickstart/"
+            }
+          ],
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Johann Rehberger - Your Agent Works for Me Now | [un]prompted 2026",
+          "provider": "unprompted",
+          "type": "video",
+          "role": "Real exploits against coding and computer-use agents from a leading agent-security researcher",
+          "url": "https://www.youtube.com/watch?v=zVUm23P7ZNg",
+          "duration": "26m",
+          "published": "2026-03-25",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully. Pay attention to the 'promptware kill chain' (5:00) and delayed tool invocation (5:41) - you will use these ideas when you threat-model agents.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Guardrails with LangChain: A Complete Crash Course for Building Safe AI Agents",
+          "provider": "Krish Naik",
+          "type": "video",
+          "role": "Guardrails as agent middleware: PII detection, human-in-the-loop, layered guardrails",
+          "url": "https://www.youtube.com/watch?v=ruiLq0OzjkI",
+          "duration": "38m",
+          "published": "2026-03-04",
+          "priority": "MUST (selected parts)",
+          "watch_in_detail": [
+            "0:04:45 - 0:13:50  deterministic vs model-based guardrails, guardrails as middleware, agent hooks",
+            "0:19:19 - end  PII middleware, human-in-the-loop, custom hooks, layered guardrails"
+          ],
+          "how_to_use": "Add one PII guard and one human-approval step to your Phase 14 LangGraph agent.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Web Security Academy: Web LLM attacks (free labs)",
+          "provider": "PortSwigger",
+          "type": "interactive",
+          "role": "Hands-on labs: exploiting LLM APIs, excessive agency, indirect prompt injection, insecure output handling",
+          "url": "https://portswigger.net/web-security/llm-attacks",
+          "priority": "PRACTICE",
+          "how_to_use": "Free account needed. Read the topic page, then solve every lab in the LLM attacks section. This is the closest thing to real pentesting of AI features.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "Gandalf (prompt injection game) + Agent Breaker",
+          "provider": "Lakera",
+          "type": "interactive",
+          "role": "Learn prompt-injection techniques by playing - each level adds a new defence",
+          "url": "https://gandalf.lakera.ai/",
+          "priority": "PRACTICE",
+          "how_to_use": "Clear all main Gandalf levels (1-2 hours), writing down which defence each level added and how you beat it. Then try Agent Breaker, which simulates agentic apps.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "AI Red Teaming Playground Labs",
+          "provider": "Microsoft (GitHub)",
+          "type": "interactive",
+          "role": "Self-hosted red-teaming challenges used in Microsoft's AI red-team training",
+          "url": "https://github.com/microsoft/AI-Red-Teaming-Playground-Labs",
+          "priority": "OPTIONAL",
+          "how_to_use": "Run the challenges locally with Docker after Phase 18 (or now if Docker is comfortable). Good practice after the Microsoft AI Red Teaming 101 videos.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        },
+        {
+          "title": "The lethal trifecta for AI agents: private data, untrusted content, and external communication",
+          "provider": "Simon Willison",
+          "type": "article",
+          "role": "The single most useful mental model for agent security - read first",
+          "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+          "priority": "MUST (full)",
+          "how_to_use": "10-minute read. After reading, list which of the three capabilities each of your own agents has.",
+          "cost": "Free",
+          "added_in": "v3.2"
+        }
+      ],
+      "links_note": "Phase 16 is only 1 week in the schedule (week 29), but AI security is your target role, so this phase now holds more than one week of material. In week 29 do the MUST items. Then keep 3-4 hours per week of the PRACTICE and OPTIONAL items (PortSwigger labs, Gandalf, PyRIT, Microsoft labs) running alongside Phases 17-21, and attack your own projects with them.",
+      "study_order": [
+        "Day 1: lethal trifecta article + IBM OWASP attacks video + OWASP LLM Top 10 2026",
+        "Day 2: OWASP Agentic Top 10 2026 + OWASP London deep dive + OWASP Agentic Skills Top 10",
+        "Day 3: Microsoft AI Red Teaming 101 (episodes 1-7) + Gandalf",
+        "Day 4: Johann Rehberger talk + PortSwigger Web LLM attacks labs",
+        "Day 5: guardrails - Guardrails AI tutorial, Pavan Belagatti, Krish Naik LangChain middleware",
+        "Day 6: PyRIT episodes 8-10 + promptfoo red-team quickstart against your own agent; write a 1-page threat model",
+        "Weeks 30-35: keep going with PortSwigger, Agent Breaker, garak and the Microsoft playground labs"
+      ]
+    },
+    {
+      "phase": 17,
+      "title": "MLOps, CI/CD & Technical Writing",
+      "weeks": "30-31",
+      "notes": "DVC, GitHub Actions, READMEs. Unchanged in substance, contiguous weeks now (v2 had it split across weeks 33/34/37).",
+      "resources": [
+        {
+          "title": "MLOps Training: Data Version Control with DVC & Git",
+          "provider": "Skillfyme",
+          "type": "video",
+          "role": "Data versioning with DVC",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=QTRqbrntc0U",
+          "duration": "41m",
+          "published": "2025-10-06",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully and repeat each step in your Phase 12 fine-tuning project (dvc init, dvc add, revert data with git checkout + dvc checkout).",
+          "extra_links": [
+            {
+              "label": "DVC official Get Started",
+              "url": "https://doc.dvc.org/start"
+            }
+          ]
+        },
+        {
+          "title": "CI/CD Made Simple: Build a Real Pipeline",
+          "provider": "Traversy Media",
+          "type": "video",
+          "role": "CI/CD pipeline with GitHub Actions - checks, merge gates and preview environments",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=B7GM6F3BP6A",
+          "duration": "35m",
+          "published": "2026-10-05",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully and build the same pipeline for one of your Python projects (lint + tests + promptfoo eval as a required check).",
+          "watch_in_detail": [
+            "0:14:54 - 0:31:32  GitHub Actions workflow, first checks run, enforced guardrails, gate tests"
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=_ClABh66raE",
+            "reason": "The Cloud Guru video (Feb 2026, under 1k views) deploys a Node.js app to EC2; despite the title, Docker does not appear in its chapters. Keep it if you want the EC2 deploy steps (4:57 - 28:42).",
+            "title": "Complete CI/CD Pipeline Tutorial (GitHub Actions + AWS + Docker)",
+            "provider": "Cloud Guru"
+          }
+        },
+        {
+          "title": "How to Write an Effective README File for Github Projects in 2026",
+          "provider": "Oladimeji Ipaye",
+          "type": "video",
+          "role": "Technical writing / README",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=nN59j4TELcE",
+          "duration": "40m",
+          "published": "2026-04-02",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch, then rewrite the README of your best 3 repos: problem, architecture diagram, setup, usage, evals, security notes."
+        },
+        {
+          "title": "GitHub Actions official docs + quickstart",
+          "provider": "GitHub",
+          "type": "docs",
+          "role": "Build your own pipeline, do not just watch",
+          "cost": "Free",
+          "url": "https://docs.github.com/en/actions/get-started/quickstart",
+          "priority": "PRACTICE",
+          "how_to_use": "Do the quickstart, then read 'Secure use' - secrets, least-privilege GITHUB_TOKEN, pinning actions to a commit SHA, and untrusted input in workflows (a real supply-chain attack surface).",
+          "extra_links": [
+            {
+              "label": "Secure use reference for GitHub Actions",
+              "url": "https://docs.github.com/en/actions/reference/security/secure-use"
+            }
+          ]
+        }
+      ],
+      "study_order": [
+        "Week 30: DVC video + DVC Get Started on your fine-tuning project; README video and rewrite 3 READMEs",
+        "Week 31: Traversy CI/CD video; GitHub Actions quickstart + Secure use; add lint, tests and a promptfoo eval as required checks"
+      ]
+    },
+    {
+      "phase": 18,
+      "title": "Docker & LLM Observability",
+      "weeks": "32",
+      "notes": "Containerize your projects; trace and monitor LLM calls in production.",
+      "resources": [
+        {
+          "title": "Learn Docker - Full DevOps Course for Deploying Containerized Apps",
+          "provider": "freeCodeCamp.org",
+          "type": "video",
+          "role": "Docker primary - selected chapters (about 3 hours)",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=rjjES5IsPdg",
+          "duration": "7h 30m",
+          "published": "2026-06-03",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Watch the chapters below; use Docker Desktop on your own machine instead of the AWS setup he shows.",
+          "watch_in_detail": [
+            "0:42:07 - 0:53:07  Docker architecture",
+            "1:42:24 - 2:08:38  basic commands (pull, run, stop, inspect)",
+            "2:38:00 - 3:22:40  volumes, bind mounts, Docker Compose",
+            "3:40:00 - 4:54:00  Dockerfiles, image layers, CMD vs RUN, EXPOSE/COPY, Compose lab",
+            "4:54:00 - 5:12:00  image lifecycle and registry (tag, push, pull)"
+          ],
+          "skip_or_skim": [
+            "0:00:00 - 0:42:07  intro, servers and VMs - 1.5x",
+            "0:53:07 - 1:42:24  AWS/EC2 setup - skip if using Docker Desktop",
+            "2:08:38 - 2:38:00  networking modes - skim"
+          ],
+          "extra_links": [
+            {
+              "label": "Short classic refresher: TechWorld with Nana 'Docker Crash Course' (1h 07m, 2023)",
+              "url": "https://www.youtube.com/watch?v=pg19Z8LL06w"
+            }
+          ],
+          "replaces": {
+            "url": "https://www.youtube.com/watch?v=NLuVclgJaCE",
+            "reason": "The Super SQA video (Mar 2026) spends its first 2 hours on analogies; hands-on starts at 2:05:22 (Python Flask app at 2:30:10). Use those last 55 minutes if you prefer it.",
+            "title": "Docker Crash Course for Beginners: The Full 3-Hour Tutorial (2026)",
+            "provider": "Super SQA | QA Automation"
+          }
+        },
+        {
+          "title": "LangSmith Tutorial For Beginners 2026 | What Is LangSmith?",
+          "provider": "Simplilearn",
+          "type": "video",
+          "role": "LangSmith observability",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=C1S6NCpPRE0",
+          "duration": "40m",
+          "published": "2026-03-17",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Watch the features and hands-on parts, then set up tracing on your own agent with the docs.",
+          "watch_in_detail": [
+            "0:08:21 - 0:31:54  core features, deep dive, hands-on setup and tracing",
+            "0:31:54 - 0:37:31  advanced tools and best practices"
+          ],
+          "skip_or_skim": [
+            "0:02:50 - 0:05:16  course promotion"
+          ],
+          "extra_links": [
+            {
+              "label": "Evaluation-focused follow-up with labs: KodeKloud 'LangSmith Tutorial for Beginners' (1h 07m, May 2026)",
+              "url": "https://www.youtube.com/watch?v=XkekH2z94Fo"
+            }
+          ]
+        },
+        {
+          "title": "Docker official Get Started",
+          "provider": "Docker",
+          "type": "docs",
+          "role": "Hands-on companion",
+          "cost": "Free",
+          "url": "https://docs.docker.com/get-started/",
+          "priority": "PRACTICE",
+          "how_to_use": "Do the Get Started workshop, then containerize your FastAPI + RAG project. Security basics: run as a non-root user, never bake API keys into images, use .dockerignore, use slim base images."
+        },
+        {
+          "title": "LangSmith docs",
+          "provider": "LangChain",
+          "type": "docs",
+          "role": "Set up tracing on your own agent",
+          "cost": "Free",
+          "url": "https://docs.langchain.com/langsmith/observability",
+          "priority": "PRACTICE",
+          "how_to_use": "Follow the tracing quickstart for your Phase 14 agent, then add one online evaluator. Traces are also your evidence when investigating an attack on an agent."
+        }
+      ],
+      "study_order": [
+        "Days 1-3: freeCodeCamp Docker selected chapters + Docker Get Started; containerize your FastAPI/RAG app with Compose",
+        "Days 4-6: LangSmith video + docs; trace your agent; optional KodeKloud evaluation labs"
+      ]
+    },
+    {
+      "phase": 19,
+      "title": "AI Workflow Automation (n8n)",
+      "weeks": "33",
+      "notes": "Kept at 1 week. Valuable for the Pakistani/UK freelance + SMB market specifically; do not let the 17-hour course eat more than the week.",
+      "resources": [
+        {
+          "title": "Ultimate n8n Course: Beginner to Pro in 17 Hours (2026)",
+          "provider": "Ryan & Matt Data Science",
+          "type": "video",
+          "role": "Primary n8n course - skim, do not complete linearly",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=TZ43SRdTMs0",
+          "duration": "17h 17m",
+          "published": "2026-01-12",
+          "priority": "MUST (selected parts)",
+          "how_to_use": "Do not watch linearly. Self-host n8n with Docker (you just learned it), then use only these chapters.",
+          "watch_in_detail": [
+            "0:12:24 - 0:21:49  self-hosting with Docker",
+            "0:39:00 - 1:41:05  interface, core concepts and nodes, first workflow, triggers, data types, essential nodes",
+            "1:59:44 - 2:31:10  AI agent tools, LLM models and memory, error handling",
+            "2:39:13 - 2:46:16  webhooks and API",
+            "3:17:23 - 3:22:34  security and compliance - must for you",
+            "3:57:23 - 4:10:53  RAG, human in the loop, AI evaluation"
+          ],
+          "skip_or_skim": [
+            "1:51:20 - 1:59:44  Google Workspace",
+            "2:46:16 - 2:54:12  web scraping",
+            "4:03:21 - 4:04:28  AI images and video",
+            "Everything after the chapter list - use as a reference library"
+          ]
+        },
+        {
+          "title": "n8n Tutorial for 2026: How To Build AI Agents for FREE (step by step)",
+          "provider": "David Ondrej",
+          "type": "video",
+          "role": "n8n AI agents",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=Pqp4qJ5sS5g",
+          "duration": "3h 49m",
+          "published": "2026-01-06",
+          "priority": "MUST (selected parts)",
+          "watch_in_detail": [
+            "0:05:25 - 0:47:02  build a multi-agent workflow step by step",
+            "1:07:20 - 1:24:27  using n8n AI to build agents, advanced tips, coding and error handling",
+            "3:09:00 - end  cybersecurity for AI agents - must for you"
+          ],
+          "skip_or_skim": [
+            "0:13:31 - 0:15:14  hosting promotion",
+            "2:24:45 - 3:09:00  guest consultation and future-of-AI discussion"
+          ],
+          "how_to_use": "Build along with the first section in your self-hosted n8n."
+        },
+        {
+          "title": "n8n official free courses",
+          "provider": "n8n",
+          "type": "course",
+          "role": "Structured official path",
+          "cost": "Free",
+          "url": "https://learn.n8n.io/",
+          "priority": "PRACTICE",
+          "how_to_use": "docs.n8n.io/courses now redirects to learn.n8n.io. Do the beginner and intermediate text courses. Security: protect every webhook with authentication and keep self-hosted n8n updated."
+        }
+      ],
+      "study_order": [
+        "Day 1: self-host n8n with Docker (0:12:24 chapter) + n8n official beginner course",
+        "Days 2-4: Ryan & Matt selected chapters; David Ondrej multi-agent build",
+        "Day 5: both security sections; add webhook auth and error handling to your workflows",
+        "Day 6: one automation for a real use case, documented on GitHub"
+      ]
+    },
+    {
+      "phase": 20,
+      "title": "LLM Cost Optimization & Production Economics",
+      "weeks": "34",
+      "notes": "Token economics, prompt caching, semantic caching, model routing. Compressed to 1 week - by now you have built enough to understand it fast. Route cheap traffic to small fast models (e.g., Claude Haiku class) and complex traffic to frontier models.",
+      "resources": [
+        {
+          "title": "How I cut token costs by 90%: AI cost optimization guide",
+          "provider": "ClankerEngineer (channel formerly listed as PropTech Founder)",
+          "type": "video",
+          "role": "Cost reduction guide",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=4x4nM0uPmg0",
+          "duration": "20m",
+          "published": "2026-04-04",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully: caching, prompt-prefix caching, prompt structure, JSON, routing, rerankers. Skip the coaching segment (14:22 - 15:28)."
+        },
+        {
+          "title": "Cut Your LLM Costs and Latency up to 86% with Semantic Caching",
+          "provider": "AWS Events",
+          "type": "video",
+          "role": "Semantic caching",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=vIgF4GP2n9w",
+          "duration": "1h 00m",
+          "published": "2026-02-27",
+          "priority": "MUST (selected parts)",
+          "watch_in_detail": [
+            "0:14:13 - 0:46:19  what semantic caching is, vector DB as cache, Valkey implementation, LangGraph architecture, demo, cost analysis",
+            "0:46:19 - 0:58:22  best practices and advanced caching strategies"
+          ],
+          "skip_or_skim": [
+            "0:00:00 - 0:14:13  intro and problem statement - 1.5x"
+          ],
+          "how_to_use": "AWS livestream; code along with the Valkey part if you have time."
+        },
+        {
+          "title": "Model Router: Intelligent LLM Routing for Cost & Speed Optimization",
+          "provider": "NeuroVed",
+          "type": "video",
+          "role": "Intelligent routing",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=MG62GHzVfLw",
+          "duration": "36m",
+          "published": "2025-12-16",
+          "priority": "MUST (selected parts)",
+          "watch_in_detail": [
+            "0:05:30 - 0:21:45  comparing model costs, decision criteria, simple vs complex routing, local models, code implementation"
+          ],
+          "how_to_use": "Small channel but focused. Build the if-else router he shows, then improve it with a cheap classifier model."
+        },
+        {
+          "title": "Prompt Caching Explained: Stop Overpaying for AI Agents",
+          "provider": "Hugging Face (Alejandro AO)",
+          "type": "video",
+          "role": "Prompt caching - the biggest single cost lever for agents (and a Checkpoint 4 exam question)",
+          "url": "https://www.youtube.com/watch?v=SkM4k4SKvCM",
+          "duration": "17m",
+          "published": "2026-08-09",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully, then run the Anthropic prompt-caching notebook and compare cost with and without caching.",
+          "extra_links": [
+            {
+              "label": "Anthropic prompt caching notebook",
+              "url": "https://github.com/anthropics/claude-cookbooks/blob/main/misc/prompt_caching.ipynb"
+            }
+          ],
+          "cost": "Free",
+          "added_in": "v3.2"
+        }
+      ],
+      "study_order": [
+        "Day 1: ClankerEngineer video + prompt caching video",
+        "Day 2: Anthropic prompt caching notebook - measure the savings",
+        "Days 3-4: AWS semantic caching session; add a semantic cache to your RAG app",
+        "Days 5-6: model router video; add a cheap/expensive router and log cost per request",
+        "Security note: cost controls (rate limits, max tokens, budgets) are also your defence against 'unbounded consumption' (OWASP LLM Top 10)"
+      ]
+    },
+    {
+      "phase": 21,
+      "title": "AI System Design & Interview Prep",
+      "weeks": "35",
+      "notes": "Capstone week: architecture trade-offs, portfolio polish, interview drills.",
+      "resources": [
+        {
+          "title": "AI Engineer Interview Guide (2026): Questions, System Design, Coding, RAG, Portfolio",
+          "provider": "Alexey Grigorev",
+          "type": "video",
+          "role": "AI engineer interview guide",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=qjKAqMSD4Vw",
+          "duration": "1h 46m",
+          "published": "2026-03-03",
+          "priority": "MUST (selected parts)",
+          "watch_in_detail": [
+            "0:12:15 - 0:30:18  interview funnel, theory questions on LLMs, RAG, agents, evaluation, monitoring",
+            "0:43:13 - 1:13:49  coding rounds, project deep dive, AI system design, behavioural",
+            "1:19:38 - 1:27:46  portfolio strategy and lack of production experience"
+          ],
+          "skip_or_skim": [
+            "0:30:18 - 0:43:13  Q&A on careers - optional"
+          ],
+          "how_to_use": "Data-driven: built from real job descriptions and interview reports. Make a list of every question type he shows and answer each one out loud."
+        },
+        {
+          "title": "Mastering AI System Design with GenAI & RAG (FAANG-Level Masterclass)",
+          "provider": "Interview Kickstart India",
+          "type": "video",
+          "role": "AI system design masterclass",
+          "cost": "Free",
+          "url": "https://www.youtube.com/watch?v=7Fu_NHNvvPY",
+          "duration": "1h 25m",
+          "published": "2025-12-02",
+          "priority": "MUST (full)",
+          "how_to_use": "Watch fully and pause at each step to design it yourself first. Pay attention to 1:04:04 (safety and compliance) - in interviews for security roles, always add a threat-model step to your design.",
+          "extra_links": [
+            {
+              "label": "Same masterclass with a Google engineer (Interview Kickstart US, 1h 36m)",
+              "url": "https://www.youtube.com/watch?v=AkiDAjp05Ws"
+            }
+          ]
+        }
+      ],
+      "study_order": [
+        "Days 1-2: Alexey Grigorev guide; write answers to every question category",
+        "Days 3-4: system design masterclass; design 2 systems (RAG assistant, agent with tools) including a threat model",
+        "Days 5-6: polish READMEs and portfolio; Checkpoint 4"
+      ]
+    }
+  ],
+  "weekly_schedule": [
+    {
+      "week": 1,
+      "dates": "15 Jun - 20 Jun 2026",
+      "phase": 1,
+      "topic": "Git, GitHub & Python Programming (finish in progress)",
+      "milestone": null
+    },
+    {
+      "week": 2,
+      "dates": "22 Jun - 27 Jun 2026",
+      "phase": 1,
+      "topic": "Git, GitHub & Python Programming (finish in progress)",
+      "milestone": null
+    },
+    {
+      "week": 3,
+      "dates": "29 Jun - 04 Jul 2026",
+      "phase": 2,
+      "topic": "Practical DSA (compressed)",
+      "milestone": null
+    },
+    {
+      "week": 4,
+      "dates": "06 Jul - 11 Jul 2026",
+      "phase": 3,
+      "topic": "Exploratory Data Analysis (EDA)",
+      "milestone": null
+    },
+    {
+      "week": 5,
+      "dates": "13 Jul - 18 Jul 2026",
+      "phase": 3,
+      "topic": "Exploratory Data Analysis (EDA)",
+      "milestone": null
+    },
+    {
+      "week": 6,
+      "dates": "20 Jul - 25 Jul 2026",
+      "phase": 4,
+      "topic": "Advanced SQL for AI Engineers",
+      "milestone": null
+    },
+    {
+      "week": 7,
+      "dates": "27 Jul - 01 Aug 2026",
+      "phase": 5,
+      "topic": "Machine Learning Fundamentals",
+      "milestone": null
+    },
+    {
+      "week": 8,
+      "dates": "03 Aug - 08 Aug 2026",
+      "phase": 5,
+      "topic": "Machine Learning Fundamentals",
+      "milestone": "Checkpoint 1"
+    },
+    {
+      "week": 9,
+      "dates": "10 Aug - 15 Aug 2026",
+      "phase": 6,
+      "topic": "Deep Learning & Neural Networks",
+      "milestone": null
+    },
+    {
+      "week": 10,
+      "dates": "17 Aug - 22 Aug 2026",
+      "phase": 6,
+      "topic": "Deep Learning & Neural Networks",
+      "milestone": null
+    },
+    {
+      "week": 11,
+      "dates": "24 Aug - 29 Aug 2026",
+      "phase": 6,
+      "topic": "Deep Learning & Neural Networks",
+      "milestone": null
+    },
+    {
+      "week": 12,
+      "dates": "31 Aug - 05 Sep 2026",
+      "phase": 7,
+      "topic": "Cloud Fundamentals",
+      "milestone": null
+    },
+    {
+      "week": 13,
+      "dates": "07 Sep - 12 Sep 2026",
+      "phase": 8,
+      "topic": "API Development with FastAPI",
+      "milestone": null
+    },
+    {
+      "week": 14,
+      "dates": "14 Sep - 19 Sep 2026",
+      "phase": 9,
+      "topic": "Prompt, Context & Harness Engineering",
+      "milestone": null
+    },
+    {
+      "week": 15,
+      "dates": "21 Sep - 26 Sep 2026",
+      "phase": 9,
+      "topic": "Prompt, Context & Harness Engineering",
+      "milestone": null
+    },
+    {
+      "week": 16,
+      "dates": "28 Sep - 03 Oct 2026",
+      "phase": 10,
+      "topic": "Generative AI & LangChain",
+      "milestone": null
+    },
+    {
+      "week": 17,
+      "dates": "05 Oct - 10 Oct 2026",
+      "phase": 10,
+      "topic": "Generative AI & LangChain",
+      "milestone": null
+    },
+    {
+      "week": 18,
+      "dates": "12 Oct - 17 Oct 2026",
+      "phase": 11,
+      "topic": "Vector Databases & RAG",
+      "milestone": null
+    },
+    {
+      "week": 19,
+      "dates": "19 Oct - 24 Oct 2026",
+      "phase": 11,
+      "topic": "Vector Databases & RAG",
+      "milestone": "Checkpoint 2"
+    },
+    {
+      "week": 20,
+      "dates": "26 Oct - 31 Oct 2026",
+      "phase": 12,
+      "topic": "Fine-Tuning & Open-Model Serving",
+      "milestone": null
+    },
+    {
+      "week": 21,
+      "dates": "02 Nov - 07 Nov 2026",
+      "phase": 12,
+      "topic": "Fine-Tuning & Open-Model Serving",
+      "milestone": null
+    },
+    {
+      "week": 22,
+      "dates": "09 Nov - 14 Nov 2026",
+      "phase": 13,
+      "topic": "Evals & LLM Testing",
+      "milestone": null
+    },
+    {
+      "week": 23,
+      "dates": "16 Nov - 21 Nov 2026",
+      "phase": 14,
+      "topic": "Agentic AI & Multi-Agent Frameworks",
+      "milestone": null
+    },
+    {
+      "week": 24,
+      "dates": "23 Nov - 28 Nov 2026",
+      "phase": 14,
+      "topic": "Agentic AI & Multi-Agent Frameworks",
+      "milestone": null
+    },
+    {
+      "week": 25,
+      "dates": "30 Nov - 05 Dec 2026",
+      "phase": 14,
+      "topic": "Agentic AI & Multi-Agent Frameworks",
+      "milestone": null
+    },
+    {
+      "week": 26,
+      "dates": "07 Dec - 12 Dec 2026",
+      "phase": 15,
+      "topic": "Anthropic Ecosystem: Claude API, Claude Code, Agent SDK & MCP",
+      "milestone": null
+    },
+    {
+      "week": 27,
+      "dates": "14 Dec - 19 Dec 2026",
+      "phase": 15,
+      "topic": "Anthropic Ecosystem: Claude API, Claude Code, Agent SDK & MCP",
+      "milestone": null
+    },
+    {
+      "week": 28,
+      "dates": "21 Dec - 26 Dec 2026",
+      "phase": 15,
+      "topic": "Anthropic Ecosystem: Claude API, Claude Code, Agent SDK & MCP",
+      "milestone": "Checkpoint 3"
+    },
+    {
+      "week": 29,
+      "dates": "28 Dec - 02 Jan 2027",
+      "phase": 16,
+      "topic": "Agentic AI Security",
+      "milestone": null
+    },
+    {
+      "week": 30,
+      "dates": "04 Jan - 09 Jan 2027",
+      "phase": 17,
+      "topic": "MLOps, CI/CD & Technical Writing",
+      "milestone": null
+    },
+    {
+      "week": 31,
+      "dates": "11 Jan - 16 Jan 2027",
+      "phase": 17,
+      "topic": "MLOps, CI/CD & Technical Writing",
+      "milestone": null
+    },
+    {
+      "week": 32,
+      "dates": "18 Jan - 23 Jan 2027",
+      "phase": 18,
+      "topic": "Docker & LLM Observability",
+      "milestone": null
+    },
+    {
+      "week": 33,
+      "dates": "25 Jan - 30 Jan 2027",
+      "phase": 19,
+      "topic": "AI Workflow Automation (n8n)",
+      "milestone": null
+    },
+    {
+      "week": 34,
+      "dates": "01 Feb - 06 Feb 2027",
+      "phase": 20,
+      "topic": "LLM Cost Optimization & Production Economics",
+      "milestone": null
+    },
+    {
+      "week": 35,
+      "dates": "08 Feb - 13 Feb 2027",
+      "phase": 21,
+      "topic": "AI System Design & Interview Prep",
+      "milestone": "Checkpoint 4"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Claude Certified Architect - Foundations (CCA-F)",
+      "provider": "Anthropic",
+      "priority": "HIGH - anchor certification of this roadmap",
+      "cost": "$99 per attempt (free for first 5,000 Claude Partner Network employees)",
+      "format": "60 scenario-based MCQs, 120 min, proctored, passing score 720/1000",
+      "status": "LIVE - launched publicly 12 March 2026 (v2.0 said partner-only: outdated)",
+      "registration": "https://anthropic.skilljar.com/claude-certified-architect-foundations-access-request",
+      "preparation": "Free Anthropic Academy courses at https://anthropic.skilljar.com/ ; Partner Network info: https://www.anthropic.com/news/claude-partner-network",
+      "when": "After Phase 15 (Anthropic Ecosystem)"
+    },
+    {
+      "name": "Anthropic Academy course certificates",
+      "provider": "Anthropic (Skilljar)",
+      "priority": "HIGH - free and from the model provider itself",
+      "cost": "Free",
+      "format": "13+ free courses, ~15-20 hours total, official certificates per course, LinkedIn-addable",
+      "status": "Available",
+      "registration": "https://anthropic.skilljar.com/",
+      "when": "Throughout Phase 15"
+    },
+    {
+      "name": "Hugging Face AI Agents Course Certificate",
+      "provider": "Hugging Face",
+      "priority": "HIGH - free, hands-on, recognised",
+      "cost": "Free",
+      "format": "Complete Unit 1 (fundamentals cert) or full course + final challenge (completion cert)",
+      "status": "Available",
+      "registration": "https://huggingface.co/learn/agents-course",
+      "when": "During Phase 14 (Agentic AI)"
+    },
+    {
+      "name": "Hugging Face MCP Course Certificate",
+      "provider": "Hugging Face",
+      "priority": "MEDIUM",
+      "cost": "Free",
+      "format": "Course units + assignments",
+      "status": "Available",
+      "registration": "https://huggingface.co/learn/mcp-course",
+      "when": "During Phase 15"
+    },
+    {
+      "name": "AWS Certified Machine Learning Engineer - Associate",
+      "provider": "AWS",
+      "priority": "MEDIUM - pick AWS OR Google, not both",
+      "cost": "$150",
+      "format": "130-minute, 65-question exam",
+      "status": "Available",
+      "registration": "https://aws.amazon.com/certification/certified-machine-learning-engineer-associate/",
+      "when": "After Phase 17 (MLOps) - only if targeting cloud-heavy roles"
+    },
+    {
+      "name": "NVIDIA Agentic AI Professional (NCP-AAI)",
+      "provider": "NVIDIA",
+      "priority": "OPTIONAL - only NVIDIA cert worth considering; the other 5 from v2.0 were cut for low employer recognition vs cost",
+      "cost": "$200",
+      "format": "2-hour advanced exam",
+      "status": "Available",
+      "registration": "https://www.nvidia.com/en-us/learn/certification/",
+      "when": "After Phase 14"
+    },
+    {
+      "name": "Hugging Face Deep RL Course Certificate",
+      "provider": "Hugging Face",
+      "priority": "OPTIONAL",
+      "cost": "Free",
+      "format": "Pass 80% of practical assignments",
+      "status": "Available",
+      "registration": "https://huggingface.co/learn/deep-rl-course",
+      "when": "Optional, after Phase 6"
+    },
+    {
+      "name": "Google Cloud Professional ML Engineer",
+      "provider": "Google Cloud",
+      "priority": "CUT from core plan - heavy GCP-specific exam, roadmap is AWS-oriented",
+      "cost": "$200",
+      "format": "2-hour exam",
+      "status": "Available",
+      "registration": "https://cloud.google.com/learn/certification/machine-learning-engineer",
+      "when": "Skip unless a target employer is GCP-based"
+    }
+  ],
+  "checkpoints": [
+    {
+      "checkpoint": 1,
+      "due_date": "2026-08-08",
+      "week": 8,
+      "timing_note": "End of week 11 (after ML fundamentals)",
+      "project_brief": {
+        "title": "End-to-End Data Pipeline & ML Model",
+        "objective": "Build a complete data pipeline that ingests a raw dataset, cleans it using Pandas, stores the cleaned data in a SQL database, and trains a baseline Machine Learning model to predict a target variable.",
+        "stack_suggestion": "Python, Pandas, Scikit-Learn, SQLite (or PostgreSQL), Git/GitHub",
+        "deliverables": [
+          "A GitHub repository containing your code and a professional README.md",
+          "A Jupyter Notebook (or Python scripts) demonstrating Exploratory Data Analysis (EDA) and data cleaning",
+          "A SQL schema file and a script that loads the cleaned data into the database",
+          "A trained ML model (e.g., Random Forest or Logistic Regression) saved as a .pkl file, with metrics printed to the console"
+        ],
+        "done_looks_like": [
+          "The repository is clean, well-documented, and has a clear commit history",
+          "The EDA notebook clearly explains the data distribution and handling of missing values",
+          "The SQL database successfully stores the cleaned data and can be queried",
+          "The ML model runs without errors and outputs validation metrics (Accuracy, F1-Score, or RMSE depending on the problem)",
+          "The entire project can be completed in one weekend"
+        ]
+      },
+      "mcq_exam": [
+        {
+          "q": 1,
+          "question": "When using Git, what is the primary purpose of a 'rebase' operation compared to a 'merge'?",
+          "options": {
+            "A": "To create a new commit that combines two branches, preserving exact chronological history.",
+            "B": "To rewrite the commit history by moving a sequence of commits to a new base commit, creating a linear history.",
+            "C": "To securely push local changes to a remote repository without requiring authentication.",
+            "D": "To permanently delete commits from the history that contain sensitive information."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 2,
+          "question": "In Python, why are dictionaries generally faster for lookups than lists?",
+          "options": {
+            "A": "Dictionaries are implemented using hash tables, allowing for O(1) average time complexity for lookups.",
+            "B": "Dictionaries automatically sort their keys in memory, allowing for binary search lookups.",
+            "C": "Lists store data in non-contiguous memory blocks, making traversal slower.",
+            "D": "Dictionaries are compiled to C code at runtime, whereas lists are interpreted."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 3,
+          "question": "Which data structure is most appropriate for implementing a 'Undo' feature in a text editor?",
+          "options": {
+            "A": "Queue",
+            "B": "Hash Map",
+            "C": "Stack",
+            "D": "Binary Search Tree"
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 4,
+          "question": "What is the fundamental difference between a Tuple and a List in Python?",
+          "options": {
+            "A": "Lists can only store integers, while Tuples can store any data type.",
+            "B": "Tuples are mutable, while Lists are immutable.",
+            "C": "Tuples are immutable, while Lists are mutable.",
+            "D": "Lists use zero-based indexing, while Tuples use one-based indexing."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 5,
+          "question": "In algorithmic complexity, why is O(N log N) generally preferred over O(N^2) for sorting large datasets?",
+          "options": {
+            "A": "O(N log N) requires less memory space than O(N^2).",
+            "B": "O(N log N) scales significantly better as the input size N grows exponentially.",
+            "C": "O(N^2) algorithms cannot handle floating-point numbers.",
+            "D": "O(N log N) algorithms always complete in exactly N steps."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 6,
+          "question": "When analyzing data with Pandas, what is the underlying reason vectorized operations are faster than iterating through rows with a for-loop?",
+          "options": {
+            "A": "Vectorized operations bypass the Python interpreter and execute optimized C code directly on contiguous memory blocks.",
+            "B": "For-loops in Python have an intentional delay built-in to prevent CPU overheating.",
+            "C": "Vectorized operations automatically utilize multi-threading across all available CPU cores.",
+            "D": "Pandas converts all data to strings before iterating, which slows down for-loops."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 7,
+          "question": "What happens when you perform a left join (LEFT OUTER JOIN) in SQL on two tables where some keys in the left table do not exist in the right table?",
+          "options": {
+            "A": "The query fails and throws a syntax error.",
+            "B": "The resulting table omits the rows with missing keys entirely.",
+            "C": "The resulting table includes the rows from the left table, with NULL values for the columns from the right table.",
+            "D": "The database automatically creates dummy records in the right table to match the left table."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 8,
+          "question": "Why is data normalization or scaling often necessary before training a Machine Learning model like K-Nearest Neighbors (KNN) or Support Vector Machines (SVM)?",
+          "options": {
+            "A": "It prevents the model from overfitting by reducing the number of features.",
+            "B": "Distance-based algorithms are highly sensitive to the scale of features; features with larger ranges will disproportionately influence the distance calculation.",
+            "C": "It converts categorical variables into numerical variables automatically.",
+            "D": "Scaling guarantees that the model will achieve 100% accuracy on the training set."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 9,
+          "question": "In the context of Machine Learning, what is the primary goal of cross-validation?",
+          "options": {
+            "A": "To increase the training speed of the model by splitting the data into smaller chunks.",
+            "B": "To ensure the model memorizes the training data perfectly.",
+            "C": "To estimate how well the model will generalize to unseen data by training and testing on multiple subsets of the data.",
+            "D": "To automatically select the best programming language for the model deployment."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 10,
+          "question": "What is the key difference between supervised and unsupervised machine learning?",
+          "options": {
+            "A": "Supervised learning requires labeled training data with known target variables, while unsupervised learning finds patterns in unlabeled data.",
+            "B": "Supervised learning is only used for image processing, while unsupervised learning is used for text.",
+            "C": "Unsupervised learning always requires a human operator to monitor the training process in real-time.",
+            "D": "Supervised learning algorithms cannot be run on cloud infrastructure."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 11,
+          "question": "Why might a Random Forest model perform better than a single Decision Tree on a complex dataset?",
+          "options": {
+            "A": "Random Forests only use the single best feature to make predictions.",
+            "B": "Random Forests combine the predictions of multiple diverse trees, reducing the variance and likelihood of overfitting compared to a single tree.",
+            "C": "A single Decision Tree cannot handle categorical data, whereas Random Forests can.",
+            "D": "Random Forests automatically drop 50% of the training data to speed up processing."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 12,
+          "question": "In SQL, what is the purpose of the GROUP BY clause?",
+          "options": {
+            "A": "To sort the final output in ascending or descending order.",
+            "B": "To aggregate rows that share the same values in specified columns into summary rows.",
+            "C": "To filter the results based on a specific condition before aggregation.",
+            "D": "To join multiple tables together without specifying a primary key."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 13,
+          "question": "When evaluating a classification model for a highly imbalanced dataset (e.g., fraud detection where 99% of transactions are legitimate), why is Accuracy a misleading metric?",
+          "options": {
+            "A": "Accuracy cannot be calculated for datasets with more than 10,000 rows.",
+            "B": "A model that simply predicts the majority class for every instance will have a very high accuracy, despite failing to detect any actual fraud.",
+            "C": "Accuracy requires the target variable to be continuous, not categorical.",
+            "D": "Imbalanced datasets cause the accuracy calculation to return negative numbers."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 14,
+          "question": "What does a high bias and low variance indicate in a Machine Learning model?",
+          "options": {
+            "A": "The model is overfitting the training data and will perform poorly on new data.",
+            "B": "The model is underfitting the training data, meaning it is too simple to capture the underlying patterns.",
+            "C": "The model has perfectly learned the relationship between features and the target.",
+            "D": "The model requires more training data to increase its variance."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 15,
+          "question": "In Python, what is the primary purpose of a generator function (using the yield keyword)?",
+          "options": {
+            "A": "To generate random numbers cryptographically securely.",
+            "B": "To produce a sequence of values lazily over time, saving memory compared to returning a full list all at once.",
+            "C": "To automatically compile Python code into machine code before execution.",
+            "D": "To force a function to run on a separate background thread."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 16,
+          "question": "Why is it considered a best practice to use environment variables for sensitive information like database passwords?",
+          "options": {
+            "A": "Environment variables are automatically encrypted by the operating system.",
+            "B": "It prevents hardcoding secrets directly into the source code, reducing the risk of accidentally exposing them in version control systems like GitHub.",
+            "C": "Python cannot read hardcoded strings longer than 16 characters.",
+            "D": "It speeds up the database connection time by bypassing the DNS lookup."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 17,
+          "question": "When performing Exploratory Data Analysis (EDA), why is visualizing data distributions important before applying statistical tests?",
+          "options": {
+            "A": "Statistical tests often assume specific underlying distributions (like normality); visualizing the data helps verify if these assumptions hold true.",
+            "B": "Visualizations automatically clean missing values from the dataset.",
+            "C": "Machine learning models can only accept image files as input.",
+            "D": "It guarantees that the dataset has zero outliers."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 18,
+          "question": "What is the conceptual difference between a primary key and a foreign key in a relational database?",
+          "options": {
+            "A": "A primary key uniquely identifies a record within its own table, while a foreign key links to the primary key of another table to establish a relationship.",
+            "B": "A primary key can contain NULL values, but a foreign key cannot.",
+            "C": "A primary key is used for numeric data, while a foreign key is used for text data.",
+            "D": "Foreign keys are only used in NoSQL databases."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 19,
+          "question": "In Git, what happens when you create a new branch?",
+          "options": {
+            "A": "Git copies all files in the repository to a new directory on your hard drive.",
+            "B": "Git creates a new pointer to the current commit, allowing you to diverge from the main line of development without affecting it immediately.",
+            "C": "Git automatically deletes the previous branch to save space.",
+            "D": "Git locks the main branch so no other developers can commit to it."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 20,
+          "question": "Which of the following best describes the Gradient Descent optimization algorithm used in Machine Learning?",
+          "options": {
+            "A": "An algorithm that randomly guesses model parameters until it achieves 100% accuracy.",
+            "B": "An iterative algorithm that adjusts model parameters in the direction of the steepest decrease of the cost function to find the minimum error.",
+            "C": "A sorting algorithm used to organize training data from smallest to largest.",
+            "D": "A method for automatically translating Python code into SQL queries."
+          },
+          "correct_answer": "B"
+        }
+      ],
+      "short_answer_questions": [
+        "Explain why standardizing or normalizing features is critical before training a K-Nearest Neighbors (KNN) model, but generally unnecessary for a Decision Tree model.",
+        "In the context of version control with Git, describe a scenario where a merge conflict would occur and explain the conceptual steps required to resolve it.",
+        "You are analyzing a dataset in Pandas and notice that applying a custom Python function via .apply() is significantly slower than using built-in Pandas methods. Explain the underlying architectural reason for this performance difference.",
+        "Discuss the trade-off between Bias and Variance in Machine Learning. How does increasing the complexity of a model affect this trade-off?",
+        "Explain the difference between an INNER JOIN and a LEFT JOIN in SQL. Give a practical business example of when you would explicitly choose a LEFT JOIN over an INNER JOIN."
+      ],
+      "rubric": {
+        "pass_criteria": [
+          "MCQs: Scores 15/20 (75%) or higher",
+          "Short Answers: Demonstrates a clear conceptual understanding of why algorithms and tools work, not just how to type the syntax. Explanations correctly identify underlying mechanisms (e.g., vectorized operations vs. loops, bias-variance tradeoff)",
+          "Project: Code executes without critical errors",
+          "Project: Data pipeline successfully ingests, cleans, and stores data in a SQL database",
+          "Project: A baseline ML model is trained and evaluation metrics are clearly outputted",
+          "Project: GitHub repository includes a descriptive README and logical commit history"
+        ],
+        "fail_criteria": [
+          "MCQs: Scores below 15/20",
+          "Short Answers: Answers rely on memorized syntax without explaining the underlying concepts, or contain fundamental misunderstandings of core ML/Data concepts (e.g., confusing supervised and unsupervised learning)",
+          "Project: Code fails to run or throws unhandled exceptions",
+          "Project: Data is not properly cleaned or stored in the database",
+          "Project: ML model fails to train or evaluation metrics are omitted",
+          "Project: GitHub repository is messy, lacks a README, or consists of a single massive commit"
+        ]
+      }
+    },
+    {
+      "checkpoint": 2,
+      "due_date": "2026-10-24",
+      "week": 19,
+      "timing_note": "End of week 20 (after LangChain and GenAI)",
+      "project_brief": {
+        "title": "Containerized LLM API",
+        "objective": "Build a REST API using FastAPI that wraps a Generative AI model (via an LLM provider's API) and deploy it locally using Docker. The API must include basic prompt engineering guardrails to prevent malicious inputs.",
+        "stack_suggestion": "FastAPI, Docker, Python, LangChain (optional for prompt formatting), OpenAI/Anthropic API",
+        "deliverables": [
+          "A GitHub repository with a main.py containing the FastAPI application",
+          "A Dockerfile and requirements.txt to containerize the application",
+          "A .env.example file showing required environment variables (without real keys)",
+          "API documentation (auto-generated by FastAPI) accessible via the /docs endpoint"
+        ],
+        "done_looks_like": [
+          "The application can be built and run successfully using a single docker run command",
+          "The API accepts a JSON payload with a user prompt and returns a structured JSON response from the LLM",
+          "The API implements a guardrail: if the user prompt contains specific restricted keywords (e.g., 'ignore previous instructions', 'system prompt'), the API rejects the request with a 400 Bad Request status",
+          "The code uses environment variables for the LLM API key",
+          "The entire project can be completed in one weekend"
+        ]
+      },
+      "mcq_exam": [
+        {
+          "q": 1,
+          "question": "In a Convolutional Neural Network (CNN), what is the primary purpose of a pooling layer (e.g., MaxPooling)?",
+          "options": {
+            "A": "To increase the number of parameters in the network, allowing it to learn more complex features.",
+            "B": "To reduce the spatial dimensions of the feature maps, decreasing computational cost and providing translation invariance.",
+            "C": "To apply a non-linear activation function to the output of the convolutional layer.",
+            "D": "To convert the 2D image data into a 1D array for the final dense layers."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 2,
+          "question": "What is the 'vanishing gradient' problem in Deep Learning?",
+          "options": {
+            "A": "When the learning rate is set too high, causing the model to overshoot the optimal weights.",
+            "B": "When the model runs out of training data and the loss function stops improving.",
+            "C": "When gradients become infinitesimally small as they are backpropagated through many layers, preventing early layers from learning effectively.",
+            "D": "When the GPU memory is exhausted during backpropagation, causing the training to crash."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 3,
+          "question": "Which activation function is most commonly used in the hidden layers of deep neural networks to mitigate the vanishing gradient problem?",
+          "options": {
+            "A": "Sigmoid",
+            "B": "Tanh",
+            "C": "ReLU (Rectified Linear Unit)",
+            "D": "Softmax"
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 4,
+          "question": "In the context of Cloud Computing (e.g., AWS), what is the primary difference between IaaS (Infrastructure as a Service) and PaaS (Platform as a Service)?",
+          "options": {
+            "A": "IaaS provides raw computing resources (like virtual machines), while PaaS provides a managed environment (like a managed database or app runner) where the underlying OS is hidden.",
+            "B": "IaaS is exclusively for storage, while PaaS is exclusively for compute.",
+            "C": "IaaS is always free, whereas PaaS requires a monthly subscription.",
+            "D": "IaaS allows you to deploy code, while PaaS only allows you to store data."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 5,
+          "question": "What is the core architectural advantage of FastAPI over older Python web frameworks like Flask?",
+          "options": {
+            "A": "FastAPI uses a synchronous execution model, making it easier to debug.",
+            "B": "FastAPI natively supports asynchronous programming (async/await) and uses Pydantic for automatic data validation and serialization based on Python type hints.",
+            "C": "FastAPI includes a built-in relational database, eliminating the need for external SQL databases.",
+            "D": "FastAPI automatically generates front-end React code based on the backend routes."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 6,
+          "question": "In Docker, what is the conceptual difference between an Image and a Container?",
+          "options": {
+            "A": "An Image is a running instance of a Container.",
+            "B": "A Container is a read-only template, while an Image is the writable execution state.",
+            "C": "An Image is a static, read-only template containing the application and its dependencies, while a Container is a runnable instance of that Image.",
+            "D": "Images are used for Linux applications, while Containers are used for Windows applications."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 7,
+          "question": "Why is a Dockerfile crucial in modern software engineering?",
+          "options": {
+            "A": "It automatically writes the application code based on plain English instructions.",
+            "B": "It provides a declarative, version-controllable recipe for building a consistent, reproducible environment for the application to run in, regardless of the host machine.",
+            "C": "It encrypts the source code so it cannot be stolen when deployed to the cloud.",
+            "D": "It replaces the need for version control systems like Git."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 8,
+          "question": "What is the primary function of the 'Attention Mechanism' in Transformer architectures (like GPT)?",
+          "options": {
+            "A": "It forces the model to process input tokens sequentially, one at a time.",
+            "B": "It allows the model to dynamically weigh the importance of different words in the input sequence when processing a specific word, enabling it to capture long-range dependencies.",
+            "C": "It alerts the user when the model is generating factually incorrect information.",
+            "D": "It compresses the input text into a single, fixed-size vector representation."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 9,
+          "question": "In Large Language Models, what does the 'Temperature' parameter control during generation?",
+          "options": {
+            "A": "The physical temperature of the GPU required to run the model.",
+            "B": "The maximum number of tokens the model is allowed to generate.",
+            "C": "The randomness or creativity of the output; higher values produce more diverse responses, while lower values produce more deterministic responses.",
+            "D": "The speed at which the model generates text."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 10,
+          "question": "What is 'Prompt Injection' in the context of LLM security?",
+          "options": {
+            "A": "A technique to fine-tune an LLM using a small dataset of specialized prompts.",
+            "B": "A vulnerability where a malicious user crafts input that overrides or bypasses the developer's original system instructions, tricking the LLM into performing unintended actions.",
+            "C": "A method for speeding up API calls by injecting prompts directly into the model's memory.",
+            "D": "The process of automatically generating multiple prompt variations to test model accuracy."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 11,
+          "question": "Why are 'Guardrails' necessary when deploying Generative AI applications to production?",
+          "options": {
+            "A": "To ensure the LLM always agrees with the user's opinions.",
+            "B": "To enforce output constraints, filter toxic or sensitive content, and prevent the model from executing unauthorized actions or hallucinating critical facts.",
+            "C": "To prevent the LLM from accessing the internet.",
+            "D": "To automatically format the LLM's output as an HTML web page."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 12,
+          "question": "In the LangChain framework, what is the role of a 'Chain'?",
+          "options": {
+            "A": "To encrypt data before sending it to the LLM provider.",
+            "B": "To link multiple components together, such as connecting a Prompt Template to an LLM and then to an Output Parser, creating a cohesive workflow.",
+            "C": "To permanently store the conversation history in a relational database.",
+            "D": "To manage the physical networking infrastructure required for distributed model training."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 13,
+          "question": "What is the primary purpose of a 'System Prompt' (or System Message) when interacting with an instruction-tuned LLM?",
+          "options": {
+            "A": "To provide the specific user query that needs to be answered.",
+            "B": "To establish the persona, core instructions, and behavioral boundaries for the LLM before it processes any user input.",
+            "C": "To define the API key and authentication credentials.",
+            "D": "To summarize the previous conversation history."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 14,
+          "question": "Why is 'Few-Shot Prompting' often more effective than 'Zero-Shot Prompting' for complex tasks?",
+          "options": {
+            "A": "Few-shot prompting uses fewer tokens, reducing API costs.",
+            "B": "Few-shot prompting provides the model with concrete examples of the desired input-output format, helping it understand the specific pattern and constraints of the task.",
+            "C": "Few-shot prompting bypasses the model's safety filters.",
+            "D": "Few-shot prompting automatically fine-tunes the model's internal weights on the provided examples."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 15,
+          "question": "When using AWS S3 (Simple Storage Service), what is a 'Bucket'?",
+          "options": {
+            "A": "A virtual machine instance used for processing data.",
+            "B": "A relational database table optimized for fast querying.",
+            "C": "A logical container used to store objects (files and metadata) in the cloud.",
+            "D": "A load balancer that distributes traffic across multiple servers."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 16,
+          "question": "What is the fundamental concept behind 'Transfer Learning' in Deep Learning?",
+          "options": {
+            "A": "Transferring data from a local machine to a cloud server for faster processing.",
+            "B": "Taking a model trained on a large, general dataset and fine-tuning it on a smaller, specific dataset to leverage the previously learned feature representations.",
+            "C": "Converting a model written in Python to C++ for deployment.",
+            "D": "Training a model simultaneously on multiple GPUs."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 17,
+          "question": "In FastAPI, what is the purpose of Pydantic models?",
+          "options": {
+            "A": "To define the database schema for SQLAlchemy.",
+            "B": "To handle routing and HTTP request methods (GET, POST).",
+            "C": "To define the structure, types, and validation rules for incoming request bodies and outgoing response payloads.",
+            "D": "To serve static HTML and CSS files to the client."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 18,
+          "question": "What is the main advantage of using a multi-stage Docker build?",
+          "options": {
+            "A": "It allows you to run multiple applications within a single container.",
+            "B": "It reduces the final image size by separating the build environment (compilers, SDKs) from the runtime environment, copying only the necessary artifacts to the final image.",
+            "C": "It automatically pushes the image to multiple container registries simultaneously.",
+            "D": "It bypasses the need for a Dockerfile entirely."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 19,
+          "question": "In the context of LLMs, what is a 'Token'?",
+          "options": {
+            "A": "A cryptographic key used to authenticate API requests.",
+            "B": "The fundamental unit of text processed by the model, which can be a word, a part of a word, or a single character.",
+            "C": "A specific type of neural network layer used for text generation.",
+            "D": "A billing unit that represents one hour of GPU compute time."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 20,
+          "question": "Which of the following is a key limitation of relying solely on an LLM's internal knowledge (parametric memory) to answer factual questions?",
+          "options": {
+            "A": "LLMs cannot generate text in languages other than English.",
+            "B": "LLMs are unable to understand context or nuance in complex questions.",
+            "C": "The model's knowledge is frozen at its training cutoff date, and it may hallucinate plausible-sounding but incorrect information when asked about recent or niche topics.",
+            "D": "LLMs require a continuous internet connection to access their internal memory."
+          },
+          "correct_answer": "C"
+        }
+      ],
+      "short_answer_questions": [
+        "Explain the architectural difference between a traditional Recurrent Neural Network (RNN) and a Transformer model. Why did Transformers largely replace RNNs for natural language processing tasks?",
+        "Describe the concept of 'Prompt Injection.' Provide a hypothetical example of how a malicious user might exploit a poorly secured customer service chatbot using this technique.",
+        "You are deploying a FastAPI application. Explain why you would use Docker to containerize this application rather than simply running it directly on a virtual machine (e.g., an AWS EC2 instance) using python main.py.",
+        "In LangChain, what is the conceptual difference between a 'Prompt Template' and an 'Output Parser'? How do they work together in a typical LLM chain?",
+        "Explain the difference between Zero-Shot, One-Shot, and Few-Shot prompting. Under what circumstances would you choose Few-Shot prompting over Zero-Shot?"
+      ],
+      "notes": "The roadmap's Ref 13 (MIT 6.S191) has been replaced with the 2026 edition playlist. Ref 16 (FastAPI) has a title mismatch (actual: Bitfumes 2021); rely on Ref 17 (Traversy Media) instead.",
+      "rubric": {
+        "pass_criteria": [
+          "MCQs: Scores 15/20 (75%) or higher",
+          "Short Answers: Demonstrates a clear understanding of the architectural shifts in AI (e.g., RNN to Transformer) and the practical reasons for using modern engineering tools (e.g., Docker, FastAPI). Explanations of prompt injection and LangChain components are accurate and conceptual",
+          "Project: FastAPI application runs locally via Docker without errors",
+          "Project: API successfully communicates with an LLM provider and returns structured JSON",
+          "Project: The implemented guardrail successfully blocks requests containing the restricted keywords while allowing normal requests",
+          "Project: Sensitive API keys are handled securely via environment variables, not hardcoded"
+        ],
+        "fail_criteria": [
+          "MCQs: Scores below 15/20",
+          "Short Answers: Answers demonstrate fundamental misunderstandings of deep learning architectures, containerization, or LLM vulnerabilities",
+          "Project: Docker container fails to build or run",
+          "Project: API crashes or fails to return structured JSON",
+          "Project: Guardrails are missing or easily bypassed with simple variations of the restricted keywords",
+          "Project: API keys are hardcoded in the source code or pushed to the repository"
+        ]
+      }
+    },
+    {
+      "checkpoint": 3,
+      "due_date": "2026-12-26",
+      "week": 28,
+      "timing_note": "End of week 28 (after agentic frameworks)",
+      "project_brief": {
+        "title": "Agentic RAG System",
+        "objective": "Build a Retrieval-Augmented Generation (RAG) system powered by an Agentic Framework (LangGraph). The agent should be able to decide whether to search a local vector database for information or use a fallback tool (like a web search or a calculator) based on the user's query.",
+        "stack_suggestion": "Python, LangChain, LangGraph, ChromaDB (or Pinecone/FAISS), OpenAI/Anthropic API, Tavily Search API (optional)",
+        "deliverables": [
+          "A GitHub repository containing the complete source code",
+          "A script to ingest a set of provided documents (e.g., PDFs or text files) into the vector database",
+          "A LangGraph implementation defining the agent's state, nodes (e.g., 'retrieve', 'generate', 'web_search'), and conditional edges",
+          "A simple command-line interface (CLI) or Streamlit app to interact with the agent"
+        ],
+        "done_looks_like": [
+          "The vector database successfully ingests and chunks the source documents",
+          "The LangGraph agent can answer questions by retrieving context from the vector database",
+          "If asked a question outside the scope of the documents (or requiring calculation), the agent successfully routes the request to the appropriate external tool",
+          "The agent's decision-making process (which node it visits) is logged or printed to the console",
+          "The entire project can be completed in one weekend"
+        ]
+      },
+      "mcq_exam": [
+        {
+          "q": 1,
+          "question": "In a Retrieval-Augmented Generation (RAG) system, what is the primary purpose of an Embedding Model?",
+          "options": {
+            "A": "To translate text from one language to another before retrieval.",
+            "B": "To convert text into dense numerical vectors so that semantic similarity can be calculated mathematically.",
+            "C": "To generate the final human-readable response after retrieval.",
+            "D": "To compress the text data to save storage space on the hard drive."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 2,
+          "question": "What mathematical operation is most commonly used in Vector Databases to find the most relevant documents for a given query?",
+          "options": {
+            "A": "Matrix Multiplication",
+            "B": "Fast Fourier Transform (FFT)",
+            "C": "Cosine Similarity",
+            "D": "Principal Component Analysis (PCA)"
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 3,
+          "question": "Why is 'chunking' a critical step when preparing documents for a RAG system?",
+          "options": {
+            "A": "LLMs have strict context window limits, and embedding entire large documents dilutes the semantic meaning of specific paragraphs.",
+            "B": "Chunking encrypts the data so the LLM provider cannot read it.",
+            "C": "Vector databases cannot store text; they can only store numbers.",
+            "D": "Chunking automatically removes grammatical errors from the source text."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 4,
+          "question": "In LangChain's LCEL (LangChain Expression Language), what does the pipe operator | represent?",
+          "options": {
+            "A": "A logical OR operation between two boolean variables.",
+            "B": "A mechanism to chain runnables together, passing the output of one component directly as the input to the next.",
+            "C": "A command to execute two LLM calls in parallel.",
+            "D": "A syntax error; LCEL does not use the pipe operator."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 5,
+          "question": "What is the defining characteristic of an 'Agent' in modern AI frameworks compared to a standard LLM Chain?",
+          "options": {
+            "A": "An agent runs on a local machine rather than in the cloud.",
+            "B": "An agent uses an LLM as a reasoning engine to dynamically determine which actions to take and in what order, rather than following a hardcoded sequence.",
+            "C": "An agent is explicitly trained to mimic human emotion.",
+            "D": "An agent only outputs JSON, whereas a chain outputs plain text."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 6,
+          "question": "In LangGraph, what is the purpose of the 'State'?",
+          "options": {
+            "A": "To define the geographical location of the server hosting the graph.",
+            "B": "To maintain a shared, typed data structure that is passed between nodes and updated as the graph executes.",
+            "C": "To freeze the LLM's weights so they cannot be modified during execution.",
+            "D": "To track the billing costs of the API calls made during the graph's execution."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 7,
+          "question": "How does a 'Conditional Edge' function within a LangGraph architecture?",
+          "options": {
+            "A": "It randomly selects the next node to introduce variability into the agent's responses.",
+            "B": "It uses a function (often involving an LLM decision) to determine the next node to execute based on the current state.",
+            "C": "It permanently disconnects two nodes if an error occurs.",
+            "D": "It ensures that the graph only executes if the user has a premium subscription."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 8,
+          "question": "What is the primary goal of 'Fine-Tuning' an LLM compared to using RAG?",
+          "options": {
+            "A": "Fine-tuning provides the model with access to real-time, up-to-date internet search results.",
+            "B": "Fine-tuning modifies the model's internal weights to adapt its tone, style, or specific domain knowledge, whereas RAG provides external context without changing the weights.",
+            "C": "Fine-tuning reduces the physical size of the model on disk.",
+            "D": "Fine-tuning allows the model to run without a GPU."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 9,
+          "question": "Which technique allows for efficient fine-tuning of massive LLMs on consumer-grade hardware by freezing most of the model's weights and only training a small number of new parameters?",
+          "options": {
+            "A": "RAG (Retrieval-Augmented Generation)",
+            "B": "LoRA (Low-Rank Adaptation)",
+            "C": "RLHF (Reinforcement Learning from Human Feedback)",
+            "D": "PCA (Principal Component Analysis)"
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 10,
+          "question": "In the context of Graph RAG, how does it differ conceptually from standard Vector RAG?",
+          "options": {
+            "A": "Graph RAG uses images instead of text.",
+            "B": "Graph RAG extracts entities and relationships into a Knowledge Graph, allowing the system to answer complex multi-hop queries that span across different documents.",
+            "C": "Graph RAG is significantly faster because it avoids using embeddings entirely.",
+            "D": "Graph RAG relies solely on SQL databases."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 11,
+          "question": "What is the primary purpose of RLHF (Reinforcement Learning from Human Feedback) in training models like ChatGPT?",
+          "options": {
+            "A": "To teach the model how to write Python code.",
+            "B": "To align the model's behavior with human preferences (e.g., helpfulness, harmlessness, honesty) by training a reward model based on human rankings.",
+            "C": "To increase the model's context window to 1 million tokens.",
+            "D": "To allow the model to automatically search the web."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 12,
+          "question": "When evaluating a RAG system, what does the metric 'Faithfulness' (or 'Hallucination Rate') measure?",
+          "options": {
+            "A": "How quickly the system retrieves documents from the vector database.",
+            "B": "Whether the generated answer is entirely supported by the retrieved context, regardless of whether the context itself is factually true.",
+            "C": "How closely the generated answer matches the exact wording of the original document.",
+            "D": "The percentage of users who rate the answer as 'helpful'."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 13,
+          "question": "What is the purpose of 'Tool Calling' (or Function Calling) in modern LLM APIs?",
+          "options": {
+            "A": "To allow the user to call the LLM API via a telephone network.",
+            "B": "To enable the LLM to output a structured JSON object specifying a function name and arguments, which the application can then execute on the LLM's behalf.",
+            "C": "To automatically debug syntax errors in Python code.",
+            "D": "To prevent the LLM from generating any code."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 14,
+          "question": "In LangChain, what is a 'Document Loader'?",
+          "options": {
+            "A": "A tool that automatically writes documentation for your Python code.",
+            "B": "A component responsible for ingesting data from various sources (e.g., PDFs, URLs, databases) and converting it into a standardized Document format.",
+            "C": "A script that uploads your local files to AWS S3.",
+            "D": "A machine learning model that summarizes long texts."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 15,
+          "question": "Why might you choose ChromaDB over a traditional relational database like PostgreSQL for a RAG application?",
+          "options": {
+            "A": "ChromaDB is optimized for storing and performing similarity searches on high-dimensional vector embeddings, which is inefficient in standard SQL databases.",
+            "B": "ChromaDB automatically translates text into multiple languages.",
+            "C": "ChromaDB is a front-end framework for building chat interfaces.",
+            "D": "PostgreSQL cannot store text strings longer than 255 characters."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 16,
+          "question": "What is 'Semantic Caching' in the context of LLM applications?",
+          "options": {
+            "A": "Storing the LLM's weights in RAM for faster inference.",
+            "B": "Caching LLM responses based on the semantic similarity of the user's prompt to previous prompts, reducing API costs and latency for similar questions.",
+            "C": "Automatically clearing the browser cache after every chat session.",
+            "D": "Using an LLM to predict what the user will type next."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 17,
+          "question": "In a LangGraph implementation, what happens when a node returns a dictionary containing keys that match the State schema?",
+          "options": {
+            "A": "The graph immediately terminates execution.",
+            "B": "The graph overwrites the entire State with the new dictionary.",
+            "C": "The returned values are used to update the existing State according to the reducer functions defined in the State schema (e.g., appending to a list or overwriting a string).",
+            "D": "The dictionary is sent directly to the user as the final output."
+          },
+          "correct_answer": "C"
+        },
+        {
+          "q": 18,
+          "question": "What is the 'Lost in the Middle' phenomenon observed in Large Language Models?",
+          "options": {
+            "A": "When the model forgets the instructions provided in the system prompt.",
+            "B": "When the model's performance degrades significantly when trying to retrieve information located in the middle of a very long context window.",
+            "C": "When the model stops generating text halfway through a sentence.",
+            "D": "When the API connection drops during a long generation request."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 19,
+          "question": "How does 'Self-Reflection' or 'Self-Correction' work in an agentic workflow?",
+          "options": {
+            "A": "The agent uses a mirror to analyze its physical environment.",
+            "B": "The agent generates an output, passes it to an evaluation node (often another LLM prompt), and if the output is deemed flawed, loops back to regenerate or fix it before presenting it to the user.",
+            "C": "The agent automatically deletes its own code if it detects a bug.",
+            "D": "The agent asks the user to rate its performance after every interaction."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 20,
+          "question": "When evaluating an LLM, what is an 'Eval'?",
+          "options": {
+            "A": "A mathematical formula used to calculate the loss during backpropagation.",
+            "B": "A systematic framework or dataset used to quantitatively or qualitatively measure the performance, safety, or accuracy of an LLM on specific tasks.",
+            "C": "A specific type of activation function used in Transformer models.",
+            "D": "The final stage of deploying a model to a cloud server."
+          },
+          "correct_answer": "B"
+        }
+      ],
+      "short_answer_questions": [
+        "Describe the mathematical concept behind Cosine Similarity. Why is it preferred over Euclidean Distance for measuring the similarity between text embeddings?",
+        "In a RAG system, what is the difference between 'Context Relevance' and 'Answer Relevance' when evaluating the system's performance?",
+        "Explain the core difference between a sequential LangChain LCEL pipeline and a cyclical LangGraph agent. Provide a use case where LangGraph would be strictly necessary.",
+        "What is LoRA (Low-Rank Adaptation) and how does it solve the hardware constraints traditionally associated with fine-tuning massive Large Language Models?",
+        "Describe a scenario where standard Vector RAG would fail to answer a user's query accurately, but Graph RAG (using a Knowledge Graph) would succeed."
+      ],
+      "notes": "Ref 25 (LLM Fine-Tuning) had a URL typo. The corrected URL is: https://www.youtube.com/watch?v=CcrC5zSv1iA (capital C). The full 12-hour freeCodeCamp course is accessible there.",
+      "rubric": {
+        "pass_criteria": [
+          "MCQs: Scores 15/20 (75%) or higher",
+          "Short Answers: Demonstrates deep conceptual understanding of embeddings, agentic routing (LangGraph vs chains), and advanced RAG concepts (evaluations, Graph RAG). Explanations of mathematical concepts (like Cosine Similarity) are accurate",
+          "Project: Vector database successfully ingests and chunks data",
+          "Project: LangGraph implementation correctly routes queries based on context (e.g., uses RAG for document questions, uses external tool for math/search)",
+          "Project: The agent's state management is implemented correctly, allowing for multi-turn or cyclical reasoning if needed",
+          "Project: Code is clean and well-documented"
+        ],
+        "fail_criteria": [
+          "MCQs: Scores below 15/20",
+          "Short Answers: Confuses fine-tuning with RAG, misunderstands the purpose of embeddings, or cannot explain the difference between a chain and an agent",
+          "Project: Agent always defaults to a single path regardless of the prompt",
+          "Project: Vector database fails to return relevant context",
+          "Project: LangGraph state is mismanaged, causing infinite loops or crashes",
+          "Project: Hardcoded API keys or messy, undocumented code"
+        ]
+      }
+    },
+    {
+      "checkpoint": 4,
+      "due_date": "2027-02-13",
+      "week": 35,
+      "timing_note": "End of week 40 (final)",
+      "project_brief": {
+        "title": "Production-Ready Multi-Agent System with MLOps",
+        "objective": "Build, deploy, and monitor a multi-agent system (using CrewAI or Anthropic's MCP) that performs a complex research and summarization task. The system must be deployed via a CI/CD pipeline and include basic telemetry/monitoring.",
+        "stack_suggestion": "Python, CrewAI (or Claude API + MCP), Docker, GitHub Actions, LangSmith (or similar observability tool), AWS/Heroku/Render for hosting",
+        "deliverables": [
+          "A GitHub repository with the complete application code and a .github/workflows directory containing a CI/CD pipeline script",
+          "The multi-agent application code, configured to trace LLM calls using an observability platform (e.g., LangSmith)",
+          "A comprehensive README.md documenting the architecture, how to run it locally, and how the CI/CD pipeline works",
+          "A short architectural diagram (can be an image or mermaid.js) showing the flow of data between the user, agents, tools, and the LLM provider"
+        ],
+        "done_looks_like": [
+          "Pushing code to the main branch automatically triggers the CI/CD pipeline (e.g., running tests, building a Docker image)",
+          "The multi-agent system successfully coordinates at least two distinct agents (e.g., a 'Researcher' agent that gathers data and a 'Writer' agent that formats it) to complete a task",
+          "All LLM interactions are successfully logged to an observability dashboard, showing token usage, latency, and the exact prompts/responses",
+          "The project demonstrates an understanding of production-level engineering, including error handling, secret management, and clear documentation",
+          "The entire project can be completed in one weekend"
+        ]
+      },
+      "mcq_exam": [
+        {
+          "q": 1,
+          "question": "In a Multi-Agent system (like CrewAI), what is the primary advantage of defining distinct 'Roles' for different agents?",
+          "options": {
+            "A": "It reduces the total number of API calls made to the LLM.",
+            "B": "It forces the LLM to adopt specific personas and focuses its attention on a narrow set of tools and objectives, leading to higher quality and more reliable outputs for complex tasks.",
+            "C": "It allows the system to bypass the LLM's safety filters.",
+            "D": "It automatically translates the agents' outputs into multiple languages."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 2,
+          "question": "What is the Model Context Protocol (MCP) introduced by Anthropic?",
+          "options": {
+            "A": "A new programming language designed specifically for writing LLM prompts.",
+            "B": "An open standard that enables secure, two-way connections between AI models and external data sources or tools, allowing models to interact with local files, databases, and APIs.",
+            "C": "A cryptographic protocol used to encrypt training data before it is sent to the cloud.",
+            "D": "A billing protocol that calculates the cost of Claude API calls based on CPU usage."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 3,
+          "question": "In the context of MLOps, what is the primary purpose of a tool like DVC (Data Version Control)?",
+          "options": {
+            "A": "To track changes to the application's source code, replacing Git.",
+            "B": "To track and version large datasets and machine learning models, which are often too large or binary to be effectively managed by Git alone.",
+            "C": "To automatically deploy Docker containers to Kubernetes clusters.",
+            "D": "To monitor the latency of API calls in a production environment."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 4,
+          "question": "What is the core philosophy behind CI/CD (Continuous Integration / Continuous Deployment)?",
+          "options": {
+            "A": "Developers should only merge their code into the main branch once every six months to ensure stability.",
+            "B": "Code changes should be frequently and automatically built, tested, and deployed to production, reducing integration problems and allowing for rapid iteration.",
+            "C": "All software testing should be performed manually by a dedicated QA team before deployment.",
+            "D": "Applications should be deployed to a single, massive server rather than distributed across multiple containers."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 5,
+          "question": "In a GitHub Actions workflow, what triggers a 'job' to run?",
+          "options": {
+            "A": "An 'Event' (such as a push to a specific branch, a pull request, or a scheduled time).",
+            "B": "A manual phone call to GitHub support.",
+            "C": "The completion of a completely unrelated repository's workflow.",
+            "D": "A specific keyword typed into the application's user interface."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 6,
+          "question": "Why is LLM Observability (using tools like LangSmith or Phoenix) crucial in a production environment?",
+          "options": {
+            "A": "It automatically rewrites inefficient prompts to save money.",
+            "B": "It provides visibility into the 'black box' of LLM calls, allowing developers to debug complex agent trajectories, monitor token costs, track latency, and analyze user interactions.",
+            "C": "It trains a new LLM from scratch based on the user's local files.",
+            "D": "It prevents users from asking the LLM inappropriate questions."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 7,
+          "question": "What is 'Semantic Caching' designed to optimize in an AI application?",
+          "options": {
+            "A": "The amount of hard drive space used by the vector database.",
+            "B": "Both the latency and cost of LLM API calls by serving cached responses for user queries that are semantically similar to previously answered queries, rather than requiring exact string matches.",
+            "C": "The speed at which Docker images are built during the CI/CD pipeline.",
+            "D": "The physical temperature of the servers hosting the application."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 8,
+          "question": "When designing an AI system, what is the primary benefit of using an 'Intelligent LLM Router'?",
+          "options": {
+            "A": "It automatically connects the application to the user's home Wi-Fi network.",
+            "B": "It dynamically routes user queries to different LLMs (e.g., sending simple queries to a fast, cheap model like a small fast model (e.g., Claude Haiku 4.5), and complex queries to a larger model like Claude Sonnet 5) based on the query's complexity, optimizing for both cost and performance.",
+            "C": "It translates Python code into JavaScript for front-end deployment.",
+            "D": "It permanently stores all user data on a decentralized blockchain."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 9,
+          "question": "In CrewAI, what is a 'Task'?",
+          "options": {
+            "A": "A specific, actionable assignment given to an Agent, which includes a description, expected output, and the tools available to complete it.",
+            "B": "The underlying LLM model used to generate text.",
+            "C": "A physical server dedicated to running the agentic framework.",
+            "D": "The final billing invoice generated by the LLM provider."
+          },
+          "correct_answer": "A"
+        },
+        {
+          "q": 10,
+          "question": "What is the primary difference between a 'Sequential' process and a 'Hierarchical' process in a multi-agent framework?",
+          "options": {
+            "A": "Sequential processes run all agents simultaneously, while hierarchical processes run them one at a time.",
+            "B": "Sequential processes execute tasks in a strict, predefined linear order, whereas hierarchical processes use a 'Manager' agent to dynamically assign tasks and evaluate outcomes.",
+            "C": "Sequential processes are only used for image generation, while hierarchical processes are used for text.",
+            "D": "Sequential processes require an internet connection, while hierarchical processes run offline."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 11,
+          "question": "Why might a developer choose to use Anthropic's Claude Sonnet 5 over a smaller, open-source model for a complex coding task?",
+          "options": {
+            "A": "Claude Sonnet 5 is completely free to use for commercial applications.",
+            "B": "Claude Sonnet 5 has demonstrated state-of-the-art performance on complex reasoning and coding benchmarks, often surpassing smaller models in accuracy and nuance.",
+            "C": "Claude Sonnet 5 can be run locally on a smartphone without an internet connection.",
+            "D": "Claude Sonnet 5 does not require any prompt engineering."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 12,
+          "question": "What is the purpose of the system parameter in the Anthropic Messages API?",
+          "options": {
+            "A": "To define the operating system (e.g., Windows or Linux) the API is running on.",
+            "B": "To provide top-level instructions, persona details, and behavioral constraints that guide the model's overall behavior throughout the conversation.",
+            "C": "To specify the maximum number of tokens the model can generate.",
+            "D": "To authenticate the user's API key."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 13,
+          "question": "In the context of Multimodal AI, what does it mean for a model to be 'natively multimodal'?",
+          "options": {
+            "A": "The model can only process text that has been translated into multiple languages.",
+            "B": "The model was trained from the ground up on diverse data types (e.g., text, images, audio) simultaneously, allowing it to understand and reason across modalities without relying on separate, bolt-on transcription or OCR models.",
+            "C": "The model automatically generates a graphical user interface (GUI) for the application.",
+            "D": "The model requires multiple GPUs to function."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 14,
+          "question": "When preparing for an AI Engineer system design interview, why is it important to define the API contracts and data schemas early in the design process?",
+          "options": {
+            "A": "It proves to the interviewer that you have memorized the entire SQL standard.",
+            "B": "It establishes clear boundaries and communication protocols between different microservices or components, ensuring the system is modular, scalable, and understandable.",
+            "C": "It automatically generates the front-end code for the application.",
+            "D": "It prevents the interviewer from asking any further questions."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 15,
+          "question": "What is the primary function of a tool like n8n in the AI ecosystem?",
+          "options": {
+            "A": "To train massive LLMs from scratch using distributed computing.",
+            "B": "To provide a visual, node-based workflow automation platform that easily integrates AI models with hundreds of external APIs and services, often requiring little to no code.",
+            "C": "To securely store user passwords and API keys.",
+            "D": "To compress video files before they are processed by a multimodal model."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 16,
+          "question": "In MLOps, what is 'Model Drift' (or Concept Drift)?",
+          "options": {
+            "A": "When the physical servers hosting the model are moved to a different data center.",
+            "B": "The phenomenon where a model's predictive performance degrades over time because the statistical properties of the real-world data it encounters have changed since it was trained.",
+            "C": "When the model's source code is accidentally deleted from the repository.",
+            "D": "The process of migrating a model from AWS to Google Cloud."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 17,
+          "question": "Why is writing an effective README.md considered a critical engineering skill?",
+          "options": {
+            "A": "It is the only file the Python interpreter reads when executing the application.",
+            "B": "It serves as the primary entry point for other developers, explaining what the project does, how to set it up, and how to contribute, which is essential for collaboration and maintainability.",
+            "C": "It automatically encrypts the repository.",
+            "D": "It prevents the code from being copied by unauthorized users."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 18,
+          "question": "When deploying an AI agent using Docker, why is it important to use .dockerignore?",
+          "options": {
+            "A": "To prevent Docker from installing the Python interpreter.",
+            "B": "To exclude unnecessary files (like local virtual environments, .git folders, or sensitive .env files) from the build context, resulting in a smaller, more secure image.",
+            "C": "To force Docker to ignore all error messages during the build process.",
+            "D": "To tell the LLM which files it is not allowed to read."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 19,
+          "question": "What is the primary benefit of using a managed service like AWS Bedrock or Amazon SageMaker for hosting LLMs, compared to self-hosting an open-source model on an EC2 instance?",
+          "options": {
+            "A": "Managed services are always 100% free.",
+            "B": "Managed services abstract away the complex infrastructure management, scaling, and security patching required to host large models, allowing developers to focus on building the application layer.",
+            "C": "Managed services automatically write the application code for you.",
+            "D": "Managed services do not require an internet connection."
+          },
+          "correct_answer": "B"
+        },
+        {
+          "q": 20,
+          "question": "In the context of AI cost optimization, what is 'Prompt Caching' (as offered by providers like Anthropic)?",
+          "options": {
+            "A": "Storing the user's credit card information for faster billing.",
+            "B": "A feature that allows developers to cache large, frequently used portions of a prompt (like system instructions or large context documents), significantly reducing the cost and latency of subsequent API calls that use the same prefix.",
+            "C": "Automatically deleting old prompts from the server to save space.",
+            "D": "Using an LLM to predict the user's next prompt before they type it."
+          },
+          "correct_answer": "B"
+        }
+      ],
+      "short_answer_questions": [
+        "Explain the conceptual difference between a traditional CI/CD pipeline for standard software and an MLOps pipeline. What additional artifacts and metrics must be tracked in MLOps?",
+        "Describe the Model Context Protocol (MCP). How does it solve the problem of connecting LLMs to fragmented, local, or proprietary data sources securely?",
+        "You are designing an AI system for a startup that needs to process both simple customer support queries and complex technical documents. Explain how you would implement an 'Intelligent LLM Router' to optimize for both cost and latency.",
+        "In a multi-agent framework like CrewAI, explain the role of a 'Manager' agent in a hierarchical process. How does this differ from a sequential process?",
+        "Discuss the concept of 'Model Drift' in production AI systems. How can implementing robust LLM Observability (using tools like LangSmith) help detect and mitigate this issue?"
+      ],
+      "rubric": {
+        "pass_criteria": [
+          "MCQs: Scores 15/20 (75%) or higher",
+          "Short Answers: Demonstrates a mature, production-oriented mindset. Explanations of MLOps, cost optimization (routing/caching), and system architecture (MCP, multi-agent hierarchies) are clear and practical",
+          "Project: Multi-agent system successfully completes its objective using distinct roles",
+          "Project: CI/CD pipeline (e.g., GitHub Actions) is implemented and triggers correctly on push",
+          "Project: Observability (e.g., LangSmith) is successfully integrated, capturing traces of the LLM calls",
+          "Project: The README is professional, comprehensive, and includes a clear architectural diagram"
+        ],
+        "fail_criteria": [
+          "MCQs: Scores below 15/20",
+          "Short Answers: Answers lack understanding of production realities (e.g., ignoring cost, latency, or drift) or confuse basic concepts (e.g., CI/CD vs. MLOps)",
+          "Project: Multi-agent system fails to run or agents hallucinate wildly without coordination",
+          "Project: No CI/CD pipeline is present, or the pipeline consistently fails",
+          "Project: No observability/telemetry is implemented",
+          "Project: README is sparse, missing setup instructions, or lacks an architectural diagram"
+        ]
+      }
+    }
+  ]
+}

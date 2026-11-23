@@ -1,0 +1,63 @@
+{
+    "meta": {
+        "title": "Laravel & React Web Development Roadmap",
+        "version": "1.0",
+        "start_date": "2026-01-01",
+        "duration_weeks": 17,
+        "study_days": 102,
+        "pace": "2-3 hours per day, 6 days per week",
+        "how_to_use": "Do not passively watch videos. Every phase: build something small, commit it to GitHub, and use an AI coding assistant alongside you from week 1."
+    },
+    "phases": [
+        {
+            "phase": 1,
+            "title": "PHP & Laravel Fundamentals",
+            "weeks": "1-3",
+            "notes": "Routing, controllers, Blade templating, artisan CLI, the MVC request lifecycle."
+        },
+        {
+            "phase": 2,
+            "title": "Eloquent ORM & Database",
+            "weeks": "4-5",
+            "notes": "Migrations, model relationships, the query builder, seeders and factories."
+        },
+        {
+            "phase": 3,
+            "title": "Auth, Validation & Testing",
+            "weeks": "6-7",
+            "notes": "Laravel Breeze/Fortify authentication, form request validation, Pest/PHPUnit feature tests."
+        },
+        {
+            "phase": 4,
+            "title": "Building APIs",
+            "weeks": "8-9",
+            "notes": "REST resource controllers, API resources/transformers, token auth with Sanctum."
+        },
+        {
+            "phase": 5,
+            "title": "React Fundamentals",
+            "weeks": "10-11",
+            "notes": "Components, JSX, hooks, local state, and data fetching."
+        },
+        {
+            "phase": 6,
+            "title": "Laravel + React Integration",
+            "weeks": "12-13",
+            "notes": "Wiring a React frontend to a Laravel backend with Inertia.js and the Vite asset pipeline."
+        },
+        {
+            "phase": 7,
+            "title": "Advanced Patterns & State Management",
+            "weeks": "14-15",
+            "notes": "Queues and events on the backend, client state management and service-layer patterns."
+        },
+        {
+            "phase": 8,
+            "title": "Deployment & Capstone Project",
+            "weeks": "16-17",
+            "notes": "CI/CD, deploying a Laravel + React app, and building a full capstone project end to end."
+        }
+    ],
+    "checkpoints": [],
+    "certifications": []
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "phase_number": 1,
+    "title": "Laravel 11 Core Data & Eloquent",
+    "description": "Forget front-end styling. Master Migrations and Eloquent. Masterclass Video: https://www.youtube.com/watch?v=VrQRa-afCAk",
+    "week_start": 1,
+    "week_end": 1,
+    "topics": [
+      {
+        "name": "Migrations & Schema Builder",
+        "description": "Understanding how Laravel creates and modifies database tables. Crucial for establishing the base architecture before Claude writes your UI."
+      },
+      {
+        "name": "Eloquent ORM & Relationships",
+        "description": "One-to-Many, Many-to-Many. How to query data efficiently using Laravel models so you can pass it to the React frontend."
+      },
+      {
+        "name": "Controllers & Validation",
+        "description": "Receiving form data, validating it strictly, and keeping the backend secure."
+      }
+    ]
+  },
+  {
+    "phase_number": 2,
+    "title": "React JS Survival Hooks",
+    "description": "Data flow is everything. Learn how components receive data and how state changes. Masterclass Video: https://www.youtube.com/watch?v=VrQRa-afCAk",
+    "week_start": 2,
+    "week_end": 2,
+    "topics": [
+      {
+        "name": "Components & Props",
+        "description": "How to pass data down the component tree. Essential for understanding how Inertia injects Laravel data into your React views."
+      },
+      {
+        "name": "useState & useEffect",
+        "description": "Managing local component state and side effects. If the AI writes an infinite re-render loop that crashes your browser, you debug it here."
+      },
+      {
+        "name": "Event Handling & Forms in React",
+        "description": "Capturing user input correctly in React before sending it across the bridge."
+      }
+    ]
+  },
+  {
+    "phase_number": 3,
+    "title": "The Inertia.js Bridge",
+    "description": "The Holy Grail of this sprint. Bypassing REST APIs completely to stitch Laravel directly to React. Masterclass Video: https://www.youtube.com/watch?v=VrQRa-afCAk",
+    "week_start": 3,
+    "week_end": 3,
+    "topics": [
+      {
+        "name": "Laravel Breeze (React/Inertia Stack)",
+        "description": "Using Laravel Breeze to automatically scaffold the Inertia and React environment in Laravel 11. One command setup."
+      },
+      {
+        "name": "Passing Props from Controller to Page",
+        "description": "Using 'Inertia::render()' to send Eloquent data directly from a Laravel controller into a React component's props."
+      },
+      {
+        "name": "Inertia useForm Helper & Navigation",
+        "description": "Using the 'useForm' hook to submit data back to Laravel without Axios. Client-side routing with Inertia's '<Link>' component."
+      }
+    ]
+  },
+  {
+    "phase_number": 4,
+    "title": "CRUD Operations & Monorepo Capstone",
+    "description": "Put it all together. A complete, stateless-API-free internal tool built in exactly one week. Masterclass Video: https://www.youtube.com/watch?v=VrQRa-afCAk",
+    "week_start": 4,
+    "week_end": 4,
+    "topics": [
+      {
+        "name": "Building a Resourceful CRUD app",
+        "description": "Mapping Create, Read, Update, and Delete operations from Laravel routes directly to React pages."
+      },
+      {
+        "name": "Flash Messages & Shared Data",
+        "description": "Passing global state (like authenticated user data or success flash messages) via Inertia middleware."
+      },
+      {
+        "name": "Vibe Coding Debugging",
+        "description": "Identifying when the AI misroutes an Inertia prop, hallucinates a missing Eloquent query, or breaks the Vite compilation."
+      }
+    ]
+  }
+]
