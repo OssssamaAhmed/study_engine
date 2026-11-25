@@ -36,9 +36,9 @@ Route::post('/notes/{note}/resolve', [App\Http\Controllers\ConceptController::cl
 Route::get('/phases', [PhaseController::class, 'index']);
 Route::get('/phases/{phase}', [PhaseController::class, 'show']);
 Route::get('/phases/{phase}/research-prompt', [PhaseController::class, 'researchPrompt']);
-Route::post('/phases/{phase}/project', [PhaseController::class, 'generateProject']);
-Route::post('/phases/{phase}/project-from-research', [PhaseController::class, 'generateFromResearch']);
-Route::post('/phases/{phase}/implementation-plan', [PhaseController::class, 'generateImplementationPlan']);
+Route::post('/phases/{phase}/brief', [PhaseController::class, 'storeBrief']);
+Route::post('/phases/{phase}/plan', [PhaseController::class, 'storePlan']);
+Route::post('/phases/{phase}/criteria', [PhaseController::class, 'storeCriteria']);
 Route::get('/phases/{phase}/export/{document}/{format}', [PhaseController::class, 'export']);
 Route::get('/phases/{phase}/audit-prompt', [PhaseController::class, 'auditPrompt']);
 Route::post('/phases/{phase}/fix-plan', [PhaseController::class, 'generateFixPlan']);

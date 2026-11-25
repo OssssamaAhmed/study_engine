@@ -115,35 +115,20 @@
                 <p class="eyebrow">Portfolio Milestone // {{ \App\Support\StudyMode::label() }}</p>
                 <h2 class="text-lg font-semibold tracking-tight">2. Mega Portfolio Project</h2>
             </div>
-            <div class="flex items-center gap-2">
-                @if ($progress?->mega_project_md)
-                    <button id="btn-new-research" type="button" class="btn btn-outline btn-sm" onclick="openResearchFlow()">
-                        🔬 New Research + Regenerate
-                    </button>
-                    <form method="POST" action="/phases/{{ $phaseNumber }}/project" data-llm>
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-outline" title="Regenerate without new research">
-                            ↺ Quick Regenerate
-                        </button>
-                    </form>
-                @else
-                    <button id="btn-start-research" type="button" class="btn btn-outline btn-sm" onclick="openResearchFlow()">
-                        🔬 Generate Mega Project Brief
-                    </button>
-                @endif
-            </div>
+            {{-- Research prompt copy button always visible --}}
+            <button id="btn-research-prompt" type="button" class="btn btn-outline btn-sm" onclick="openResearchFlow()">
+                🔬 {{ $progress?->mega_project_md ? 'New Research Prompt' : 'Get Research Prompt' }}
+            </button>
         </div>
 
-        {{-- Research Ingestion Flow Panel --}}
+        {{-- Research Prompt Panel (Stage 1 only — copy prompt, do research externally) --}}
         <div id="research-flow" class="hidden border-b border-line bg-paper/40">
-
-            {{-- Stage 1: Research Prompt --}}
             <div id="stage-1" class="px-6 py-6">
                 <div class="mb-4 flex items-start gap-3">
                     <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 text-sm font-bold text-accent">1</div>
                     <div>
                         <h3 class="font-semibold text-ink">Copy this prompt into Claude Pro</h3>
-                        <p class="mt-0.5 text-xs text-muted">Claude Pro will research Reddit, GitHub, HN, job boards, CVE feeds, and DEF CON talks to find what 2026 AI Security employers actually need — then paste its response back here.</p>
+                        <p class="mt-0.5 text-xs text-muted">Claude Pro will research Reddit, GitHub, HN, job boards, CVE feeds, and DEF CON talks to find what 2026 employers actually need. Copy the prompt, run it, then come back and paste your brief below.</p>
                     </div>
                 </div>
 
@@ -165,138 +150,164 @@
                         onclick="copyPrompt()">
                         📋 Copy Prompt to Clipboard
                     </button>
-                    <button id="stage1-next" type="button"
-                        class="btn btn-sm btn-outline hidden ml-auto"
-                        onclick="goToStage2()">
-                        I've got the research → Stage 2
-                    </button>
+                    <button type="button" class="ml-auto text-xs text-muted hover:text-ink hover:underline hidden" id="close-research" onclick="document.getElementById('research-flow').classList.add('hidden')">Close ✕</button>
                 </div>
             </div>
+        </div>
 
-            {{-- Stage 2: Paste Research + Generate --}}
-            <div id="stage-2" class="hidden border-t border-line px-6 py-6">
-                <div class="mb-4 flex items-start gap-3">
-                    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">2</div>
-                    <div>
-                        <h3 class="font-semibold text-ink">Paste Claude Pro's research here</h3>
-                        <p class="mt-0.5 text-xs text-muted">Paste the full response from Claude Pro. Your app's LLM will use this real-world research to generate a market-grounded portfolio project brief.</p>
-                    </div>
+        <div class="px-6 py-6 space-y-6">
+
+            {{-- Step 2: Paste Brief --}}
+            <div class="rounded-lg border border-line p-5">
+                <div class="mb-3 flex items-center gap-2">
+                    <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">2</span>
+                    <h3 class="font-semibold text-ink">Project Brief</h3>
+                    @if ($progress?->mega_project_md)
+                        <span class="badge bg-emerald-600 text-white ml-auto">✓ Saved</span>
+                    @endif
                 </div>
-
-                <form method="POST" action="/phases/{{ $phaseNumber }}/project-from-research" data-llm>
+                <p class="mb-3 text-xs text-muted">Use Claude Pro's research output to choose a project topic and write a brief. Paste it here.</p>
+                <form method="POST" action="/phases/{{ $phaseNumber }}/brief" class="space-y-3">
                     @csrf
-                    @error('research')
-                        <div class="mb-3 rounded-md border border-red-300 bg-red-50 px-4 py-3 text-xs text-red-800">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                    <textarea
-                        id="research-input"
-                        name="research"
-                        rows="16"
+                    @error('brief_md') <div class="rounded border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800">{{ $message }}</div> @enderror
+                    <textarea name="brief_md" rows="8"
                         class="input font-mono text-xs leading-relaxed"
-                        placeholder="Paste Claude Pro's research output here…&#10;&#10;Expected format: Top 5 hottest project areas, key technologies, attack vectors, what makes a GitHub project stand out, emerging standards…"
-                        required>{{ old('research', $progress?->research_context) }}</textarea>
-                    <div class="mt-3 flex items-center justify-between">
-                        <button type="button" class="text-xs text-muted hover:text-ink hover:underline" onclick="goToStage1()">← Back to Stage 1</button>
-                        <button type="submit" class="btn btn-accent">
-                            ✦ Generate Brief from Research
+                        placeholder="Paste your project brief here (written with Claude Pro)…">{{ old('brief_md', $progress?->mega_project_md) }}</textarea>
+                    <div class="flex justify-end">
+                        <button type="submit" class="btn btn-sm btn-accent">
+                            {{ $progress?->mega_project_md ? '↺ Update Brief' : '✦ Save Brief' }}
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
 
-        <div class="px-6 py-6">
             @if ($progress?->mega_project_md)
-                @if ($progress->research_context)
-                    <div class="mb-4 flex items-center gap-2 rounded-md border border-accent/20 bg-accent-wash px-4 py-2.5 text-xs text-accent-deep">
-                        <span>✦</span>
-                        <span><strong>Research-grounded brief</strong> — generated from real 2026 market research you ingested.</span>
+                {{-- Step 3: Paste Implementation Plan --}}
+                <div class="rounded-lg border border-line p-5">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">3</span>
+                        <h3 class="font-semibold text-ink">Implementation Plan</h3>
+                        @if ($progress?->implementation_plan_md)
+                            <span class="badge bg-emerald-600 text-white ml-auto">✓ Saved</span>
+                        @endif
+                    </div>
+                    <p class="mb-3 text-xs text-muted">Ask Claude Pro to write a milestone-based implementation plan for your brief. Paste it here.</p>
+                    <form method="POST" action="/phases/{{ $phaseNumber }}/plan" class="space-y-3">
+                        @csrf
+                        @error('plan_md') <div class="rounded border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800">{{ $message }}</div> @enderror
+                        <textarea name="plan_md" rows="8"
+                            class="input font-mono text-xs leading-relaxed"
+                            placeholder="Paste your implementation plan here…">{{ old('plan_md', $progress?->implementation_plan_md) }}</textarea>
+                        <div class="flex justify-end">
+                            <button type="submit" class="btn btn-sm btn-accent">
+                                {{ $progress?->implementation_plan_md ? '↺ Update Plan' : '✦ Save Plan' }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                {{-- Step 4: Paste Passing Criteria --}}
+                <div class="rounded-lg border border-line p-5">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">4</span>
+                        <h3 class="font-semibold text-ink">Passing Criteria</h3>
+                        @if ($progress?->passing_criteria_md)
+                            <span class="badge bg-emerald-600 text-white ml-auto">✓ Saved</span>
+                        @endif
+                    </div>
+                    <p class="mb-3 text-xs text-muted">Ask Claude Pro to define the passing criteria for this project (what DONE looks like). This is injected into the audit prompt so Claude Code knows exactly what to check.</p>
+                    <form method="POST" action="/phases/{{ $phaseNumber }}/criteria" class="space-y-3">
+                        @csrf
+                        @error('criteria_md') <div class="rounded border border-red-300 bg-red-50 px-3 py-2 text-xs text-red-800">{{ $message }}</div> @enderror
+                        <textarea name="criteria_md" rows="6"
+                            class="input font-mono text-xs leading-relaxed"
+                            placeholder="Paste your passing criteria here…">{{ old('criteria_md', $progress?->passing_criteria_md) }}</textarea>
+                        <div class="flex justify-end">
+                            <button type="submit" class="btn btn-sm btn-accent">
+                                {{ $progress?->passing_criteria_md ? '↺ Update Criteria' : '✦ Save Criteria' }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                {{-- Document viewer: Brief, Plan, Criteria, Attempt plans --}}
+                @if ($progress->implementation_plan_md || count($fixPlans) > 0)
+                    <div>
+                        <div class="mb-4 flex flex-wrap items-center gap-3 border-b border-line pb-4">
+                            <label for="doc-select" class="text-xs font-semibold text-ink-soft">View saved document</label>
+                            <select id="doc-select" class="input w-auto min-w-[16rem] py-1.5 text-sm">
+                                <option value="brief">📄 Brief</option>
+                                @if ($progress->implementation_plan_md)
+                                    <option value="plan">🗺 Implementation Plan</option>
+                                @endif
+                                @if ($progress->passing_criteria_md)
+                                    <option value="criteria">✅ Passing Criteria</option>
+                                @endif
+                                @foreach ($fixPlans as $forAttempt => $fixPlan)
+                                    <option value="attempt-{{ $forAttempt }}">🛠 Attempt {{ $forAttempt }} Plan</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="doc-panel" data-panel="brief">
+                            <article class="mission text-sm">
+                                {!! Illuminate\Support\Str::markdown($progress->mega_project_md, ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
+                            </article>
+                            @include('phases.partials.export-buttons', ['phase' => $phaseNumber, 'document' => 'brief'])
+                        </div>
+
+                        @if ($progress->implementation_plan_md)
+                            <div class="doc-panel hidden" data-panel="plan">
+                                <article class="mission text-sm">
+                                    {!! Illuminate\Support\Str::markdown($progress->implementation_plan_md, ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
+                                </article>
+                                @include('phases.partials.cut-off-warning', ['md' => $progress->implementation_plan_md])
+                                @include('phases.partials.export-buttons', ['phase' => $phaseNumber, 'document' => 'plan'])
+                            </div>
+                        @endif
+
+                        @if ($progress->passing_criteria_md)
+                            <div class="doc-panel hidden" data-panel="criteria">
+                                <article class="mission text-sm">
+                                    {!! Illuminate\Support\Str::markdown($progress->passing_criteria_md, ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
+                                </article>
+                            </div>
+                        @endif
+
+                        {{-- Attempt plans --}}
+                        @foreach ($fixPlans as $forAttempt => $fixPlan)
+                            <div class="doc-panel hidden" data-panel="attempt-{{ $forAttempt }}">
+                                <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
+                                    <div>
+                                        <h3 class="font-semibold text-ink">Attempt {{ $forAttempt }} — implementation plan</h3>
+                                        <p class="mt-0.5 text-xs text-muted">Written by the app from what attempt {{ $fixPlan['from'] }} found weak.</p>
+                                    </div>
+                                    @if ($latestAttempt && $forAttempt === $latestAttempt['n'] + 1)
+                                        <form method="POST" action="/phases/{{ $phaseNumber }}/fix-plan" data-llm>
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-outline">↺ Recreate this plan</button>
+                                        </form>
+                                    @endif
+                                </div>
+                                <article class="mission text-sm">
+                                    {!! Illuminate\Support\Str::markdown($fixPlan['md'], ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
+                                </article>
+                                @include('phases.partials.cut-off-warning', ['md' => $fixPlan['md']])
+                                @include('phases.partials.export-buttons', ['phase' => $phaseNumber, 'document' => 'attempt-'.$forAttempt])
+                            </div>
+                        @endforeach
                     </div>
                 @endif
-                {{-- Document picker: Brief, Implementation Plan, then one entry per attempt (Attempt 2, 3, 4 ...) --}}
-                <div class="mb-6 flex flex-wrap items-center gap-3 border-b border-line pb-4">
-                    <label for="doc-select" class="text-xs font-semibold text-ink-soft">Show</label>
-                    <select id="doc-select" class="input w-auto min-w-[16rem] py-1.5 text-sm">
-                        <option value="brief">📄 Brief</option>
-                        <option value="plan">🗺 Implementation Plan @unless ($progress->implementation_plan_md)(not yet)@endunless</option>
-                        @foreach ($fixPlans as $forAttempt => $fixPlan)
-                            <option value="attempt-{{ $forAttempt }}">🛠 Attempt {{ $forAttempt }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="doc-panel" data-panel="brief">
-                <article class="mission text-sm">
-                    {!! Illuminate\Support\Str::markdown($progress->mega_project_md, ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
-                </article>
-                @include('phases.partials.export-buttons', ['phase' => $phaseNumber, 'document' => 'brief'])
-                </div>
-
-                {{-- Stage 3: Implementation Plan --}}
-                <div class="doc-panel hidden" data-panel="plan">
-                    <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                            <h3 class="font-semibold text-ink">Implementation Plan</h3>
-                            <p class="mt-0.5 text-xs text-muted">A milestone-based work breakdown with binary Definition-of-Done gates — optional, recommended before you start building.</p>
-                        </div>
-                        <form method="POST" action="/phases/{{ $phaseNumber }}/implementation-plan" data-llm class="flex flex-wrap items-center gap-3">
-                            @csrf
-                            <label class="flex items-center gap-1.5 text-xs font-medium text-muted" title="Full hand-holding: every step says what to do, in which file, with which tool — and how to check it works">
-                                <input type="checkbox" name="learner_mode" value="1" @checked(session('learner_mode'))>
-                                <span>Learner mode</span>
-                            </label>
-                            <button type="submit" class="btn btn-sm btn-outline">
-                                {{ $progress->implementation_plan_md ? '↺ Regenerate Plan' : '✦ Generate Implementation Plan' }}
-                            </button>
-                        </form>
-                    </div>
-
-                    @if ($progress->implementation_plan_md)
-                        <article class="mission text-sm">
-                            {!! Illuminate\Support\Str::markdown($progress->implementation_plan_md, ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
-                        </article>
-                        @include('phases.partials.cut-off-warning', ['md' => $progress->implementation_plan_md])
-                        @include('phases.partials.export-buttons', ['phase' => $phaseNumber, 'document' => 'plan'])
-                    @else
-                        <p class="text-xs text-muted">No plan yet — click Generate above (tick Learner mode for step-by-step hand-holding).</p>
-                    @endif
-                </div>
-
-                {{-- Attempt plans: the implementation plan for each next attempt, written from the evaluation before it --}}
-                @foreach ($fixPlans as $forAttempt => $fixPlan)
-                    <div class="doc-panel hidden" data-panel="attempt-{{ $forAttempt }}">
-                        <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
-                            <div>
-                                <h3 class="font-semibold text-ink">Attempt {{ $forAttempt }} — implementation plan</h3>
-                                <p class="mt-0.5 text-xs text-muted">Written by the app from what attempt {{ $fixPlan['from'] }} found weak, in the same step format as your other plans.</p>
-                            </div>
-                            @if ($latestAttempt && $forAttempt === $latestAttempt['n'] + 1)
-                                <form method="POST" action="/phases/{{ $phaseNumber }}/fix-plan" data-llm>
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline">↺ Recreate this plan</button>
-                                </form>
-                            @endif
-                        </div>
-
-                        <article class="mission text-sm">
-                            {!! Illuminate\Support\Str::markdown($fixPlan['md'], ['html_input' => 'strip', 'allow_unsafe_links' => false]) !!}
-                        </article>
-                        @include('phases.partials.cut-off-warning', ['md' => $fixPlan['md']])
-                        @include('phases.partials.export-buttons', ['phase' => $phaseNumber, 'document' => 'attempt-'.$forAttempt])
-                    </div>
-                @endforeach
 
                 {{-- Submit Project Form --}}
                 <div class="mt-8 border-t border-line pt-6">
                     <h3 class="text-base font-semibold">Submit Your Implementation</h3>
                     <p class="mt-1 text-xs text-muted">
-                        The app's AI cannot read a whole project, so a finished project is audited by Claude Code and you submit its report.
+                        Audit your project with Claude Code, then paste the full report here. The app reads the score from the report automatically.
                     </p>
                     @if (count($attempts) > 0)
                         <p class="mt-3 rounded-md border border-amber-500/30 bg-amber-50/50 px-4 py-2.5 text-xs text-amber-900">
-                            <strong>Resubmission:</strong> this will be attempt {{ end($attempts)['n'] + 1 }}. The grader sees your earlier attempts, and the audit prompt below already lists the problems Claude Code must re-check.
+                            <strong>Resubmission:</strong> this will be attempt {{ end($attempts)['n'] + 1 }}. The audit prompt below already lists the problems Claude Code must re-check.
                         </p>
                     @endif
 

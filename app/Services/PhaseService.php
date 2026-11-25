@@ -91,6 +91,8 @@ class PhaseService
             throw new \InvalidArgumentException("Phase {$phaseNumber} does not exist in roadmap.");
         }
 
+        $totalPhases = count($this->roadmap->phases());
+
         // Current phase concepts
         $topic = Topic::where('phase_number', $phaseNumber)->first();
         $concepts = Concept::where('topic_id', $topic?->id)->get();
@@ -119,54 +121,70 @@ class PhaseService
         }
 
         $priorPhasesSection = $phaseNumber > 1
-            ? "- **Prior phases completed (full skill stack):**\n{$priorPhaseSummary}\n"
+            ? "\n- **Prior phases completed (full skill stack):**\n{$priorPhaseSummary}"
             : '';
 
         return <<<PROMPT
-You are a 2026 AI Security Engineering talent analyst and curriculum researcher. I need you to do thorough, source-backed research to help me design a killer portfolio project for my skill level.
+You will act as a 2026 AI Security Engineering talent analyst and curriculum researcher. Your goal is to conduct thorough, live-verified research to identify high-signal, real-world portfolio project directions scaled to my exact skill level and learning progression.
+
+Internal Execution Framework (Input → Logic → Output):
+
+Input Processing (Hidden): Parse my target role ({$role}), progression (Phase {$phaseNumber} of {$totalPhases} — {$phase['title']}), current phase concepts ({$conceptList}), and cumulative stack below. Calculate my exact progression stage using the ratio of {$phaseNumber} to {$totalPhases}, and map intersections across multiple phases so recommended projects compound my skills rather than isolating the latest phase.
+
+Logic & Research Synthesis (Hidden):
+
+Search across these open-web, live-accessible domains:
+
+Practitioner Forums: Reddit (r/netsec, r/AISecOps, r/MachineLearning, r/LLMSecurity) and Hacker News (2025–2026 top threads).
+
+Code Ecosystems: GitHub Trending / high-velocity AI + Security repos from the last 12 months.
+
+Open Hiring Market Data: Public job boards and aggregators (e.g., Greenhouse/Lever-indexed postings, Wellfound, YC Work at a Startup, or public job market reports) for {$role}, MLSecOps, LLM Security, and AI Red Team roles.
+
+Vulnerability Databases & Standards: CVE/NVD (2025–2026 AI/ML attack vectors) and OWASP LLM Top 10 (2025 update).
+
+Conferences: DEF CON AI Village 2025, NeurIPS Security workshops, and Black Hat AI talks.
+
+Open Security Blogs & Newsletters: Frontier lab security blogs (Anthropic, OpenAI, Google DeepMind) and practitioner outlets (e.g., tl;dr sec, Lakera, HiddenLayer, Wiz Research).
+
+Strict Verification Rule: If a source is blocked, paywalled, or inaccessible, stop trying after a maximum of 2 attempts and move on. Cite only live-verified sources, CVEs, repos, and tools from this session.
+
+Phase-Adaptive Feasibility Filter: Scale project scope dynamically using Phase {$phaseNumber} of {$totalPhases}—target 1–2 week builds for early phases and up to 3–4 week integrated systems for advanced phases. Discard anything requiring paid cloud GPUs, enterprise API budgets, or multi-month timelines. Standard free-tier or low-cost APIs are acceptable.
+
+Synthesize the top 5 areas, their underlying attack vectors, and one opinionated #1 pick into a single unified section with zero repetition.
+
+Keep all reasoning hidden by default. If I say "Show Logic" and reasoning is not cached, reconstruct it by reverse-engineering the output.
+
+Output Delivery (Visible): Deliver only the final research brief directly to me—direct, pragmatic, structured, and free of fluff.
 
 ## MY FULL LEARNING CONTEXT
+
 - **Role I'm targeting:** {$role}
-- **Phase I just completed:** Phase {$phaseNumber} — {$phase['title']}
-- **Concepts learned in THIS phase:** {$conceptList}
-{$priorPhasesSection}
-> Use my COMPLETE skill stack above when recommending a project. The best project should integrate concepts from multiple phases where it makes sense — not just the latest one in isolation.
+- **Phase I just completed:** Phase {$phaseNumber} of {$totalPhases} — {$phase['title']}
+- **Concepts learned in THIS phase:** {$conceptList}{$priorPhasesSection}
 
-## YOUR RESEARCH MISSION
-Find the MOST in-demand, genuinely valuable portfolio project topics for an {$role} in 2026 that someone with my exact skill background could build. This research will directly feed into a portfolio project generator — be specific, not generic.
+## Required Output Structure:
 
-## SOURCES TO CHECK (check all of them)
-1. **Reddit** — r/netsec, r/AISecOps, r/MachineLearning, r/LLMSecurity — what are practitioners actually worried about? Top posts from 2025-2026.
-2. **GitHub Trending** — AI + Security repos with the most stars/forks in the last 12 months. What tools are being built?
-3. **LinkedIn Job Postings** — Search "{$role}", "MLSecOps", "LLM Security", "AI Red Team" — what skills appear in EVERY posting?
-4. **Hacker News** — Threads about AI model vulnerabilities, prompt injection, LLM supply chain attacks. What keeps people up at night?
-5. **CVE Database / NVD** — What new attack vectors targeting AI/ML systems appeared in 2025-2026? Any patterns?
-6. **Conference talks** — DEF CON AI Village 2025, NeurIPS Security workshops, Black Hat AI talks — what was the hottest topic?
-7. **OWASP LLM Top 10 (2025 update)** — Which vulnerabilities are most critical and underrepresented in portfolios?
-8. **X/Twitter** — @AISecDevs, #AISecOps, #MLSec — what are practitioners posting about?
-9. **Company engineering blogs** — Anthropic, OpenAI, Google DeepMind security teams — what problems are they publishing about?
+**Top 5 High-Signal Project Areas, Active Attack Vectors & Your #1 Pick:**
 
-## OUTPUT FORMAT (be very specific)
+For each of the 5 areas: name it, tie it directly to a trending or unsolved 2025–2026 attack vector (citing live-verified CVEs, repos, companies, or discussions), rate employer appeal, and map it to my multi-phase skills.
 
-### 1. Top 5 Hottest Project Areas for 2026
-For each: name it, explain WHY it's hot right now (cite real evidence — company names, CVE numbers, GitHub repos, post titles), rate the employer-appeal, and note which of my skills from the phases above it would leverage.
+The #1 Opinionated Pick: Immediately below the list, select ONE direction that maximizes 2026 employer signal for my Phase {$phaseNumber} of {$totalPhases} scope and explain how it integrates multiple phases—without repeating evidence already listed above.
 
-### 2. Key Technologies & Frameworks Companies Are Hiring For RIGHT NOW
-List the actual tool names, libraries, frameworks. Not generic — specific. Flag which ones align with skills I've already learned.
+**Key Technologies & Frameworks Companies Are Hiring For Right Now:** List specific tool names, libraries, and frameworks—flagging which align with my existing stack.
 
-### 3. Specific Attack Vectors or Security Problems That Are Trending or Unsolved
-Real problems. Real CVE references where possible. What's the gap in the field?
+**What Makes an AI Security Portfolio Project Stand Out on GitHub in 2026:** Concrete signals hiring managers look for that separate strong solo repos from generic ones.
 
-### 4. What Makes an AI Security Portfolio Project Stand Out on GitHub in 2026?
-What separates a 5-star project from a generic one? Specific signals hiring managers look for.
+**Emerging Standards, Certifications, or Compliance Frameworks:** Relevant ISO, NIST AI RMF, EU AI Act, or similar frameworks worth aligning a project with.
 
-### 5. Emerging Standards, Certifications, or Compliance Frameworks to Demonstrate
-Any new ISO, NIST AI RMF, EU AI Act, or similar frameworks that projects should align with?
-
-### 6. Your Recommendation
-Given my COMPLETE background (Phase {$phaseNumber} just completed, full stack above), what ONE project direction would give me maximum employer signal in 2026? Be opinionated. Explain how it pulls from multiple phases of my learning.
-
-Be specific. Use real names. This research will feed directly into a portfolio project generator, so the more concrete the better.
+## Constraints
+- Do not retry accessing a blocked or inaccessible source more than 2 times.
+- Do not cite any source, CVE, repository, tool, or statistic that has not been live-verified during the current research session.
+- Do not recommend projects that require paid cloud GPUs, enterprise-level API budgets, or multi-month build timelines.
+- Do not apply a fixed, one-size-fits-all build timeline—scale project complexity to Phase {$phaseNumber} of {$totalPhases}.
+- Do not guess or infer my overall progression stage without using the explicit ratio of Phase {$phaseNumber} to {$totalPhases}.
+- Do not attempt to scrape or query login-walled platforms like LinkedIn or X/Twitter; use open-web equivalents instead.
+- Do not separate Project Areas, Trending Attack Vectors, and the Final Recommendation into repetitive, overlapping sections.
 PROMPT;
     }
 
@@ -436,13 +454,17 @@ PROMPT;
         [$brief, $gates, $auditId] = $this->auditStandards($phaseNumber, $progress);
         preg_match('/^#\s*Mega Portfolio Project:\s*(.+)$/mi', $brief, $m);
 
+        $criteria = $progress->passing_criteria_md
+            ? "\n\n## PASSING CRITERIA (set by learner)\n{$progress->passing_criteria_md}"
+            : '';
+
         $prompt = strtr(StudyMode::renderPrompt(File::get(resource_path('prompts/project-audit.md'))), [
-            '{{AUDIT_ID}}' => $auditId,
+            '{{AUDIT_ID}}'      => $auditId,
             '{{PROJECT_TITLE}}' => trim($m[1] ?? "Phase {$phaseNumber} project"),
-            '{{PHASE_LABEL}}' => "Phase {$phaseNumber} — {$phase['title']}",
-            '{{BRIEF}}' => $brief,
-            '{{GATES}}' => $gates,
-            '{{RESUBMISSION}}' => $this->resubmissionForAudit($progress),
+            '{{PHASE_LABEL}}'   => "Phase {$phaseNumber} — {$phase['title']}",
+            '{{BRIEF}}'         => $brief.$criteria,
+            '{{GATES}}'         => $gates,
+            '{{RESUBMISSION}}'  => $this->resubmissionForAudit($progress),
         ]);
 
         return ['prompt' => $prompt, 'audit_id' => $auditId];
@@ -810,63 +832,42 @@ PROMPT;
         return $failed;
     }
 
-    /** Submit and evaluate the learner's Mega Portfolio Project (code and docs, or a Claude Code audit report). */
+    /** Submit and evaluate the learner's Mega Portfolio Project (Claude Code audit report with embedded score). */
     public function evaluateMegaProject(int $phaseNumber, string $submission): array
     {
         $progress = PhaseProgress::where('phase_number', $phaseNumber)->first();
         if (! $progress || ! $progress->mega_project_md) {
-            $progress = $this->generateMegaProject($phaseNumber);
+            throw new \RuntimeException('No project brief found for this phase. Paste your brief first.');
         }
 
+        // Parse score from Claude's pasted report — expect "Score: XX/100" or "Overall Score: XX/100"
+        $plain = preg_replace('/^```[a-z]*\s*$/mi', '', $submission);
+        if (! preg_match('/(?:overall\s+)?score[:\s]+(\d{1,3})\s*[\/\\\\]\s*100/i', $plain, $scoreMatch)) {
+            throw new \RuntimeException('No score found in the pasted report. Claude\'s report must contain a line like "Score: 85/100". Paste the full report and try again.');
+        }
+        $score = min(100, max(0, (int) $scoreMatch[1]));
+
+        if ($score === 0) {
+            throw new \RuntimeException('Score 0 detected — something looks wrong. Check you pasted the full Claude evaluation report (it must contain "Score: XX/100").');
+        }
+
+        // Parse feedback — everything after the score line, or the full text
+        $feedbackMd = preg_replace('/(?:overall\s+)?score[:\s]+\d{1,3}\s*[\/\\\\]\s*100/i', '', $plain, 1);
+        $feedbackMd = trim($feedbackMd) ?: $submission;
+
+        $passed = $score >= 70;
+
         $isAudit = self::isAuditReport($submission);
-        [, $gates, $auditId] = $this->auditStandards($phaseNumber, $progress);
+        [, , $auditId] = $this->auditStandards($phaseNumber, $progress);
+
         if ($isAudit) {
             $this->assertAuditReportGradable($auditId, $submission);
         }
 
-        $phase = $this->roadmap->getPhase($phaseNumber);
-        $topic = Topic::where('phase_number', $phaseNumber)->first();
-        $concepts = Concept::where('topic_id', $topic?->id)->get();
-        $conceptNames = $concepts->pluck('name')->implode(', ') ?: implode(', ', $this->roadmap->getRequiredTopicsForPhase($phaseNumber));
-
-        $systemPrompt = StudyMode::renderPrompt(File::get(resource_path('prompts/mega-project.md')));
-
-        // Taken before the stored submission/feedback are overwritten below.
         $history = $this->attemptHistory($progress);
         $attemptNo = $history === [] ? 1 : end($history)['n'] + 1;
 
-        $userPrompt = "MODE: EVALUATE_MEGA_PROJECT\n\n";
-
-        if ($history !== []) {
-            $userPrompt .= "RESUBMISSION — this is attempt {$attemptNo}. The learner was graded on this project before. Follow the RESUBMISSIONS rules in your instructions. Earlier attempts, oldest first:\n\n"
-                .self::formatAttempts($history, 2)."\n\n";
-        }
-
-        if ($isAudit) {
-            // The model cannot read a whole repository, so it gets the standards in short form plus the report.
-            $userPrompt .= "Submission type: AUDIT REPORT — written by an AI coding agent from the learner's whole repository. The app already checked that its Audit ID matches this brief and that it is complete.\n\n"
-                . "Project Brief:\n{$progress->mega_project_md}\n\n"
-                . "Milestone gates and checks from the Implementation Plan:\n{$gates}\n\n"
-                . "Learned Concepts: {$conceptNames}\n\n"
-                . "Audit report:\n{$submission}";
-        } else {
-            $userPrompt .= "Project Brief:\n{$progress->mega_project_md}\n\n";
-
-            if ($progress->implementation_plan_md) {
-                $userPrompt .= "Implementation Plan (check the submission against its milestone gates):\n{$progress->implementation_plan_md}\n\n";
-            }
-
-            $userPrompt .= "Learned Concepts: {$conceptNames}\n\n"
-                . "Learner Submitted Code & Documentation:\n{$submission}";
-        }
-
-        $evalJson = $this->llm->chatJson($systemPrompt, $userPrompt);
-
-        $score = (int) ($evalJson['overall_score'] ?? 0);
-        $passed = (bool) ($evalJson['passed'] ?? ($score >= 70));
-        $feedbackMd = $evalJson['feedback_md'] ?? 'No feedback provided.';
-
-        // Enforced here, not in the prompt: free models skip prose rules.
+        // Enforced cap: audit report with FAIL rows cannot pass regardless of stated score
         $failedRows = $isAudit ? self::auditFailedRows($submission) : 0;
         if ($failedRows > 0 && $score > self::AUDIT_FAIL_CAP) {
             $score = self::AUDIT_FAIL_CAP;
@@ -876,23 +877,22 @@ PROMPT;
 
         $history[] = self::attemptEntry($attemptNo, $score, $passed, $submission, $feedbackMd, now()->toDateTimeString());
 
-        // Auto-complete the phase when the project passes — missing topics are advisory only.
         $progress->update([
             'project_submission' => $submission,
-            'project_eval_md' => $feedbackMd,
-            'project_score' => $score,
-            'project_attempts' => array_slice($history, -self::ATTEMPTS_KEPT),
-            'status' => $passed ? 'completed' : $progress->status,
-            'completed_at' => $passed ? now() : $progress->completed_at,
+            'project_eval_md'    => $feedbackMd,
+            'project_score'      => $score,
+            'project_attempts'   => array_slice($history, -self::ATTEMPTS_KEPT),
+            'status'             => $passed ? 'completed' : $progress->status,
+            'completed_at'       => $passed ? now() : $progress->completed_at,
         ]);
 
         return [
-            'attempt' => $attemptNo,
-            'score' => $score,
-            'passed' => $passed,
+            'attempt'  => $attemptNo,
+            'score'    => $score,
+            'passed'   => $passed,
             'feedback_md' => $feedbackMd,
-            'concept_scores' => $evalJson['concept_scores'] ?? [],
-            'security_insights' => $evalJson['security_insights'] ?? '',
+            'concept_scores'     => [],
+            'security_insights'  => '',
         ];
     }
 

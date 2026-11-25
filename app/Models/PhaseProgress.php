@@ -31,6 +31,7 @@ class PhaseProgress extends Model
         'status',
         'mega_project_md',
         'research_context',
+        'passing_criteria_md',
         'implementation_plan_md',
         'skeleton_md',
         'project_submission',

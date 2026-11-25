@@ -85,19 +85,57 @@ class PhaseController extends Controller
         }
     }
 
-    /** Stage 2: Accept pasted research output and generate a grounded Mega Project brief. */
-    public function generateFromResearch(Request $request, int $phase)
+    /** Store a user-pasted project brief (written externally with Claude Pro). */
+    public function storeBrief(Request $request, int $phase)
     {
         $request->validate([
-            'research' => ['required', 'string', 'min:100'],
+            'brief_md' => ['required', 'string', 'min:50'],
         ], [
-            'research.required' => 'Please paste the research output from Claude Pro.',
-            'research.min'      => 'The research content seems too short. Paste the full Claude Pro response.',
+            'brief_md.required' => 'Please paste your project brief.',
+            'brief_md.min'      => 'Brief seems too short — paste the full text from Claude.',
         ]);
 
-        $this->phaseService->generateMegaProjectFromResearch($phase, $request->input('research'));
+        $progress = \App\Models\PhaseProgress::firstOrCreate(['phase_number' => $phase]);
+        $progress->update([
+            'mega_project_md'      => $request->input('brief_md'),
+            'implementation_plan_md' => null, // reset plan when brief changes
+            'status'               => in_array($progress->status, [\App\Models\PhaseProgress::COMPLETED, \App\Models\PhaseProgress::MOVED_ON], true)
+                                        ? $progress->status : 'pending_project',
+        ]);
 
-        return redirect("/phases/{$phase}")->with('status', StudyMode::label()." Mega Portfolio Project brief generated from your 2026 research for Phase {$phase}!");
+        return redirect("/phases/{$phase}")->with('status', "Project brief saved for Phase {$phase}!");
+    }
+
+    /** Store a user-pasted implementation plan (written externally with Claude Pro). */
+    public function storePlan(Request $request, int $phase)
+    {
+        $request->validate([
+            'plan_md' => ['required', 'string', 'min:50'],
+        ], [
+            'plan_md.required' => 'Please paste your implementation plan.',
+            'plan_md.min'      => 'Plan seems too short — paste the full text from Claude.',
+        ]);
+
+        $progress = \App\Models\PhaseProgress::firstOrCreate(['phase_number' => $phase]);
+        $progress->update(['implementation_plan_md' => $request->input('plan_md')]);
+
+        return redirect("/phases/{$phase}#plan")->with('status', "Implementation plan saved for Phase {$phase}!");
+    }
+
+    /** Store a user-pasted passing criteria (written externally with Claude Pro). */
+    public function storeCriteria(Request $request, int $phase)
+    {
+        $request->validate([
+            'criteria_md' => ['required', 'string', 'min:20'],
+        ], [
+            'criteria_md.required' => 'Please paste your passing criteria.',
+            'criteria_md.min'      => 'Criteria seems too short.',
+        ]);
+
+        $progress = \App\Models\PhaseProgress::firstOrCreate(['phase_number' => $phase]);
+        $progress->update(['passing_criteria_md' => $request->input('criteria_md')]);
+
+        return redirect("/phases/{$phase}")->with('status', "Passing criteria saved for Phase {$phase}!");
     }
 
     public function generateImplementationPlan(Request $request, int $phase)
